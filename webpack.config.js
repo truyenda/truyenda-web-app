@@ -1,5 +1,9 @@
 const path = require('path');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin'); 
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 module.exports = {
     entry: './src/index.js',
@@ -11,6 +15,7 @@ module.exports = {
     devServer: {
         contentBase: './build',
 		hot: true,
+		open: true,
         port: 3000
     },
     module:{
@@ -46,10 +51,23 @@ module.exports = {
         },
         ]
     },
+	optimization: {
+		minimizer: [
+			new UglifyJsPlugin(),
+			new OptimizeCSSAssetsPlugin({})
+		]
+	},
     plugins: [
+		new CleanWebpackPlugin(),
         new MiniCssExtractPlugin({
             filename: "[name].css",
             chunkFilename: "[id].css"
-        })
+        }),
+		new HtmlWebpackPlugin({
+		  title: 'My App',
+		  template: path.resolve(__dirname, 'src', 'index.html'),
+		  filename: path.resolve('.', 'build', 'index.html')
+		}
+		)
     ]
 }
