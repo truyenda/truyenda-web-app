@@ -4,7 +4,7 @@
   "description": "TruyenDA React Web App",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --mode development --colors --hot --watch --open",
+    "start": "webpack-dev-server --mode development --colors --hot --watch --open --config ./webpack.dev.config.js",
     "build": "webpack --mode production --config ./webpack.config.js --progress"
   },
   "author": "hoangtrongminhduc",
