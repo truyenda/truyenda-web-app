@@ -1,0 +1,57 @@
+
+@import "../../../scss/variables.scss";
+.button {
+  border: none;
+  border-radius: 2px;
+  padding: 12px 18px;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  font-family: "Roboto", "Helvetica", "Arial", "sans-serif";
+  cursor: pointer;
+  color: white;
+  box-shadow: 0 0 4px #999;
+  outline: none;
+  font-weight: bold;
+  background-position: center;
+  transition: background 0.8s;
+  
+}
+
+//OK button, blue color
+.btn-ok {
+background-color: #2196f3;
+}
+.btn-ok:hover {
+  background: #47a7f5 radial-gradient(circle, transparent 1%, #47a7f5 1%) center/15000%;
+}
+.btn-ok:active{
+    background-color: #6eb9f7;
+}
+
+//Delete button, red color
+.btn-del {
+    background-color: $red;
+}
+.btn-del:hover{
+    background: $red+30 radial-gradient(circle, transparent 1%, $red+30 1%) center/15000%;
+}
+.btn-del:active{
+    background-color: $red+50;
+}
+
+//Cancel button, gray color
+.btn-cancel {
+    background-color: $gray-1;
+    color: black;
+}
+.btn-cancel:hover{
+    background: $gray-1+10 radial-gradient(circle, transparent 1%, $gray-1+10 1%) center/15000%;
+}
+.btn-cancel:active{
+    background-color: $gray-1+30;
+}
+
+.button:active {
+    background-size: 100%;
+    transition: background 0s;
+}
