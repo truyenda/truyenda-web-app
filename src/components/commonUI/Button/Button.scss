@@ -3,7 +3,7 @@
 .button {
   border: none;
   border-radius: 2px;
-  padding: 12px 18px;
+  padding: 9px 18px;
   font-size: 0.875rem;
   text-transform: uppercase;
   font-family: "Roboto", "Helvetica", "Arial", "sans-serif";
@@ -54,4 +54,8 @@ background-color: #2196f3;
 .button:active {
     background-size: 100%;
     transition: background 0s;
+}
+
+.button:disabled{
+    background: $gray-1+10 radial-gradient(circle, transparent 1%, $gray-1+10 1%) center/15000%;
 }
