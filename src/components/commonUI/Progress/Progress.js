@@ -5,7 +5,7 @@ class Progress extends Component {
     render() {
         return (
             <div className='progress-bar'>
-                <progress class="pure-material-progress-circular" />
+                <progress className="pure-material-progress-circular" />
                 <p>Đang tải...</p>
             </div>
         );
