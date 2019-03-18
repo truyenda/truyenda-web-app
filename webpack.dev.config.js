@@ -33,10 +33,14 @@ module.exports = {
         },
        {
            test: /\.s?css$/,
+           exclude: /(node_modules|bower_components)/,
            use: [
                 MiniCssExtractPlugin.loader,
                 {
                     loader: 'css-loader'
+               },
+               {
+                  loader: 'postcss-loader'  
                 },
                 {
                     loader: 'sass-loader'
