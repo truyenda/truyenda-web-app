@@ -12,7 +12,8 @@ class SelectBox extends Component {
     this.setState({
       value: event.target.value
     });
-    this.props.onChanged(this.props.id, event.target.value);
+    if(this.props.onChanged)
+      this.props.onChanged(this.props.id, event.target.value);
   }
   componentWillMount() {
     //receive selected item
