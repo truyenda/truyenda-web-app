@@ -13,7 +13,8 @@ class TextInput extends Component {
     this.setState({
       input: event.target.value
     });
-    this.props.onChanged(this.props.id, event.target.value);
+    if(this.props.onChanged)
+      this.props.onChanged(this.props.id, event.target.value);
   }
   //set init text
   componentWillMount() {
