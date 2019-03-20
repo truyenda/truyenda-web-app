@@ -9,16 +9,14 @@ class Button extends Component {
   }
   render() {
     return (
-      <div>
         <button
           type={this.props.submit}
           onClick={() => this.clicked()}
-          className={'button ' + (this.props.type ? this.props.type : 'btn-ok')}
-          disabled={this.props.disabled?this.props.disabled:false}
+          className={'button ' + (this.props.type ? this.props.type : 'btn-ok ') + (this.props.style?' '+this.props.style:'')}
+          disabled={this.props.disabled ? this.props.disabled : false}
         >
           {this.props.display}
         </button>
-      </div>
     );
   }
 }
