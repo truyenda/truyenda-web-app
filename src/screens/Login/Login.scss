@@ -1,0 +1,67 @@
+@import "../../scss/mixins.scss";
+@import "../../scss/variables.scss";
+.login-container {
+  align-items: center;
+}
+.login-content {
+  margin: 0 auto;
+  width: 500px;
+}
+.login-form {
+  padding: 1em 1em;
+  background: white;
+  @include shadow;
+}
+
+.forgot-password {
+  display: block;
+  text-align: right;
+  margin-top: 1em;
+}
+
+#remember-pass {
+  margin-top: 0.5em;
+}
+.title-log {
+  text-align: center;
+  border-bottom: 2px;
+  border-bottom-color: black;
+  font-size: 150%;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-top: 1.5em;
+  margin-bottom: 1em;
+}
+.login-btn-container {
+  display: flex;
+  justify-content: space-between;
+}
+.p-login-btn {
+  margin-top: 1em;
+  display: inline-block;
+}
+
+.p-sign-btn {
+  margin-top: 1em;
+  display: inline-block;
+}
+
+body {
+  background-color: $gray-1;
+}
+
+@media screen and (max-width: 560px) {
+  .login-content {
+    width: 100%;
+  }
+  .login-btn-container {
+    display: block;
+    justify-content: space-between;
+  }
+  .p-login-btn {
+    width: 100%;
+  }
+  .p-sign-btn {
+    width: 100%;
+  }
+}
