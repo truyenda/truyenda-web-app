@@ -6,65 +6,67 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 module.exports = {
-    entry: './src/index.js',
-    output: {
-        path: path.resolve(__dirname, 'build'),
-        filename: 'index.bundle.js'
-    },
-    devtool: 'inline-source-map',
-    devServer: {
-        contentBase: './build',
-		hot: true,
-		open: true,
-        port: 3000
-    },
-    module:{
-        rules: [
-		{
-		  test: /\.m?js$/,
-		  exclude: /(node_modules|bower_components)/,
-		  use: {
-			loader: 'babel-loader',
-			options: {
-				  presets: ['@babel/preset-env'],
-				  plugins: ['@babel/plugin-proposal-object-rest-spread']
-				}
-			}
-        },
-       {
-           test: /\.s?css$/,
-           exclude: /(node_modules|bower_components)/,
-           use: [
-                MiniCssExtractPlugin.loader,
-                {
-                    loader: 'css-loader'
-               },
-               {
-                  loader: 'postcss-loader'  
-                },
-                {
-                    loader: 'sass-loader'
-                }
-           ],
-       },
-        {
-            test: /\.(png|jpg|gif|svg)$/,
-            use: [{
-                loader: 'file-loader'
-            } ],
-        },
+  entry: "./src/index.js",
+  output: {
+    path: path.resolve(__dirname, "build"),
+    filename: "index.bundle.js"
+  },
+  devtool: "inline-source-map",
+  devServer: {
+    contentBase: "./build",
+    hot: true,
+    open: true,
+    port: 3000,
+    historyApiFallback: true
+  },
+  module: {
+    rules: [
+      {
+        test: /\.m?js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env"],
+            plugins: ["@babel/plugin-proposal-object-rest-spread"]
+          }
+        }
+      },
+      {
+        test: /\.s?css$/,
+        exclude: /(node_modules|bower_components)/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: "css-loader"
+          },
+          {
+            loader: "postcss-loader"
+          },
+          {
+            loader: "sass-loader"
+          }
         ]
-    },
-    plugins: [
-        new MiniCssExtractPlugin({
-            filename: "[name].css",
-            chunkFilename: "[id].css"
-        }),
-		new HtmlWebpackPlugin({
-		  title: 'My App',
-		  template: path.resolve(__dirname, 'src', 'index.html'),
-		  filename: path.resolve('.', 'build', 'index.html')
-		}
-		)
+      },
+      {
+        test: /\.(png|jpg|gif|svg)$/,
+        use: [
+          {
+            loader: "file-loader"
+          }
+        ]
+      }
     ]
-}
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "[name].css",
+      chunkFilename: "[id].css"
+    }),
+    new HtmlWebpackPlugin({
+      title: "My App",
+      template: path.resolve(__dirname, "src", "index.html"),
+      filename: path.resolve(".", "build", "index.html")
+    })
+  ]
+};

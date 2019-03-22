@@ -12,7 +12,8 @@ class CheckBox extends Component {
     this.setState({
       checked: event.target.checked
     });
-    this.props.onChanged(this.props.id, event.target.checked);
+    if(this.props.onChanged)
+      this.props.onChanged(this.props.id, event.target.checked);
   }
   componentWillMount() {
     if (this.props.checked) {
