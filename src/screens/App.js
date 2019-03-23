@@ -12,7 +12,8 @@ import SelectBox from '../components/commonUI/SelectBox';
 
 import Home from './Home';
 import Login from './Login';
-import SignUp from "./SignUp/SignUp";
+import Menu from './Home/Menu'
+// import SignUp from "./SignUp/SignUp";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -38,17 +39,16 @@ class App extends Component {
     return (
       <Router>
         <div>
-          //menu component here
+          <Menu />
           <Link to="/">Home</Link>|
           <Link to="/login">Log In</Link>|
           <Link to="/signup">Sign Up</Link>
-          <br />
           // start content area
           <div className="container">
             <Switch>
               <Route path="/" exact={true} component={Home} />
               <Route path="/login" component={Login} />
-              <Route path="/signup" component={SignUp} />
+              {/* <Route path="/signup" component={SignUp} /> */}
             </Switch>
           </div>
         </div>
