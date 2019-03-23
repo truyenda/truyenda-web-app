@@ -12,7 +12,7 @@ class SelectBox extends Component {
     this.setState({
       value: event.target.value
     });
-    if(this.props.onChanged)
+    if (this.props.onChanged)
       this.props.onChanged(this.props.id, event.target.value);
   }
   componentWillMount() {
@@ -33,7 +33,7 @@ class SelectBox extends Component {
   }
   render() {
     return (
-      <div className="select">
+      <div className={"select " + (this.props.style ? this.props.style : "")}>
         <select
           className="select-text"
           value={this.state.value}
@@ -50,7 +50,10 @@ class SelectBox extends Component {
         </select>
         <span className="select-highlight" />
         <span className="select-bar" />
-        <label className="select-label">{this.props.display}</label>
+        <label className="select-label">
+          {this.props.icon ? <i className={this.props.icon} /> : ""}
+          {" " + this.props.display}
+        </label>
       </div>
     );
   }

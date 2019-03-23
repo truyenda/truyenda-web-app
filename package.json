@@ -7,7 +7,7 @@
     "start": "webpack-dev-server --mode development --colors --hot --watch --open --config ./webpack.dev.config.js",
     "build": "webpack --mode production --config ./webpack.config.js --progress",
     "deploy": "yarn build && yarn push",
-	"push": "node deploy.config.js"
+    "push": "node deploy.config.js"
   },
   "author": "hoangtrongminhduc & nhatquangta",
   "license": "MIT",

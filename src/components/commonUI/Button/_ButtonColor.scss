@@ -1,0 +1,15 @@
+@import '../../../scss/variables';
+
+$colors-map: (
+  Green $green,
+  Blue $blue,
+  Yellow $yellow,
+  Brown $brown
+);
+
+:export {
+  green: $green;
+  blue: $blue;
+  yellow: $yellow;
+  brown: $brown;
+}
