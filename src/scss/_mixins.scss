@@ -4,3 +4,11 @@
     0 2px 4px 0 rgba(0, 0, 0, 0.14);
   border-radius: 0.5%;
 }
+
+@mixin clearFix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}

@@ -1,0 +1,27 @@
+@import "../../scss/mixins";
+@import "../../scss/variables";
+
+.wrapper {
+   width: 300px;
+   height: 200px;
+   @include shadow;
+   background-color: $white;
+   padding: 20px;
+
+   .browse {
+      display: flex;
+
+      .col {
+         flex: 1 1 50%;
+      }
+   }
+   p {
+      margin-bottom: 10px;
+   }
+}
+
+.title {
+   color: $blue-4;
+   font-size: 30px;
+   padding-bottom: 30px; 
+}

@@ -1,0 +1,13 @@
+.home-wrapper {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: flex-end;
+}
+
+.browse-col {
+   flex: 0 1 20%;
+}
+
+.chart-col {
+   flex: 0 1 30%; 
+}
