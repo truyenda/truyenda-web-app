@@ -1,0 +1,69 @@
+@import '../../scss/mixins.scss';
+.signup-container{
+    align-items: center;
+}
+
+.signup-title{
+    text-align: center;
+    margin: 0 auto;
+    font-size: 150%;
+    margin-top: 2em;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-bottom: 1.5em;
+}
+
+.signup-content{
+    @include shadow;
+    background-color: white;
+    margin: 0 auto;
+    width: 600px;
+}
+
+.form-signup{
+    padding: 1.5em 1em;
+    .button{
+        margin-top: 0.75em;
+    }
+}
+
+.create-acc-btn{
+    margin-top: 1em;
+}
+
+.date-gen{
+    padding-bottom: 1em;
+    margin-bottom: 0.5em;
+    display: flex;
+    .date-picker,.gender-select{
+        width: 50%;
+    }
+    border-bottom: 1px dashed brown;
+}
+
+.create-btn-container{
+    display: flex;
+    justify-content: space-around;
+}
+
+@media screen and (max-width: 720px) {
+    .create-acc-btn{
+        width: 100%;
+    }
+    .date-gen{
+        display: block;
+        .date-picker, .gender-select{
+            width: 100%;
+        }
+    }
+    .signup-content{
+        width: 100%;
+
+    }
+    .create-btn-container{
+        display: block;
+        button{
+            width: 100%;
+        }
+    }
+}
