@@ -23,10 +23,12 @@ class TextInput extends Component {
         input: this.props.value
       });
     }
+    if (this.props.onChanged)
+      this.props.onChanged(this.props.id, this.props.value);
   }
   render() {
     return (
-      <div className="group-input">
+      <div className={"group-input " + this.props.style?this.props.style:''}>
         <label className="pure-material-textfield-filled">
           <input
             id={this.props.id}
@@ -39,7 +41,7 @@ class TextInput extends Component {
             disabled={this.props.disabled ? this.props.disabled : false}
             required={this.props.required ? this.props.required : false}
           />
-          <span>{this.props.display}</span>
+          <span>{this.props.icon?<i className={this.props.icon}/>:''}{' ' + this.props.display}</span>
         </label>
         <div className={"field-alert " + (this.props.alert ? "" : "hide")}>
           <p>{this.props.alert}</p>
