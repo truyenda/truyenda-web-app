@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./Menu.scss";
 import Button from '../../../components/commonUI/Button'
+import logo from'../../../assets/85e9f040-5369-4fdb-8463-90e3d8dabf86.png';
 
 const Menu = props => {
    return (
@@ -9,7 +10,7 @@ const Menu = props => {
             <label htmlFor="toggle">&#9776;</label>
             <input type="checkbox" id="toggle" />
             <div className="menu">
-               <a href="#" id="logo">TRUYEN<i>DA</i></a>
+               <a href="#" id="logo"><img alt="logo" src={logo}></img></a>
                <a href="#">Home</a>
                <a href="#">All</a>
                <a href="#">Latest</a>

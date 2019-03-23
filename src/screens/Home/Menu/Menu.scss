@@ -21,11 +21,14 @@ html, body {
 }
 
 #logo {
-   color: $blue-2;
-   font-size: 26px;
    float: left;
    margin-left: 30px;
-   font-weight: bold;
+
+   img {
+      width: 70px;
+      height: 70px;
+   }
+
 }
 
 .menu a {
