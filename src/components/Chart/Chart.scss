@@ -1,34 +1,29 @@
 @import "../../scss/mixins";
 @import "../../scss/variables";
 
-.chart {
-   display: flex;
-   flex-wrap: wrap;
-}
-
 .chart-item {
-   flex: 1 1 300px;
    display: flex;
    flex-wrap: wrap;
-   justify-content: space-between;
    @include shadow;
    background-color: $white;
    height: 100px;
-   width: 200px;
-   margin: 0 5px 5px;
+   width: 95%;
    padding: 10px;
-}
+   color: #444;
 
-.rank {
-   flex: 1 1 10%;
-   font-size: 40px;
+   .rank {
+      flex: 1 1 5%;
+      font-size: 40px;
+      color: $blue-5;
+   }
 
-}
+   .img {
+      width: 100%;
+      height: 100%;
+      flex: 1 1 25%;
+   }
 
-.img {
-   flex: 1 1; 
-}
-
-.content {
-   flex: 1 1 60%;
+   .content {
+      flex: 1 1 70%;
+   }
 }

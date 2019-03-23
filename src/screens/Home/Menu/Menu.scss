@@ -14,7 +14,7 @@ ul {
    // Menu Base Styles
 
    nav {
-      background-color: $blue-3;
+      background-color: $blue-5;
       border-radius: 3px;
 
       ul {
@@ -61,13 +61,13 @@ a {
 }
 
 .main-nav a {
-   color: $blue-2;
-   // font-size: 0.99em;
+   color: $blue-4;
+   font-size: 0.99em;
    font-weight: bold;
 }
 
 .main-nav a:hover {
-   color: $blue-5;
+   color: $blue;
    font-weight: bold;
 }
 

@@ -1,0 +1,10 @@
+@import '../../scss/mixins';
+@import '../../scss/variables';
+
+.main-wrapper {
+   width: 93%;
+   height: 1000px;
+   background-color: $white;
+   @include shadow;
+   padding: 20px;
+}
