@@ -17,7 +17,7 @@ class Home extends Component {
                   <Browse />  
                </div>
                <div className="chart-col">
-                  {/* <p className="chart-title">MOST POPULAR</p> */}
+                  <p className="chart-title">MOST POPULAR</p>
                   <Chart />
                   <Chart />
                   <Chart />

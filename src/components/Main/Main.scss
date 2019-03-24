@@ -1,5 +1,5 @@
-@import '../../scss/mixins';
-@import '../../scss/variables';
+@import "../../scss/mixins";
+@import "../../scss/variables";
 
 .main-wrapper {
    width: 93%;
@@ -7,4 +7,16 @@
    background-color: $white;
    @include shadow;
    padding: 20px;
+}
+
+@media only screen and (max-width: 1025px) {
+   .main-wrapper {
+      width: 96%;
+   }
+}
+
+@media only screen and (max-width: 769px) {
+   .main-wrapper {
+      width: 93%;
+   }
 }
