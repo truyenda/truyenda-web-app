@@ -1,0 +1,51 @@
+@import '../../scss/variables';
+@import '../../scss/mixins';
+
+.home-wrapper {
+   display: flex;
+   flex-wrap: wrap;
+}
+
+.main-content-col {
+   flex: 1 1 65%;
+}
+.side-content-col {
+   flex: 1 1 35%;
+   display: flex;
+   flex-direction: column;
+   flex-wrap: wrap;
+   justify-content: space-between;
+
+   .browse-col {
+      flex: 1 1 30%
+   }
+
+   .chart-col {
+      flex: 1 1 70%;
+
+      .chart-title {
+         font-weight: bold;
+         color: $blue-5;
+         margin: 10px 0;
+
+         #show-more {
+            font-size: 80%;
+         }
+      }
+   }  
+
+}
+
+@media only screen and (max-width: 1025px) {
+   .home-wrapper {
+      flex-direction: column;
+   }
+   
+   .main-content-col {
+      justify-content: center;
+   }
+
+   .browse-col {
+      margin: 25px 0;
+   }
+}
