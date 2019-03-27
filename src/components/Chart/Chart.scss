@@ -5,14 +5,18 @@
    display: flex;
    flex-wrap: wrap;
    flex-direction: column;
-   width: 97%;
+
+   &:last-child {
+      margin-bottom: 0;
+   }
 }
 
 .chart-item {
    @include shadow;
+   border-radius: 3px;
    background-color: $white;
    height: 105px;
-   width: 98.5%;
+   // width: 98.5%;
    color: #444;
    display: flex;
    align-items: stretch;
@@ -44,12 +48,13 @@
       .name-title {
          line-height: 1.2em;
          width: 80%;
-         height: 1.2em;
+         height: 2.4em;
          color: $blue-5;
          font-weight: bold;
          overflow: hidden;
          text-overflow: ellipsis;
          margin-bottom: 3%;
+         display: block;
       }
 
       .side-title {

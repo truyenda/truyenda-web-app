@@ -2,6 +2,11 @@ import React, { Component } from "react";
 import styles from "./Chart.scss";
 import demo from "../../assets/demo.jpg";
 export default class Chart extends Component {
+   
+   constructor(props) {
+      super(props);
+   }
+
    render() {
       return (
          <div className="chart-wrapper">
