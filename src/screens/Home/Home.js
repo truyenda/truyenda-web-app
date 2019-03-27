@@ -20,10 +20,7 @@ class Home extends Component {
                   <p className="chart-title">MOST POPULAR</p>
                   <Chart />
                   <Chart />
-                  {/* <Chart />
                   <Chart />
-                  <Chart />
-                  <Chart /> */}
                </div>
             </div>
          </div>
