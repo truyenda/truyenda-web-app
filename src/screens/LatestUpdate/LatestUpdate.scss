@@ -1,0 +1,9 @@
+@import '../../scss/mixins';
+@import '../../scss/variables';
+
+.latest-update-container {
+   height: 700px;
+   background-color: $white;
+   @include shadow;
+   padding: 1em;
+}

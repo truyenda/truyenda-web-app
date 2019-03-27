@@ -4,15 +4,15 @@ import styles from "./Browse.scss";
 export default class Browse extends Component {
    render() {
       return (
-         <div class="browse-wrapper">
-            <p class="title">Browse By Genres <span id="show-more"><a href="#">Show more</a></span></p>
+         <div className="browse-wrapper">
+            <p className="title">Browse By Genres <span id="show-more"><a href="#">Show more</a></span></p>
             <div className="browse">
-               <div class="col">
+               <div className="col">
                   <p>Action</p>
                   <p>Adventure</p>
                   <p>Police</p>
                </div>
-               <div class="col">
+               <div className="col">
                   <p>Demons</p>
                   <p>Drama</p>
                   <p>Comedy</p>

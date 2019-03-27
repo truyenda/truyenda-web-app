@@ -4,8 +4,8 @@
 .chart-wrapper {
    display: flex;
    flex-wrap: wrap;
-   flex-direction: column; 
-   width: 100%;
+   flex-direction: column;
+   width: 97%;
 }
 
 .chart-item {
@@ -14,14 +14,14 @@
    height: 105px;
    width: 98.5%;
    color: #444;
-   flex: 1 1;
    display: flex;
+   align-items: stretch;
    margin-bottom: 10px;
+   padding: 1.2%;
 
    .rank {
-      flex: 1 1 7%;
       font-size: 40px;
-      color: $blue-5;
+      color: $blue;
       padding: 15px;
       text-align: center;
       display: block;
@@ -29,24 +29,45 @@
    }
 
    .img {
-      flex: 0 0 13%;
-      height: 80%;
-      padding: 10px 10px 10px 0;
+      height: 90%;
+      display: block;
+      margin: auto 0;
    }
 
    .content {
       flex: 1 1 80%;
-      padding: 10px;
+      padding: 1% 2%;
+      display: flex;
+      flex-direction: column;
+      margin-left: 1%;
 
       .name-title {
+         line-height: 1.2em;
+         width: 80%;
+         height: 1.2em;
          color: $blue-5;
          font-weight: bold;
-         margin: 15px 0;
+         overflow: hidden;
+         text-overflow: ellipsis;
+         margin-bottom: 3%;
       }
 
       .side-title {
-         font-size: 80%;
-         margin-bottom: 5px;
+         height: 16%;
+         font-size: 0.8em;
+         margin-bottom: 1%;
+         overflow: hidden;
+         text-overflow: ellipsis;
+      }
+
+      .status-title {
+         height: 16%;
+         font-size: 0.6em;
+         color: $blue;
+         overflow: hidden;
+         text-overflow: ellipsis;
       }
    }
 }
+
+// @media only screen and (max-width: )

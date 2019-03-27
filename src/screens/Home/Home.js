@@ -21,9 +21,6 @@ class Home extends Component {
                   <Chart />
                   <Chart />
                   <Chart />
-                  <Chart />
-                  <Chart />
-                  <Chart />
                </div>
             </div>
          </div>
