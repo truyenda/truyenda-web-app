@@ -51,11 +51,11 @@ body {
 .break-line-block {
   width: 100%;
   text-align: center;
-  border-bottom: 2px solid #000;
+  border-bottom: 2px solid gray;
   line-height: 0.2em;
   margin: 10px 0 20px;
   span {
-    background: #fff;
+    background: $gray-1;
     padding: 0 10px;
     font-weight: bold;
     font-size:115%;
@@ -74,9 +74,12 @@ body {
   text-align: center;
   .rep-btn{
     width: 70%;
+    margin-top: 0em;
+  }
+  .mat1em{
+    margin-top: 1em;
   }
 }
-
 
 @media screen and (max-width: 560px) {
   .login-content {
