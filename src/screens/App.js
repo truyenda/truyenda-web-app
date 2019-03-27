@@ -14,19 +14,6 @@ class App extends Component {
       return (
          <div>
             <Menu />
-            <Router>
-               <div>
-                  <Link to="/">Home</Link>|<Link to="/login">Log In</Link>|
-                  <Link to="/signup">Sign Up</Link>
-                  <div className="container">
-                     <Switch>
-                        <Route path="/" exact={true} component={Home} />
-                        <Route path="/login" component={Login} />
-                        <Route path="/signup" component={SignUp} />
-                     </Switch>
-                  </div>
-               </div>
-            </Router>
             <Footer />
          </div>
       );
