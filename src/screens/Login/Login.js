@@ -5,6 +5,8 @@ import CheckBox from "../../components/commonUI/CheckBox";
 import Button from "../../components/commonUI/Button";
 import { Link } from "react-router-dom";
 import Caller from "../../utils/APICaller.js";
+import Cookies from "universal-cookie";
+
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -15,6 +17,9 @@ class Login extends Component {
       passwordMes: "",
       remember: false
     };
+  }
+  componentDidMount() {
+    document.title = 'Đăng nhập trang web';
   }
   handleSubmitForm(event) {
     event.preventDefault();
@@ -33,8 +38,8 @@ class Login extends Component {
   }
   LoginEvent() {
     this.setState({ log: "Đang đăng nhập..." });
-    if (this.ValidInput()) {
-      Caller("api/home/login", "POST", {
+    if (this.ValidInput()||true) {
+      Caller("login", "POST", {
         username: this.state.username,
         password: this.state.password,
         remember: this.state.remember
@@ -43,7 +48,15 @@ class Login extends Component {
           this.setState({
             log: "Đang nhập thành công, code return " + res.data.Code
           });
-          console.log(res);
+          const cookies = new Cookies();
+          var date = new Date();
+          let days = 4;
+          date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+          cookies.set("token", res.data.Data.Token, {
+            path: "/",
+            domain: ".truyenda.tk",
+            expires: date
+          });
         })
         .catch(err => {
           console.log(err);
@@ -70,9 +83,6 @@ class Login extends Component {
             className="login-form"
             onSubmit={event => this.handleSubmitForm(event)}
           >
-            <div className="break-line-block">
-              <span>Đăng nhập bằng tài khoản</span>
-            </div>
             <TextInput
               display="Tên đăng nhập"
               id="username"
@@ -115,10 +125,10 @@ class Login extends Component {
               </Link>
             </div>
           </form>
+          <div className="break-line-block">
+            <span>HOẶC</span>
+          </div>
           <div className="social-panel">
-            <div className="break-line-block">
-              <span>Đăng nhập bằng tài khoản liên kết</span>
-            </div>
             <div className="social-btn-container">
               <Button
                 display=" Đăng nhập với Facebook"
@@ -131,7 +141,7 @@ class Login extends Component {
                 display=" Đăng nhập với Google"
                 icon="fab fa-google"
                 type="btn-del"
-                style="rep-btn"
+                style="rep-btn mat1em"
                 onClick={() => {}}
               />
             </div>
