@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 import Home from "../Home";
 import Login from "../../Login/Login";
 import SignUp from "../../SignUp/SignUp";
+import AllManga from "../../AllManga/AllManga";
+import LatestUpdate from "../../LatestUpdate/LatestUpdate";
 const Menu = props => {
    return (
       <BrowserRouter>
@@ -16,8 +18,8 @@ const Menu = props => {
             </Link>
             <ul className="main-nav">
                <Link to="/">Home</Link>
-               <Link to="/">All Manga</Link>
-               <Link to="/">Latest Update</Link>
+               <Link to="/all-manga">All Manga</Link>
+               <Link to="/latest-update">Latest Update</Link>
                <Link to="/login">
                   <span>
                      <Button style="p-login-btn" display="Login" />
@@ -30,6 +32,8 @@ const Menu = props => {
                   <Route path="/" exact={true} component={Home} />
                   <Route path="/login" component={Login} />
                   <Route path="/signup" component={SignUp} />
+                  <Route path="/all-manga" component={AllManga} />
+                  <Route path="/latest-update" component={LatestUpdate} />
                </Switch>
             </div>
       </BrowserRouter>
