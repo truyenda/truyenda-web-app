@@ -2,8 +2,6 @@
 @import "../../scss/variables";
 
 .browse-wrapper {
-   width: 90%;
-   height: 85%;
    @include shadow;
    background-color: $white;
    padding: 20px;
