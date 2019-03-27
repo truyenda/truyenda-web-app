@@ -9,9 +9,9 @@ export default class Chart extends Component {
                <p className="rank">1</p>
                <img className="img" src={demo} />
                <div className="content">
-                  <p className="name-title">Tales of Demons and Gods</p>
-                  <p className="side-title">Mad Snail</p>
-                  <p className="side-title">ONGOING - 344 chapters</p>
+                  <p className="name-title">Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet, praesentium. Ut expedita ipsam, inventore fugiat ex saepe cum aspernatur dolor dolore modi, quis ad quos dolorum amet. Blanditiis, molestiae omnis.</p>
+                  <p className="side-title">Author C</p>
+                  <p className="status-title">ONGOING - 344</p>
                </div>
             </div>
          </div>
