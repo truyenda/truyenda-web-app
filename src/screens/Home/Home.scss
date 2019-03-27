@@ -22,7 +22,6 @@
    }
 
    .chart-col {
-
       background-color: $white;
       @include shadow;
       padding: 1em;
@@ -64,14 +63,14 @@
    }
 }
 
-.chart-container {
-   .title-type-chart p {
+.title-type-chart {
+   p {
       color: $blue;
       width: 30%;
       font-weight: bold;
       font-size: 0.8em;
       padding: 0.7em;
-      padding-left: 0; 
+      padding-left: 0;
    }
 }
 

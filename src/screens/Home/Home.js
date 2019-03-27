@@ -13,6 +13,7 @@ class Home extends Component {
                <p>Daily Chart</p>
                <Chart />
                <Chart />
+               <Chart />
             </div>
          )
       };
@@ -27,7 +28,6 @@ class Home extends Component {
             <div className="title-type-chart">
                <p>Daily Chart</p>
                <Chart />
-               <Chart />
             </div>
          );
          this.setState({
@@ -38,7 +38,6 @@ class Home extends Component {
             let weeklyChart = (
                <div className="title-type-chart">
                   <p>Weekly Chart</p>
-                  <Chart />
                   <Chart />
                   <Chart />
                </div>
