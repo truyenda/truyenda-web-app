@@ -6,7 +6,7 @@ import { createStore, compose, applyMiddleware } from "redux";
 import AppReducer from "./reducers/index.js";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
-
+require('./assets/favicon.ico');
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(
