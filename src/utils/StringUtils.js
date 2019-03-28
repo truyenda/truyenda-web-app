@@ -27,8 +27,8 @@ module.exports.validateDate = date => {
 };
 
 module.exports.validUsername = username => {
-  var re = /^(?=.{8,24}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/;
-  return re.test(String(username));
+  var re = '^(?=.{8,24}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$';
+  return username.match(re);
 };
 
 module.exports.getCurrentDate = () => {
