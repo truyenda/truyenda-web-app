@@ -8,15 +8,22 @@ import Menu from "./Home/Menu";
 import Footer from "./Home/Footer/Footer";
 import SignUp from "./SignUp/SignUp";
 class App extends Component {
-   componentWillReceiveProps() {}
-   render() {
-      return (
-         <div>
-            <Menu />
-            <Footer />
-         </div>
-      );
-   }
+  componentWillReceiveProps() {}
+  render() {
+    return (
+      <Router>
+          <Menu />
+          <div className="container">
+            <Switch>
+              <Route path="/" exact={true} component={Home} />
+              <Route path="/login" component={Login} />
+              <Route path="/signup" component={SignUp} />
+            </Switch>
+          </div>
+          <Footer/>
+      </Router>
+    );
+  }
 }
 
 export default App;
