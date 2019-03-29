@@ -3,7 +3,7 @@ import "./Login.scss";
 import TextInput from "../../components/commonUI/TextInput";
 import CheckBox from "../../components/commonUI/CheckBox";
 import Button from "../../components/commonUI/Button";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import Caller from "../../utils/APICaller.js";
 import Cookies from "universal-cookie";
 
@@ -11,6 +11,7 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLogned: false,
       username: "",
       usernameMes: "",
       password: "",
@@ -18,8 +19,22 @@ class Login extends Component {
       remember: false
     };
   }
+
+  componentWillMount() {
+    var cookies = new Cookies();
+    var isLogined = false;
+    if (cookies.get("token")) {
+      isLogined = true;
+    } else {
+      isLogined = false;
+    }
+    this.setState({
+      isLogined: isLogined
+    });
+  }
+
   componentDidMount() {
-    document.title = 'Đăng nhập trang web';
+    document.title = "Đăng nhập trang web";
   }
   handleSubmitForm(event) {
     event.preventDefault();
@@ -38,7 +53,7 @@ class Login extends Component {
   }
   LoginEvent() {
     this.setState({ log: "Đang đăng nhập..." });
-    if (this.ValidInput()||true) {
+    if (this.ValidInput()) {
       Caller("login", "POST", {
         username: this.state.username,
         password: this.state.password,
@@ -46,12 +61,13 @@ class Login extends Component {
       })
         .then(res => {
           this.setState({
-            log: "Đang nhập thành công, code return " + res.data.Code
+            log: "Đang nhập thành công, code return " + res.data.Code,
+            isLogined: true
           });
           const cookies = new Cookies();
           var date = new Date();
           let days = 4;
-          date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+          date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
           cookies.set("token", res.data.Data.Token, {
             path: "/",
             domain: ".truyenda.tk",
@@ -75,6 +91,10 @@ class Login extends Component {
     }
   }
   render() {
+    var { isLogined } = this.state;
+    if (isLogined) {
+      return <Redirect to="/" />;
+    }
     return (
       <div className="login-container">
         <div className="title-log">Đăng nhập</div>
