@@ -1,0 +1,46 @@
+@import '../../../scss/variables';
+@import '../../../scss/mixins';
+
+.toast-icon{
+    display: inline-block;
+    height: 100%;
+    align-self: center;
+    margin-right: 0.25em;
+}
+
+.toast-content{
+    width: 100%;
+    p{
+        text-align: left;
+        color:$dark-gray;
+    }
+    h2{
+        color: $dark-gray-2;
+        text-align: left;
+    }
+    span{
+        color: $dark-gray-2;
+    }
+}
+
+.btoast{
+    display: flex;
+    flex-direction: row;
+}
+.progress-toast{
+    background: $gray-1;
+}
+.green-toast{
+    color: $green;
+    border-left: 5px solid $green;
+}
+
+.yellow-toast{
+    color: $yellow;
+    border-left: 5px solid $yellow;
+}
+
+.red-toast{
+    color: $red;
+    border-left: 5px solid $red;
+}
