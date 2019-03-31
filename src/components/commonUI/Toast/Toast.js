@@ -3,14 +3,14 @@ import { toast } from "react-toastify";
 import "./Toast.scss";
 
 export default {
-  success(message, option = {}) {
+  success(message, title='Thành công', option = {}) {
     return toast(
       <div className="btoast">
         <div className="toast-icon">
           <i className="fas fa-check-circle fa-2x" />
         </div>
         <div className="toast-content">
-          <h2>Thành công</h2>
+          <h2>{title}</h2>
           <p>{message}</p>
         </div>
       </div>,
@@ -22,14 +22,14 @@ export default {
       }
     );
     },
-    alert(message, option = {}) {
+    notify(message, title='Thông báo', option = {}) {
         return toast(
           <div className="btoast">
             <div className="toast-icon">
               <i className="fas fa-bell fa-2x" />
             </div>
             <div className="toast-content">
-              <h2>Thông báo</h2>
+              <h2>{title}</h2>
               <p>{message}</p>
             </div>
           </div>,
@@ -41,14 +41,14 @@ export default {
           }
         );  
     },
-    error(message, option = {}) {
+    error(message, title='Lỗi', option = {}) {
         return toast(
           <div className="btoast">
             <div className="toast-icon">
               <i className="fas fa-exclamation-circle fa-2x" />
             </div>
             <div className="toast-content">
-              <h2>Lỗi</h2>
+              <h2>{title}</h2>
               <p>{message}</p>
             </div>
           </div>,
