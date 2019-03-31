@@ -8,6 +8,7 @@ import Menu from "./Home/Menu";
 import Footer from "./Home/Footer/Footer";
 import SignUp from "./SignUp/SignUp";
 import NotFound from "./Error/NotFound";
+import { ToastContainer } from "react-toastify";
 class App extends Component {
   componentWillReceiveProps() {}
   render() {
@@ -23,6 +24,7 @@ class App extends Component {
           </Switch>
         </div>
         <Footer />
+        <ToastContainer/>
       </Router>
     );
   }
