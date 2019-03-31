@@ -6,7 +6,7 @@ import Button from "../../components/commonUI/Button";
 import { Link, Redirect } from "react-router-dom";
 import Caller from "../../utils/APICaller.js";
 import Cookies from "universal-cookie";
-
+import Toast from '../../components/commonUI/Toast';
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -60,25 +60,43 @@ class Login extends Component {
         remember: this.state.remember
       })
         .then(res => {
-          this.setState({
-            log: "Đang nhập thành công, code return " + res.data.Code,
-            isLogined: true
-          });
-          const cookies = new Cookies();
-          var date = new Date();
-          let days = 4;
-          date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-          cookies.set("token", res.data.Data.Token, {
-            path: "/",
-            domain: ".truyenda.tk",
-            expires: date
-          });
+          this.solveResponse(res.data);
         })
         .catch(err => {
           console.log(err);
+          Toast.error('Có lỗi trong quá trình kết nối');
           this.setState({ log: "error" });
         });
     }
+  }
+  solveResponse(res) {
+    if (res.Code && res.Code === 200) {
+      Toast.success('Đăng nhập thành công', 'Thành công', {
+        onClose: ({ cls }) => {
+          this.setState({
+            log: "Đang nhập thành công, code return " + res.Code,
+            isLogined: true
+          });
+        }
+      });
+      this.setCookie(res.Data.Token)
+    } else {
+      if (res.Code < 300)
+        Toast.error('Tài khoản đăng nhập không đúng', 'Error ' + res.Code);
+      else
+        Toast.error(res.MsgEror);
+    }
+  }
+  setCookie(token) {
+    const cookies = new Cookies();
+    var date = new Date();
+    let days = 4;
+    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+    cookies.set("token", token, {
+      path: "/",
+      domain: ".truyenda.tk",
+      expires: date
+    });
   }
   setStateForm(key, value) {
     this.setState({
