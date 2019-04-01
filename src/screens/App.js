@@ -9,6 +9,7 @@ import Footer from "./Home/Footer/Footer";
 import SignUp from "./SignUp/SignUp";
 import NotFound from "./Error/NotFound";
 import { ToastContainer } from "react-toastify";
+import { sessionService } from "redux-react-session";
 class App extends Component {
   componentWillReceiveProps() {}
   render() {
@@ -19,12 +20,16 @@ class App extends Component {
           <Switch>
             <Route path="/" exact={true} component={Home} />
             <Route path="/login" component={Login} />
-            <Route path="/signup" component={SignUp} />
+            <Route
+              onEnter={sessionService.checkAuth}
+              path="/signup"
+              component={SignUp}
+            />
             <Route component={NotFound} />
           </Switch>
         </div>
         <Footer />
-        <ToastContainer/>
+        <ToastContainer />
       </Router>
     );
   }
