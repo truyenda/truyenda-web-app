@@ -72,7 +72,7 @@ class Login extends Component {
   solveResponse(res) {
     if (res.Code && res.Code === 200) {
       Toast.success('Đăng nhập thành công', 'Thành công', {
-        onClose: ({ cls }) => {
+        onOpen: ({ cls }) => {
           this.setState({
             log: "Đang nhập thành công, code return " + res.Code,
             isLogined: true
