@@ -4,9 +4,10 @@ import TextInput from "../../components/commonUI/TextInput";
 import CheckBox from "../../components/commonUI/CheckBox";
 import Button from "../../components/commonUI/Button";
 import { Link, Redirect } from "react-router-dom";
-import Caller from "../../utils/APICaller.js";
 import Cookies from "universal-cookie";
-import Toast from '../../components/commonUI/Toast';
+import * as SessionAction from '../../actions/SessionActions.js';
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -32,10 +33,10 @@ class Login extends Component {
       isLogined: isLogined
     });
   }
-
   componentDidMount() {
     document.title = "Đăng nhập trang web";
   }
+
   handleSubmitForm(event) {
     event.preventDefault();
   }
@@ -54,49 +55,10 @@ class Login extends Component {
   LoginEvent() {
     this.setState({ log: "Đang đăng nhập..." });
     if (this.ValidInput()) {
-      Caller("login", "POST", {
-        username: this.state.username,
-        password: this.state.password,
-        remember: this.state.remember
-      })
-        .then(res => {
-          this.solveResponse(res.data);
-        })
-        .catch(err => {
-          console.log(err);
-          Toast.error('Có lỗi trong quá trình kết nối');
-          this.setState({ log: "error" });
-        });
+      const { login } = this.props.actions;
+      const user = { username: this.state.username, password: this.state.password, remember: this.state.remember };
+      login(user, this.props.history);
     }
-  }
-  solveResponse(res) {
-    if (res.Code && res.Code === 200) {
-      Toast.success('Đăng nhập thành công', 'Thành công', {
-        onOpen: ({ cls }) => {
-          this.setState({
-            log: "Đang nhập thành công, code return " + res.Code,
-            isLogined: true
-          });
-        }
-      });
-      this.setCookie(res.Data.Token)
-    } else {
-      if (res.Code < 300)
-        Toast.error('Tài khoản đăng nhập không đúng', 'Error ' + res.Code);
-      else
-        Toast.error(res.MsgEror);
-    }
-  }
-  setCookie(token) {
-    const cookies = new Cookies();
-    var date = new Date();
-    let days = 4;
-    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-    cookies.set("token", token, {
-      path: "/",
-      domain: ".truyenda.tk",
-      expires: date
-    });
   }
   setStateForm(key, value) {
     this.setState({
@@ -190,4 +152,13 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapDispatch = dispatch => {
+  return {
+    actions: bindActionCreators(SessionAction, dispatch)
+  };
+};
+
+export default connect(
+  null,
+  mapDispatch
+)(Login);
