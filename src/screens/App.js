@@ -10,6 +10,7 @@ import SignUp from "./SignUp/SignUp";
 import NotFound from "./Error/NotFound";
 import { ToastContainer } from "react-toastify";
 import { sessionService } from "redux-react-session";
+import { TinyButton as ScrollUpButton } from "react-scroll-up-button";
 class App extends Component {
   componentWillReceiveProps() {}
   render() {
@@ -30,6 +31,7 @@ class App extends Component {
         </div>
         <Footer />
         <ToastContainer />
+        <ScrollUpButton EasingType="easeOutQuint" />
       </Router>
     );
   }
