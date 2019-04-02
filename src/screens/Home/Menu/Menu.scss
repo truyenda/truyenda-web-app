@@ -121,3 +121,24 @@ a {
    }
 }
 
+.user-avatar{
+   height: 45px;
+   width: 45px;
+   @include shadow;
+   border-radius: 50%;
+}
+
+.dropdown{
+   display: none;
+   position: absolute;
+   min-width: 200px;
+   min-height: 50px;
+   right: 75px;
+   background: white;
+   border-radius: 5px;
+   @include shadow;
+}
+
+.user-profile-icon:hover>div{
+   display: block;
+}

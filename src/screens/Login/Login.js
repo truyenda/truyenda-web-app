@@ -3,14 +3,16 @@ import "./Login.scss";
 import TextInput from "../../components/commonUI/TextInput";
 import CheckBox from "../../components/commonUI/CheckBox";
 import Button from "../../components/commonUI/Button";
-import { Link } from "react-router-dom";
-import Caller from "../../utils/APICaller.js";
+import { Link, Redirect } from "react-router-dom";
 import Cookies from "universal-cookie";
-
+import * as SessionAction from '../../actions/SessionActions.js';
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLogned: false,
       username: "",
       usernameMes: "",
       password: "",
@@ -18,9 +20,23 @@ class Login extends Component {
       remember: false
     };
   }
-  componentDidMount() {
-    document.title = 'Đăng nhập trang web';
+
+  componentWillMount() {
+    var cookies = new Cookies();
+    var isLogined = false;
+    if (cookies.get("token")) {
+      isLogined = true;
+    } else {
+      isLogined = false;
+    }
+    this.setState({
+      isLogined: isLogined
+    });
   }
+  componentDidMount() {
+    document.title = "Đăng nhập trang web";
+  }
+
   handleSubmitForm(event) {
     event.preventDefault();
   }
@@ -38,30 +54,10 @@ class Login extends Component {
   }
   LoginEvent() {
     this.setState({ log: "Đang đăng nhập..." });
-    if (this.ValidInput()||true) {
-      Caller("login", "POST", {
-        username: this.state.username,
-        password: this.state.password,
-        remember: this.state.remember
-      })
-        .then(res => {
-          this.setState({
-            log: "Đang nhập thành công, code return " + res.data.Code
-          });
-          const cookies = new Cookies();
-          var date = new Date();
-          let days = 4;
-          date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-          cookies.set("token", res.data.Data.Token, {
-            path: "/",
-            domain: ".truyenda.tk",
-            expires: date
-          });
-        })
-        .catch(err => {
-          console.log(err);
-          this.setState({ log: "error" });
-        });
+    if (this.ValidInput()) {
+      const { login } = this.props.actions;
+      const user = { username: this.state.username, password: this.state.password, remember: this.state.remember };
+      login(user, this.props.history);
     }
   }
   setStateForm(key, value) {
@@ -75,6 +71,10 @@ class Login extends Component {
     }
   }
   render() {
+    var { isLogined } = this.state;
+    if (isLogined) {
+      return <Redirect to="/" />;
+    }
     return (
       <div className="login-container">
         <div className="title-log">Đăng nhập</div>
@@ -152,4 +152,13 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapDispatch = dispatch => {
+  return {
+    actions: bindActionCreators(SessionAction, dispatch)
+  };
+};
+
+export default connect(
+  null,
+  mapDispatch
+)(Login);

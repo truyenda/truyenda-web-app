@@ -13,6 +13,7 @@ module.exports = {
   },
   devtool: "inline-source-map",
   devServer: {
+    host: 'app.truyenda.tk',
     contentBase: "./build",
     hot: true,
     open: true,
