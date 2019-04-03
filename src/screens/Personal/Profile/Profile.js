@@ -44,36 +44,38 @@ function Profile(props) {
         <aside />
       </section>
       <div className="profile-container">
-        <h1>Thông tin cá nhân</h1>
-        <div className="profile-form">
-          <TextInput display="Email" value="admin@mail.com" disabled={true} />
-          <TextInput display="Tài khoản" value="admin" disabled={true} />
-          <TextInput display="Tên hiển thị" />
-          <SelectBox
-            id="gender"
-            display="Giới tính"
-            data={[[1, "Nam"], [0, "Nữ"]]}
-            onChanged={(key, value) => {}}
-          />
-          <TextInput display="Ngày sinh" type="date" />
-          <div className='btn-info-container'>
-          <Button display="Lưu" />
-          
+        <div className="content-space">
+          <h1>Thông tin cá nhân</h1>
+          <div className="profile-form">
+            <TextInput display="Email" value="admin@mail.com" disabled={true} />
+            <TextInput display="Tài khoản" value="admin" disabled={true} />
+            <TextInput display="Tên hiển thị" />
+            <SelectBox
+              id="gender"
+              display="Giới tính"
+              data={[[1, "Nam"], [0, "Nữ"]]}
+              onChanged={(key, value) => {}}
+            />
+            <TextInput display="Ngày sinh" type="date" />
+            <div className="btn-info-container">
+              <Button display="Lưu" />
+            </div>
           </div>
         </div>
       </div>
       <div className="profile-container password-con">
-        <h1>Mật khẩu tài khoản</h1>
-        <TextInput display="Mật khẩu cũ" type="password" />
-        <TextInput display="Mật khẩu mới" type="password" />
-        <TextInput display="Xác nhận mật khẩu mới" type="password" />
-        <div className='btn-info-container'>
-        <Button display="Đổi mật khẩu" />
-        
+        <div className="content-space">
+          <h1>Mật khẩu tài khoản</h1>
+          <TextInput display="Mật khẩu cũ" type="password" />
+          <TextInput display="Mật khẩu mới" type="password" />
+          <TextInput display="Xác nhận mật khẩu mới" type="password" />
+          <div className="btn-info-container">
+            <Button display="Đổi mật khẩu" />
+          </div>
         </div>
       </div>
-      <div className='btn-logout-container'>
-        <Button display="Đăng xuất" type='btn-cancel' style='btn-logout'/>
+      <div className="btn-logout-container">
+        <Button display="Đăng xuất" type="btn-cancel" style="btn-logout" />
       </div>
     </div>
   );
