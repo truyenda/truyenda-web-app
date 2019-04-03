@@ -38,7 +38,7 @@ class Menu extends Component {
           <Link to="/latest-update">Mới nhất</Link>
           {this.props.user.Id ? (
             <div className="user-profile-icon">
-              <Link to="account">
+              <Link to="/personal/profile">
                 <img
                   alt={this.props.user.Ten}
                   className="user-avatar"
@@ -46,15 +46,19 @@ class Menu extends Component {
                 />
               </Link>
               <div className="dropdown">
-                <Link to="/account">Tài khoản</Link>
-                <Link to="/mycomic">Truyện của tôi</Link>
+                <Link to="/personal/profile">
+                  <i className="fas fa-user-circle" /> Tài khoản
+                </Link>
+                <Link to="/personal/comics">
+                  <i className="fas fa-book-reader" /> Truyện của tôi
+                </Link>
                 <Link
                   to="/"
                   onClick={() => {
                     this.LogoutEvent();
                   }}
                 >
-                  Đăng xuất
+                  <i className="fas fa-sign-out-alt" /> Đăng xuất
                 </Link>
               </div>
             </div>

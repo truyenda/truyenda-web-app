@@ -1,0 +1,99 @@
+@import "../../../scss/variables";
+@import "../../../scss/mixins";
+.profile-container {
+  margin: auto;
+  background: white;
+  @include shadow;
+  width: 500px;
+  .content-space{
+    padding: 1em;
+  }
+  h1 {
+    display: block;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 0.5em;
+  }
+}
+.avatar-container {
+  display: flex;
+  margin-bottom: 1em;
+}
+.password-con {
+  margin-top: 2em;
+}
+.dropzone {
+  margin: auto;
+}
+.photo-wrapper {
+  margin: auto;
+  position: relative;
+  img {
+    margin: auto;
+    width: 80px;
+    height: 80px;
+  }
+}
+
+.overlay-avatar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  transition: 0.3s ease;
+  background-color: $dark-gray-1;
+  cursor: pointer;
+}
+
+.photo-wrapper:hover .overlay-avatar {
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+  border-radius: 50%;
+}
+
+.icon {
+  color: white;
+  font-size: 40px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.fa-user:hover {
+  color: #eee;
+}
+
+.btn-info-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-top: 0.5em;
+}
+
+.btn-logout-container {
+  text-align: center;
+  margin-top: 1em;
+}
+
+.btn-logout {
+  margin: auto;
+}
+
+@media screen and (max-width: 560px) {
+  .profile-container {
+    width: 100%;
+  }
+  .btn-info-container {
+    button {
+      width: 100%;
+    }
+  }
+  .btn-logout {
+    width: 100%;
+  }
+}

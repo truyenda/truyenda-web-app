@@ -99,6 +99,14 @@ a {
          max-width: 1150px;
       }
    }
+   .user-profile-icon{
+   // display: flex;
+   position: relative;
+}
+.user-profile-icon:hover>div{
+   display: block;
+   
+}
 }
 
 @media (min-width: 1025px) {
@@ -131,14 +139,10 @@ a {
 .dropdown{
    display: none;
    position: absolute;
-   min-width: 200px;
+   min-width: 180px;
    min-height: 50px;
-   right: 75px;
+   // right: 75px;
    background: white;
    border-radius: 5px;
    @include shadow;
-}
-
-.user-profile-icon:hover>div{
-   display: block;
 }

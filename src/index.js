@@ -7,6 +7,7 @@ import AppReducer from "./reducers/index.js";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import { sessionService } from 'redux-react-session';
+import Caller from './utils/APICaller.js';
 require('./assets/favicon.ico');
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -25,6 +26,11 @@ const options = {
   driver: "LOCALSTORAGE",
   validateSession
 };
+Caller('/', 'GET', {}).then(res => {
+  
+}).catch(err => {
+  console.log('Lỗi kết nối');
+})
 sessionService.initSessionService(store, options);
 ReactDOM.render(
   <Provider store = {store}>

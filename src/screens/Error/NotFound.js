@@ -4,6 +4,9 @@ import ErrorImg from "../../assets/404.png";
 import Button from "../../components/commonUI/Button";
 import {Link} from 'react-router-dom';
 class NotFound extends Component {
+  componentDidMount() {
+    document.title='Không tìm thấy trang yêu cầu'
+  }
   render() {
     return (
       <div className="error-container">

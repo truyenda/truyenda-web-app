@@ -20,6 +20,9 @@ class Home extends Component {
 
       this.handleClick = this.handleClick.bind(this);
    }
+   componentDidMount() {
+      document.title = 'Trang chủ'
+   }
 
    handleClick(event) {
       const type = event.target.id;
