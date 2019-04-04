@@ -27,7 +27,8 @@ class SelectBox extends Component {
         this.setState({
           value: this.props.data[0][0]
         });
-        this.props.onChanged(this.props.id, this.props.data[0][0]);
+        if(this.props.onChanged)
+          this.props.onChanged(this.props.id, this.props.data[0][0]);
       }
     }
   }

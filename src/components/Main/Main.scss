@@ -2,7 +2,7 @@
 @import "../../scss/variables";
 
 .main-wrapper {
-   width: 93%;
+   // width: 93%;
    height: 1000px;
    background-color: $white;
    @include shadow;
@@ -11,12 +11,12 @@
 
 @media only screen and (max-width: 1025px) {
    .main-wrapper {
-      width: 96%;
+      // width: 96%;
    }
 }
 
 @media only screen and (max-width: 769px) {
    .main-wrapper {
-      width: 93%;
+      // width: 93%;
    }
 }
