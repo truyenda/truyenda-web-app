@@ -12,7 +12,6 @@ import { ToastContainer } from "react-toastify";
 import { sessionService } from "redux-react-session";
 import { TinyButton as ScrollUpButton } from "react-scroll-up-button";
 import Personal from "./Personal";
-import LatestUpdate from "./LatestUpdate/LatestUpdate";
 class App extends Component {
   
   render() {
@@ -29,7 +28,6 @@ class App extends Component {
               component={SignUp}
             />
             <Route path='/personal' component={Personal}/>
-            <Route path="/latest-update" component={LatestUpdate} />
             <Route component={NotFound} />
           </Switch>
         </div>
