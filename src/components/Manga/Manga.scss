@@ -1,0 +1,41 @@
+@import "../../scss/mixins";
+@import "../../scss/variables";
+
+.main-wrappers {
+   // width: 93%;
+   height: 1000px;
+   background-color: $white;
+   @include shadow;
+   padding: 0;
+   .alternative_cls:nth-child(even){
+      background: $white;
+   }
+   .alternative_cls:nth-child(odd){
+      background: $dark-gray-listmanga;
+   }
+   ._3kDZW {
+      color: rgba(0,0,0,.87);
+      font-size: 36px;
+      font-size: 2.25rem;
+      font-weight: 500;
+      line-height: 42px;
+      margin-bottom: 20px;
+   }
+   ._3_XVY{
+      margin-bottom: 20px;
+      padding-left: 20px;
+   }
+   ._3X8sC {
+      display: flex;
+      font-size: 13px;
+      height: 25px;
+      color: rgba(0,0,0,.54);
+      .qjYVyl {
+         padding-left: 20px;
+         width: 45%; 
+      }
+      .qjYVym {
+         width: 38%;
+      }
+   }
+}
