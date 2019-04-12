@@ -1,0 +1,12 @@
+@import '../../../scss/mixins';
+@import '../../../scss/variables';
+
+.comic-cover-picture-container {
+   width: 100%;
+   height: 500px;
+   @include shadow;
+   .img {
+      width: 100%;
+      height: 450px;
+   }
+}

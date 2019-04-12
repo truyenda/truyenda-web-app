@@ -1,3 +1,34 @@
+import React, { Component } from "react";
+import ComicCoverPicture from "./ComicCoverPicture/ComicCoverPicture";
+export default class ComicDetails extends Component {
+   constructor(props) {
+      super(props);
+      this.state = {
+         comicDetails: {
+               comicTitle: 'Tales of Demons and Gods',
+               comicAuthors: 'Mad Snail, Jiang Ruotai',
+               comicStatus: 'Ongoing',
+               comicCoverPicture: 'https://via.placeholder.com/1500x500?text=Update%20soon'
+         }
+      };
+   }
+
+   render() {
+      return (
+         <div className="comic-detail-container">
+            <ComicCoverPicture details={this.state.comicDetails}/>
+            <p>2911</p>
+            {/* <ComicOvervire />
+        <ComicSummary />
+        <ComicDescription />
+        <ComicStats />
+        <ComicAuthors />
+        <ComicChapters /> */}
+         </div>
+      );
+   }
+}
+
 /*
 
 TASK
