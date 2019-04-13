@@ -1,8 +1,8 @@
 @import '../../../scss/mixins';
 @import '../../../scss/variables';
 
-.comic-authors-container {
-   height: 200px;
+.comic-chapters-container {
+   height: 300px;
    @include shadow;
    background-color: $white;
    padding: 20px;

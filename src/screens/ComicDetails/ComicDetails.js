@@ -5,6 +5,7 @@ import ComicOverview from "./ComicOverview/ComicOverview";
 import ComicSummary from "./ComicSummary/ComicSummary";
 import ComicDescription from "./ComicDescription/ComicDescription";
 import ComicAuthors from "./ComicAuthors/ComicAuthors";
+import ComicChapers from "./ComicChapters/ComicChapters";
 export default class ComicDetails extends Component {
    constructor(props) {
       super(props);
@@ -17,25 +18,14 @@ export default class ComicDetails extends Component {
       const { comic } = this.state.comic;
       return (
          <div className="comic-detail-container">
-            <ComicCoverPicture 
-               details = {comic.comicCoverPicture} 
-            />
-            <ComicOverview 
-               details = {comic}
-            />
-            <ComicSummary 
-               details = {comic}
-            />
-            <ComicDescription 
-               details = {comic}
-            />
-            <ComicAuthors 
-               details = {comic.comicAuthors}
-            />
-            {/* 
-        
-        <ComicStats />
-        <ComicChapters /> */}
+            <ComicCoverPicture details={comic.comicCoverPicture} />
+            <ComicOverview details={comic} />
+            <ComicSummary details={comic} />
+            <ComicDescription details={comic} />
+            <ComicAuthors details={comic.comicAuthors} />
+            <ComicChapers details={comic} />
+
+            {/* <ComicStats /> */}
          </div>
       );
    }

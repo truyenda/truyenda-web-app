@@ -53,7 +53,7 @@ export default class Chart extends Component {
 
    render() {
       const { comics } = this.state;
-      const listComics = comics.map(comic => (
+      const listComics = comics.map(comic => (  
          <Link
             to={{
                pathname: "/comics/" + comic.comicId,
