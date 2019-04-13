@@ -20,11 +20,11 @@ export default class ComicDetails extends Component {
          <div className="comic-detail-container">
             <ComicCoverPicture details={comic.comicCoverPicture} />
             <ComicOverview details={comic} />
-            <div className="comic-detail-col">
+            <div className="comic-detail-row">
                <ComicSummary details={comic} />
                <ComicDescription details={comic} />
             </div>
-            <ComicAuthors details={comic.comicAuthors} />
+            <ComicAuthors details={comic} />
             <ComicChapers details={comic} />
 
             {/* <ComicStats /> */}
