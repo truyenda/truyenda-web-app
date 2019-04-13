@@ -12,10 +12,19 @@ export default class ComicOverview extends Component {
       const { comic } = this.state;
       return (
          <div className="comic-overview-container">
-            <h2>Overview</h2>
-            <p>{comic.comicTitle}</p>
-            <p>{comic.comicStatus}</p>
-            <p>{comic.comicAuthors}</p>
+            <div className="comic-overview-picture">
+               <img src="https://img.webnovel.com/bookcover/8094015805004305/300/300.jpg?coverUpdateTime=1548301512855" alt={comic.comicTitle}/>
+            </div>
+            <div className="comic-overview-content">
+               <p className="comic-overview-title">{comic.comicTitle}</p>
+               <p className="comic-overview-subtitle">{comic.comicAuthors}</p>
+               <p className="comic-overview-subtitle">{comic.comicStatus}</p>
+            </div>
+            <div className="comic-overview-bar">
+               <p className="comic-overview-bar-item">Resume</p>
+               <p className="comic-overview-bar-item">Chapters</p>
+               <p className="comic-overview-bar-item">Favorite</p>
+            </div>
          </div>
       );
    }

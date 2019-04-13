@@ -6,6 +6,13 @@ export default class Chart extends Component {
    constructor(props) {
       super(props);
       this.state = {
+         // avatars: [
+         //    "https://mir-s3-cdn-cf.behance.net/project_modules/disp/ce54bf11889067.562541ef7cde4.png",
+         //    "http://www.sclance.com/pngs/avatar-icon-png/avatar_icon_png_70847.jpg",
+         //    "https://ya-webdesign.com/images/girl-avatar-png-19.png",
+         //    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYm-KcyvHy3PDkmh0V9KzkUk26255h0RwthshiaoanTnfH2B_IRg",
+         //    "https://mir-s3-cdn-cf.behance.net/project_modules/disp/a9475211889067.562541caf0859.png"
+         // ],
          comics: [
             {
                comicId: 1,
@@ -13,7 +20,8 @@ export default class Chart extends Component {
                comicAuthors: "Mad Snail, Jiang Ruotai",
                comicStatus: "Ongoing",
                comicCoverPicture:
-                  "https://via.placeholder.com/1500x500?text=Cover%20Picture"
+                  "https://f01.mrcdn.info/file/mrportal/i/1/e/6/Al.4h0QHNU9.jpg",
+               comicAuthorAvatar: "https://mir-s3-cdn-cf.behance.net/project_modules/disp/ce54bf11889067.562541ef7cde4.png"
             },
             {
                comicId: 2,
@@ -21,7 +29,8 @@ export default class Chart extends Component {
                comicAuthors: "Mad Snail, Jiang Ruotai",
                comicStatus: "Ongoing",
                comicCoverPicture:
-                  "https://via.placeholder.com/1500x500?text=Cover%20Picture"
+                  "https://f01.mrcdn.info/file/mrportal/i/1/e/6/Al.4h0QHNU9.jpg",
+               comicAuthorAvatar: "http://www.sclance.com/pngs/avatar-icon-png/avatar_icon_png_70847.jpg"
             },
             {
                comicId: 3,
@@ -29,7 +38,8 @@ export default class Chart extends Component {
                comicAuthors: "Mad Snail, Jiang Ruotai",
                comicStatus: "Ongoing",
                comicCoverPicture:
-                  `https://via.placeholder.com/1500x500?text=Cover%20Picture`
+                  `https://f01.mrcdn.info/file/mrportal/i/1/e/6/Al.4h0QHNU9.jpg`,
+               comicAuthorAvatar: "https://ya-webdesign.com/images/girl-avatar-png-19.png"
             },
             {
                comicId: 4,
@@ -37,7 +47,8 @@ export default class Chart extends Component {
                comicAuthors: "Mad Snail, Jiang Ruotai",
                comicStatus: "Ongoing",
                comicCoverPicture:
-                  "https://via.placeholder.com/1500x500?text=Cover%20Picture"
+                  "https://f01.mrcdn.info/file/mrportal/i/1/e/6/Al.4h0QHNU9.jpg",
+               comicAuthorAvatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYm-KcyvHy3PDkmh0V9KzkUk26255h0RwthshiaoanTnfH2B_IRg"
             },
             {
                comicId: 5,
@@ -45,7 +56,8 @@ export default class Chart extends Component {
                comicAuthors: "Mad Snail, Jiang Ruotai",
                comicStatus: "Ongoing",
                comicCoverPicture:
-                  "https://via.placeholder.com/1500x500?text=Cover%20Picture"
+                  "https://f01.mrcdn.info/file/mrportal/i/1/e/6/Al.4h0QHNU9.jpg",
+               comicAuthorAvatar: "https://mir-s3-cdn-cf.behance.net/project_modules/disp/a9475211889067.562541caf0859.png"
             }
          ]
       };

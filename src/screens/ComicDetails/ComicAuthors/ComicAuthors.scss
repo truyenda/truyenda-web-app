@@ -2,14 +2,22 @@
 @import '../../../scss/variables';
 
 .comic-authors-container {
-   height: 200px;
+   height: auto;
    @include shadow;
    background-color: $white;
    padding: 20px;
    margin-top: 5px;
-
+   
    h2 {
       color: $blue;
       margin-bottom: 5px;
    }
+
+   .comic-list-authors {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: left;
+   }
+
 }

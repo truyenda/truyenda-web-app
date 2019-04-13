@@ -1,6 +1,15 @@
 import React, { Component } from 'react'
 import styles from './ComicChapters.scss';
 
+/*
+TODO: 
+  1. Add attribute comicNumberOfChapters
+  2. Render as list 
+  3. Add attribute comicGenres
+  4. Render as tag
+  5. Combine Author component into Description 
+
+*/
 export default class ComicChapters extends Component {
   render() {
     return (
