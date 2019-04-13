@@ -1,0 +1,15 @@
+@import '../../../scss/mixins';
+@import '../../../scss/variables';
+
+.comic-chapters-container {
+   height: 300px;
+   @include shadow;
+   background-color: $white;
+   padding: 20px;
+   margin-top: 5px;
+
+   h2 {
+      color: $blue;
+      margin-bottom: 5px;
+   }
+}

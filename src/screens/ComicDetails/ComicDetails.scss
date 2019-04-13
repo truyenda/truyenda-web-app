@@ -1,0 +1,9 @@
+@import '../../scss/mixins';
+@import '../../scss/variables';
+
+.comic-detail-container {
+   height: auto;
+   width: 100%;
+   display: flex;
+   flex-direction: column;
+}
