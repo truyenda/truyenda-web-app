@@ -1,23 +1,19 @@
 import React, { Component } from "react";
 import ComicCoverPicture from "./ComicCoverPicture/ComicCoverPicture";
+import styles from "./ComicDetails.scss";
 export default class ComicDetails extends Component {
    constructor(props) {
       super(props);
       this.state = {
-         comicDetails: {
-               comicTitle: 'Tales of Demons and Gods',
-               comicAuthors: 'Mad Snail, Jiang Ruotai',
-               comicStatus: 'Ongoing',
-               comicCoverPicture: 'https://via.placeholder.com/1500x500?text=Update%20soon'
-         }
+         comic: this.props.location.state
       };
    }
 
    render() {
+      const {comic} = this.state.comic;
       return (
          <div className="comic-detail-container">
-            <ComicCoverPicture details={this.state.comicDetails}/>
-            <p>2911</p>
+            <ComicCoverPicture details={comic.comicCoverPicture}/>
             {/* <ComicOvervire />
         <ComicSummary />
         <ComicDescription />

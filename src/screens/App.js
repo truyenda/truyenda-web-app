@@ -30,9 +30,9 @@ class App extends Component {
             />
             <Route path='/personal' component={Personal}/>
             {/* <Route component={NotFound} /> */}
-            <Route path='/comic' component={ComicDetails} />
           </Switch>
         </div>
+        <Route path='/comics/:id' component={ComicDetails} />
         <Footer />
         <ToastContainer />
         <ScrollUpButton EasingType="easeOutQuint" />
