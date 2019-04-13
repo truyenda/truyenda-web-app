@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ComicCoverPicture from "./ComicCoverPicture/ComicCoverPicture";
 import styles from "./ComicDetails.scss";
+import ComicOverview from "./ComicOverview/ComicOverview";
 export default class ComicDetails extends Component {
    constructor(props) {
       super(props);
@@ -10,11 +11,14 @@ export default class ComicDetails extends Component {
    }
 
    render() {
-      const {comic} = this.state.comic;
+      const { comic } = this.state.comic;
       return (
          <div className="comic-detail-container">
-            <ComicCoverPicture details={comic.comicCoverPicture}/>
-            {/* <ComicOvervire />
+            <ComicCoverPicture 
+               details = {comic.comicCoverPicture} 
+            />
+            <ComicOverview />
+            {/* 
         <ComicSummary />
         <ComicDescription />
         <ComicStats />

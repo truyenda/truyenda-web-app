@@ -1,0 +1,10 @@
+@import '../../../scss/mixins';
+@import '../../../scss/variables';
+
+.comic-overview-container {
+   height: 500px;
+   @include shadow;
+   background-color: $white;
+   padding: 20px;
+   margin-top: 5px;
+}
