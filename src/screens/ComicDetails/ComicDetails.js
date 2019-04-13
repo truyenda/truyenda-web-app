@@ -4,6 +4,7 @@ import styles from "./ComicDetails.scss";
 import ComicOverview from "./ComicOverview/ComicOverview";
 import ComicSummary from "./ComicSummary/ComicSummary";
 import ComicDescription from "./ComicDescription/ComicDescription";
+import ComicAuthors from "./ComicAuthors/ComicAuthors";
 export default class ComicDetails extends Component {
    constructor(props) {
       super(props);
@@ -19,13 +20,21 @@ export default class ComicDetails extends Component {
             <ComicCoverPicture 
                details = {comic.comicCoverPicture} 
             />
-            <ComicOverview />
-            <ComicSummary />
-            <ComicDescription />
+            <ComicOverview 
+               details = {comic}
+            />
+            <ComicSummary 
+               details = {comic}
+            />
+            <ComicDescription 
+               details = {comic}
+            />
+            <ComicAuthors 
+               details = {comic.comicAuthors}
+            />
             {/* 
         
         <ComicStats />
-        <ComicAuthors />
         <ComicChapters /> */}
          </div>
       );
