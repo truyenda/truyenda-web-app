@@ -15,7 +15,7 @@ export default class ComicCoverPicture extends Component {
       return (
          <div className="comic-cover-picture-container">
             <img src={comicDetails} alt="Cover Picture"/>
-            <a href="#" >START READING</a>
+            {/* <a href="#" >START READING</a> */}
          </div>
       );
    }
