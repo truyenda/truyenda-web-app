@@ -13,7 +13,7 @@ export default class Chart extends Component {
                comicAuthors: "Mad Snail, Jiang Ruotai",
                comicStatus: "Ongoing",
                comicCoverPicture:
-                  "https://via.placeholder.com/1500x500?text=Update%20soon"
+                  "https://via.placeholder.com/1500x500?text=Cover%20Picture"
             },
             {
                comicId: 2,
@@ -21,7 +21,7 @@ export default class Chart extends Component {
                comicAuthors: "Mad Snail, Jiang Ruotai",
                comicStatus: "Ongoing",
                comicCoverPicture:
-                  "https://via.placeholder.com/1500x500?text=Update%20soon"
+                  "https://via.placeholder.com/1500x500?text=Cover%20Picture"
             },
             {
                comicId: 3,
@@ -29,7 +29,7 @@ export default class Chart extends Component {
                comicAuthors: "Mad Snail, Jiang Ruotai",
                comicStatus: "Ongoing",
                comicCoverPicture:
-                  `https://via.placeholder.com/1500x500?text=Update%20soon`
+                  `https://via.placeholder.com/1500x500?text=Cover%20Picture`
             },
             {
                comicId: 4,
@@ -37,7 +37,7 @@ export default class Chart extends Component {
                comicAuthors: "Mad Snail, Jiang Ruotai",
                comicStatus: "Ongoing",
                comicCoverPicture:
-                  "https://via.placeholder.com/1500x500?text=Update%20soon"
+                  "https://via.placeholder.com/1500x500?text=Cover%20Picture"
             },
             {
                comicId: 5,
@@ -45,7 +45,7 @@ export default class Chart extends Component {
                comicAuthors: "Mad Snail, Jiang Ruotai",
                comicStatus: "Ongoing",
                comicCoverPicture:
-                  "https://via.placeholder.com/1500x500?text=Update%20soon"
+                  "https://via.placeholder.com/1500x500?text=Cover%20Picture"
             }
          ]
       };

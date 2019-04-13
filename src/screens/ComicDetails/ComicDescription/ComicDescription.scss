@@ -1,7 +1,7 @@
 @import '../../../scss/mixins';
 @import '../../../scss/variables';
 
-.comic-summary-container {
+.comic-description-container {
    height: 200px;
    @include shadow;
    background-color: $white;
