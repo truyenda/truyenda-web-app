@@ -13,7 +13,7 @@ export default class Chart extends Component {
                comicAuthors: "Mad Snail, Jiang Ruotai",
                comicStatus: "Ongoing",
                comicCoverPicture:
-                  "https://saikaiscan.com.br/media/cache/e2/9a/e29a01c8a3c70a3425ae04c179a483ef.png"
+                  "https://f01.mrcdn.info/file/mrportal/i/1/e/6/Al.4h0QHNU9.jpg"
             },
             {
                comicId: 2,
@@ -21,7 +21,7 @@ export default class Chart extends Component {
                comicAuthors: "Mad Snail, Jiang Ruotai",
                comicStatus: "Ongoing",
                comicCoverPicture:
-                  "https://saikaiscan.com.br/media/cache/e2/9a/e29a01c8a3c70a3425ae04c179a483ef.png"
+                  "https://f01.mrcdn.info/file/mrportal/i/1/e/6/Al.4h0QHNU9.jpg"
             },
             {
                comicId: 3,
@@ -29,7 +29,7 @@ export default class Chart extends Component {
                comicAuthors: "Mad Snail, Jiang Ruotai",
                comicStatus: "Ongoing",
                comicCoverPicture:
-                  `https://saikaiscan.com.br/media/cache/e2/9a/e29a01c8a3c70a3425ae04c179a483ef.png`
+                  `https://f01.mrcdn.info/file/mrportal/i/1/e/6/Al.4h0QHNU9.jpg`
             },
             {
                comicId: 4,
@@ -37,7 +37,7 @@ export default class Chart extends Component {
                comicAuthors: "Mad Snail, Jiang Ruotai",
                comicStatus: "Ongoing",
                comicCoverPicture:
-                  "https://saikaiscan.com.br/media/cache/e2/9a/e29a01c8a3c70a3425ae04c179a483ef.png"
+                  "https://f01.mrcdn.info/file/mrportal/i/1/e/6/Al.4h0QHNU9.jpg"
             },
             {
                comicId: 5,
@@ -45,7 +45,7 @@ export default class Chart extends Component {
                comicAuthors: "Mad Snail, Jiang Ruotai",
                comicStatus: "Ongoing",
                comicCoverPicture:
-                  "https://saikaiscan.com.br/media/cache/e2/9a/e29a01c8a3c70a3425ae04c179a483ef.png"
+                  "https://f01.mrcdn.info/file/mrportal/i/1/e/6/Al.4h0QHNU9.jpg"
             }
          ]
       };
