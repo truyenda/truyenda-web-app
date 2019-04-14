@@ -1,0 +1,16 @@
+@import '../../../scss/mixins';
+@import '../../../scss/variables';
+
+.comic-description-container {
+   height: 200px;
+   @include shadow;
+   background-color: $white;
+   padding: 20px;
+   margin-top: 5px;
+
+   h2 {
+      color: $blue;
+      margin-bottom: 5px;
+   }
+
+}

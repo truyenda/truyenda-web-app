@@ -1,0 +1,72 @@
+@import "../../../scss/mixins";
+@import "../../../scss/variables";
+
+.comic-chapters-container {
+   height: 350px;
+   overflow: hidden;
+   position: relative;
+   @include shadow;
+   background-color: $white;
+   padding: 20px 0;
+   margin: 5px 0 10px;
+
+   h2 {
+      color: $blue;
+      margin-left: 10px;
+      margin-bottom: 10px;
+   }
+
+   .comic-chapters-wrapper {
+      padding: 0 10px;
+      display: flex;
+      flex-direction: column-reverse;
+      flex-wrap: wrap;
+
+      .comic-chapters-item {
+         border: 1px solid $white;
+         padding: 17px;
+         margin-bottom: 5px;
+         @include shadow;
+         display: flex;
+         justify-content: space-between;
+
+         .comic-chapters-item-left {
+            font-size: 0.85em;
+            color: $dark-gray-1;
+            margin: auto 0;
+         }
+
+         .comic-chapters-item-right {
+            font-size: 0.6em;
+            color: $orange-1;
+            margin: auto 0;
+         }
+      }
+   }
+
+   .comic-chapters-show-more {
+      height: 70px;
+      width: 100%;
+      // opacity: 0.4;
+      display: block;
+      background: $dark-gray-1; 
+      background: linear-gradient(0deg,#fff 0,hsla(0,0%,100%, .8) 60%,hsla(0,0%,96%,0.1));
+      position: absolute;
+      bottom: 0px;
+
+      p {
+         color: $blue-3;
+         font-weight: bold;
+         position: absolute;
+         left: 45%;
+         bottom: 10px;
+
+         // TODO: 1. Check onclick method to show more
+         // TODO: 2. Check length (if small -> no need)
+         // TODO: 3. Responsive !!!
+         // TODO: 4. Combine...
+         // TODO: 5. ReadingPage component (initial)
+         // TODO: 6. Check smaller font size for detail (em)
+      }
+   }
+}
