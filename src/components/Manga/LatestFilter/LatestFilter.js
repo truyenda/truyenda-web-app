@@ -3,6 +3,7 @@ import styles from './LatestFilter.scss';
 import Button from '../../commonUI/Button';
 import CheckBox from '../../commonUI/CheckBox';
 import SelectBox from '../../commonUI/SelectBox';
+import Caller from '../../../utils/APICaller';
 
 export default class LatestFilter extends Component {
   constructor(props) {
@@ -11,26 +12,18 @@ export default class LatestFilter extends Component {
       shouldHide: true,
       rdoStatus: 1,
       rdoRank: 1,
-      genres: [
-        {id: "drama", display: "Drama"},
-        {id: "ecchi", display: "Ecchi"},
-        {id: "fantasy", display: "Fantasy"},
-        {id: "vampire", display: "Vampire"},
-        {id: "yuri", display: "Yuri"},
-        {id: "military", display: "Military"},
-        {id: "music", display: "Music"},
-        {id: "mystery", display: "Mystery"},
-        {id: "oneShot", display: "One Shot"},
-        {id: "parody", display: "Parody"},
-        {id: "police", display: "Police"},
-        {id: "psycho", display: "Psycho"},
-        {id: "romance", display: "Romance"},
-        {id: "schoolLife", display: "School Life"},
-        {id: "sciFi", display: "Sci-Fi"}
-      ]
+      genres: []
     };
   }
 
+  componentDidMount(){
+    Caller('categories').then(res => {
+      this.setState({
+        genres : res.data.Data
+      });
+    });
+  }
+  
   isInputChangeStatus(){
     const target = event.target;
     const name = target.name;
@@ -58,10 +51,10 @@ export default class LatestFilter extends Component {
   }
   render() {
     var elements_genres = this.state.genres.map((genre, index) => {
-      return  <div key={ genre.id } className="_2xJWS">
+      return  <div key={ genre.Id } className="_2xJWS">
                 <CheckBox
-                  display={genre.display}
-                  id={genre.id}
+                  display={genre.TenLoaiTruyen}
+                  id={genre.Id}
                   onChanged={(key, value) => this.setStateForm(key, value)}
                 />
               </div>

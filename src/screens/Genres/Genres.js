@@ -4,61 +4,7 @@ import Browse from "../../components/Browse/Browse";
 import Manga from "../../components/Manga/Manga";
 import { Link, Switch, BrowserRouter, Route } from "react-router-dom";
 import styles from "./LatestUpdate.scss";
-class LatestUpdate extends Component {
-   constructor(props) {
-      super(props);
-      this.state = {
-         chartList: (
-            <div className="title-type-chart">
-               <p>Daily Chart</p>
-               <Chart />
-               <Chart />
-               <Chart />
-            </div>
-         )
-      };
-
-      this.handleClick = this.handleClick.bind(this);
-   }
-
-   handleClick(event) {
-      const type = event.target.id;
-      if (type === "daily") {
-         let dailyList = (
-            <div className="title-type-chart">
-               <p>Daily Chart</p>
-               <Chart />
-            </div>
-         );
-         this.setState({
-            chartList: dailyList
-         });
-      } else {
-         if (type === "weekly") {
-            let weeklyChart = (
-               <div className="title-type-chart">
-                  <p>Weekly Chart</p>
-                  <Chart />
-                  <Chart />
-               </div>
-            );
-            this.setState({
-               chartList: weeklyChart
-            });
-         } else {
-            let monthlyChart = (
-               <div className="title-type-chart">
-                  <p>Monthly Chart</p>
-                  <Chart />
-               </div>
-            );
-            this.setState({
-               chartList: monthlyChart
-            });
-         }
-      }
-   }
-
+class Genres extends Component {
    render() {
       return (
          <div className="home-wrapper">
@@ -66,7 +12,9 @@ class LatestUpdate extends Component {
                <Manga />
             </div>
             <div className="side-content-col">
-              <Browse />
+               <div className="browse-col">
+                  <Browse />
+               </div>
                <div className="chart-col">
                   <div className="chart-header">
                      <p className="chart-title">MOST POPULAR</p>
