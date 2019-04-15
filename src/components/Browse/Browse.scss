@@ -5,16 +5,35 @@
    @include shadow;
    background-color: $white;
    padding: 20px;
+   margin-bottom: 20px;
 
    .browse {
-      display: flex;
-   
       .col {
-         flex: 1 1 50%;
+        //  -webkit-column-width: 150px;
+        //  -moz-column-width: 150px;
+        display: inline-block;
+        ._d5D78 {
+          min-width: 195px;
+          float: left;
+          margin-bottom: 15px;
+          a {
+            color: black;
+            &:hover {
+              color: $blue;
+            }
+          }
+        }
       }
    }
    p {
       margin-bottom: 10px;
+   }
+   ._1dGlB {
+      margin: 20px -20px -20px;
+      ._D25df {
+         color: $blue;
+         width: 100%;
+      }
    }
 }
 
