@@ -66,9 +66,7 @@ class Home extends Component {
                <Main />
             </div>
             <div className="side-content-col">
-               <div className="browse-col">
-                  <Browse />
-               </div>
+               <Browse />
                <div className="chart-col">
                   <div className="chart-header">
                      <p className="chart-title">MOST POPULAR</p>
