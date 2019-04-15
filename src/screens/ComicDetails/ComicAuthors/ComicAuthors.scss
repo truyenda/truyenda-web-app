@@ -4,6 +4,8 @@
 .comic-authors-container {
    height: auto;
    @include shadow;
+   font-size: 0.85em;
+   color: $dark-gray-1;
    background-color: $white;
    padding: 20px;
    margin-top: 5px;

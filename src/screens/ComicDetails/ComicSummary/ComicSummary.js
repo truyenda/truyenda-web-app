@@ -27,7 +27,7 @@ export default class ComicSummary extends Component {
                   A fantasy read with elements of time traveling, soul
                   reincarnation and a romantic sub-plot
                </li>
-            </ul>
+            </ul> 
          </div>
       );
    }

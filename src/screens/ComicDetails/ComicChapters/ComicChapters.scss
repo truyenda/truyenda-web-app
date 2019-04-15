@@ -7,17 +7,17 @@
    position: relative;
    @include shadow;
    background-color: $white;
-   padding: 20px 0;
+   color: $dark-gray-1;
+   font-size: 0.85em;
+   padding: 20px;
    margin: 5px 0 10px;
 
    h2 {
       color: $blue;
-      margin-left: 10px;
       margin-bottom: 10px;
    }
 
    .comic-chapters-wrapper {
-      padding: 0 10px;
       display: flex;
       flex-direction: column-reverse;
       flex-wrap: wrap;
@@ -55,8 +55,6 @@
       bottom: 0px;
 
       p {
-         color: $blue-3;
-         font-weight: bold;
          position: absolute;
          left: 45%;
          bottom: 10px;
