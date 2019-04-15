@@ -39,6 +39,7 @@
       .comic-overview-subtitle {
          font-size: 0.9em;
          margin-bottom: 4px;
+         
          &:last-child {
             color: $blue;
          }
@@ -52,12 +53,23 @@
       font-size: 0.9em;
 
       .comic-overview-bar-item {
+         border-left: 1px solid #000;
          border-right: 1px solid #000;
          padding: 5px 15px;
 
          &:last-of-type {
             border: none;
          }
+      }
+      
+      .comic-overview-bar-main-item {
+         padding: 5px 10px;
+         background-color: $orange-1;
+         border: 1px solid $orange-1;
+         color: $white;
+         border-radius: 4px;
+         font-weight: bold;
+         margin-right: 10px;
       }
    }
 }
