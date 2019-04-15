@@ -1,0 +1,17 @@
+@import "../../scss/variables";
+@import "../../scss/mixins";
+
+.reading-page-container {
+
+   .reading-page {
+      background-color: $white;
+      @include shadow;
+      height: auto;
+      
+      img {
+         @include shadow;
+         width: 100%;
+         object-fit: cover;
+      }
+   }
+}
