@@ -16,6 +16,7 @@ export default class Chart extends Component {
          comics: [
             {
                comicId: 1,
+               comicNumberOfChapters: 17,
                comicTitle: "1 Tales of Demons and Gods",
                comicAuthors: "Mad Snail, Jiang Ruotai",
                comicStatus: "Ongoing",
@@ -25,6 +26,7 @@ export default class Chart extends Component {
             },
             {
                comicId: 2,
+               comicNumberOfChapters: 4,
                comicTitle: "2 Tales of Demons and Gods",
                comicAuthors: "Mad Snail, Jiang Ruotai",
                comicStatus: "Ongoing",
@@ -34,6 +36,7 @@ export default class Chart extends Component {
             },
             {
                comicId: 3,
+               comicNumberOfChapters: 8,
                comicTitle: "3 Tales of Demons and Gods",
                comicAuthors: "Mad Snail, Jiang Ruotai",
                comicStatus: "Ongoing",
@@ -43,6 +46,7 @@ export default class Chart extends Component {
             },
             {
                comicId: 4,
+               comicNumberOfChapters: 30,
                comicTitle: "4 Tales of Demons and Gods",
                comicAuthors: "Mad Snail, Jiang Ruotai",
                comicStatus: "Ongoing",
@@ -52,6 +56,7 @@ export default class Chart extends Component {
             },
             {
                comicId: 5,
+               comicNumberOfChapters: 2,
                comicTitle: "5 Tales of Demons and Gods",
                comicAuthors: "Mad Snail, Jiang Ruotai",
                comicStatus: "Ongoing",

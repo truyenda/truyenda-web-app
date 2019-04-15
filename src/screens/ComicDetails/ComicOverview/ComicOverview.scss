@@ -30,7 +30,7 @@
       align-items: center;
       // min-width: 550px;
       flex-wrap: wrap;
-      .comic-overview-title {
+      .comic-overview-title { 
          margin: 10px 0;
          color: $blue;
          font-weight: bold;
@@ -76,10 +76,6 @@
          border-radius: 6px;
       }
 
-      .comic-overview-picture {
-      
-      }
-
       .comic-overview-content {
          margin: 0 30px;
       }
@@ -102,17 +98,6 @@
          height: auto;
          border: 7px solid $white;
          border-radius: 6px;
-      }
-
-      .comic-overview-picture {
-      
-      }
-
-      .comic-overview-content {
-         // margin: 0 30px;
-      }
-
-      .comic-overview-bar {
       }
    }
 }
