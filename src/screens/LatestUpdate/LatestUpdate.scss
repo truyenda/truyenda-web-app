@@ -1,9 +1,95 @@
 @import '../../scss/mixins';
 @import '../../scss/variables';
 
-.latest-update-container {
-   height: 700px;
-   background-color: $white;
-   @include shadow;
+.home-wrapper {
    padding: 1em;
+   display: flex;
+   // @include shadow;
+}
+
+.main-content-col {
+   flex: 1 1 65%;
+}
+.side-content-col {
+   flex: 1 1 35%;
+   display: flex;
+   flex-direction: column;
+   flex-wrap: wrap;
+   justify-content: flex-start;
+
+   .browse-col {
+      margin-bottom: 1em;
+   }
+
+   .chart-col {
+      background-color: $white;
+      @include shadow;
+      padding: 1em;
+
+      .chart-title {
+         font-weight: bold;
+         color: $blue-5;
+         margin: 10px 0;
+
+         #show-more {
+            font-size: 80%;
+         }
+      }
+   }
+}
+
+.chart-header {
+   display: flex;
+   justify-content: space-between;
+
+   .chart-type {
+      display: flex;
+      margin: 0.5em 0;
+
+      li {
+         display: block;
+         margin: 0 auto;
+         a {
+            color: $white;
+            font-size: 0.85em;
+            background-color: $blue-5;
+            margin-left: 0.3em;
+            padding: 0.2em 0.6em;
+            @include shadow;
+            border-radius: 3px;
+            cursor: pointer;
+         }
+      }
+   }
+}
+
+.title-type-chart {
+   p {
+      color: $blue;
+      width: 30%;
+      font-weight: bold;
+      font-size: 0.8em;
+      padding: 0.7em;
+      padding-left: 0;
+   }
+}
+
+@media only screen and (max-width: 1025px) {
+   .home-wrapper {
+      flex-direction: column;
+      justify-content: space-between;
+   }
+
+   .side-content-col {
+      margin-top: 1em;
+
+      .browse-col {
+         width: 90%;
+         height: 80%;
+      }
+   }
+
+   .main-content-col {
+      justify-content: center;
+   }
 }
