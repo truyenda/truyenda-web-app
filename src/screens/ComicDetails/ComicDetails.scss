@@ -13,5 +13,13 @@
    .comic-detail-row {
       display: flex;
       flex-direction: row;
+
+      .comic-detail-row-left {
+         flex: 0 0 50%;
+      }
+
+      .comic-detail-row-right {
+         flex: 0 0 50%;
+      }
    }
 }
