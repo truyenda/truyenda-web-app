@@ -37,6 +37,14 @@ export default class ComicDescription extends Component {
                And he aims to destroy the so-called Sacred family who arrogantly
                abandoned their duty and betrayed the city in his past life.
             </p>
+            <p>
+               He aims to protect the city from the coming future of being
+               devastated by demon beasts and the previous fate of ending up
+               destroyed. He aims to protect his lover, friends, family and
+               fellow citizens who died in the beast assault or its aftermath.
+               And he aims to destroy the so-called Sacred family who arrogantly
+               abandoned their duty and betrayed the city in his past life.
+            </p>
             <h2>{comic.comicStatus}</h2>
          </div>
       );
