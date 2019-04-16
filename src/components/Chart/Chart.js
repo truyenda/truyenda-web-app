@@ -17,12 +17,12 @@ export default class Chart extends Component {
             {
                comicId: 1,
                comicGenres: [
-                  'Fiction',
-                  'Comedy',
-                  'Detective',
-                  'Romantic',
-                  'Youth',
-                  'Manga'
+                  "Fiction",
+                  "Comedy",
+                  "Detective",
+                  "Romantic",
+                  "Youth",
+                  "Manga"
                ],
                comicNumberOfChapters: 17,
                comicTitle: "1 Tales of Demons and Gods",
@@ -30,94 +30,106 @@ export default class Chart extends Component {
                comicStatus: "Ongoing",
                comicCoverPicture:
                   "https://f01.mrcdn.info/file/mrportal/i/1/e/6/Al.4h0QHNU9.jpg",
-               comicAuthorAvatar: "https://mir-s3-cdn-cf.behance.net/project_modules/disp/ce54bf11889067.562541ef7cde4.png"
+               comicAvatarPicture:
+                  "https://img.webnovel.com/bookcover/8094015805004305/300/300.jpg?coverUpdateTime=1548301512855",
+               comicAuthorAvatar:
+                  "https://mir-s3-cdn-cf.behance.net/project_modules/disp/ce54bf11889067.562541ef7cde4.png"
             },
             {
                comicId: 2,
                comicGenres: [
-                  'Fiction',
-                  'Comedy',
-                  'Detective',
-                  'Romantic',
-                  'Youth',
-                  'Manga',
-                  'A',
-                  'B',
-                  'C',
-                  'D',
-                  'E',
-                  'F',
-                  'G',
+                  "Fiction",
+                  "Comedy",
+                  "Detective",
+                  "Romantic",
+                  "Youth",
+                  "Manga",
+                  "A",
+                  "B",
+                  "C",
+                  "D",
+                  "E",
+                  "F",
+                  "G"
                ],
                comicNumberOfChapters: 4,
-               comicTitle: "2 Tales of Demons and Gods",
-               comicAuthors: "Mad Snail, Jiang Ruotai",
+               comicTitle: "The Last Human",
+               comicAuthors: "Manyu",
                comicStatus: "Ongoing",
                comicCoverPicture:
-                  "https://f01.mrcdn.info/file/mrportal/i/1/e/6/Al.4h0QHNU9.jpg",
-               comicAuthorAvatar: "http://www.sclance.com/pngs/avatar-icon-png/avatar_icon_png_70847.jpg"
+                  "https://www.cartoonbrew.com/wp-content/uploads/2019/02/lasthuman_main.jpg",
+               comicAvatarPicture: "https://www.cartoonbrew.com/wp-content/uploads/2019/02/lasthuman_bookcover.jpg",
+               comicAuthorAvatar:
+                  "https://www.cartoonbrew.com/wp-content/uploads/2019/02/lasthuman_bookcover.jpg"
             },
             {
                comicId: 3,
                comicGenres: [
-                  'Fiction',
-                  'Comedy',
-                  'Detective',
-                  'Romantic',
-                  'Youth',
-                  'Manga'
+                  "Fiction",
+                  "Comedy",
+                  "Detective",
+                  "Romantic",
+                  "Youth",
+                  "Manga"
                ],
                comicNumberOfChapters: 8,
-               comicTitle: "3 Tales of Demons and Gods",
-               comicAuthors: "Mad Snail, Jiang Ruotai",
+               comicTitle: "One Piece",
+               comicAuthors: "Eiichiro Oda",
                comicStatus: "Ongoing",
-               comicCoverPicture:
-                  `https://f01.mrcdn.info/file/mrportal/i/1/e/6/Al.4h0QHNU9.jpg`,
-               comicAuthorAvatar: "https://ya-webdesign.com/images/girl-avatar-png-19.png"
+               comicCoverPicture: `https://images-eds-ssl.xboxlive.com/image?url=8Oaj9Ryq1G1_p3lLnXlsaZgGzAie6Mnu24_PawYuDYIoH77pJ.X5Z.MqQPibUVTcJTdjtktMdh6m8AhJtGzjcBQlBuElg62IYoML9TIiBwdjoC0rhzFG6pQwboB15yyjja3KW3wsRTQSjFNikG4NZvcAtwgLoevdtnikz67kYwiPCcbOgu45gB898T7vYAwkHcage5GQsSxsy.4HUbTsPJq9dTR2ciyyiMRAUmOe51Y-&h=1080&w=1920&format=jpg`,
+               comicAvatarPicture: "https://upload.wikimedia.org/wikipedia/en/thumb/a/aa/One_Piece_DVD_18.png/200px-One_Piece_DVD_18.png",
+               comicAuthorAvatar:
+                  "https://ya-webdesign.com/images/girl-avatar-png-19.png"
             },
             {
                comicId: 4,
                comicGenres: [
-                  'Fiction',
-                  'Comedy',
-                  'Detective',
-                  'Romantic',
-                  'Youth',
-                  'Manga'
+                  "Fiction",
+                  "Comedy",
+                  "Detective",
+                  "Romantic",
+                  "Youth",
+                  "Manga"
                ],
                comicNumberOfChapters: 30,
-               comicTitle: "4 Tales of Demons and Gods",
-               comicAuthors: "Mad Snail, Jiang Ruotai",
+               comicTitle: "The Rising of the Shield Hero",
+               comicAuthors: "Kyu Aiya, Yusagi Aneko",
                comicStatus: "Ongoing",
                comicCoverPicture:
-                  "https://f01.mrcdn.info/file/mrportal/i/1/e/6/Al.4h0QHNU9.jpg",
-               comicAuthorAvatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYm-KcyvHy3PDkmh0V9KzkUk26255h0RwthshiaoanTnfH2B_IRg"
+                  "https://res.cloudinary.com/sfp/image/upload/c_fill,q_60,h_750,w_1920/oth/FunimationStoreFront/1899700/Latvian/1899700_Latvian_ShowDetailHeaderDesktop_09a8faf6-a013-e911-8175-020165574d09.jpg",
+               comicAvatarPicture: "https://prodimage.images-bn.com/pimages/9781935548706_p0_v1_s550x406.jpg",
+               comicAuthorAvatar:
+                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYm-KcyvHy3PDkmh0V9KzkUk26255h0RwthshiaoanTnfH2B_IRg"
             },
             {
                comicId: 5,
                comicGenres: [
-                  'Fiction',
-                  'Comedy',
-                  'Detective',
-                  'Romantic',
-                  'Youth',
-                  'Manga'
+                  "Fiction",
+                  "Comedy",
+                  "Detective",
+                  "Romantic",
+                  "Youth",
+                  "Manga"
                ],
                comicNumberOfChapters: 2,
-               comicTitle: "5 Tales of Demons and Gods",
-               comicAuthors: "Mad Snail, Jiang Ruotai",
+               comicTitle: "One Punch-Man",
+               comicAuthors: "Yusuke Murata, ONE",
                comicStatus: "Ongoing",
                comicCoverPicture:
-                  "https://f01.mrcdn.info/file/mrportal/i/1/e/6/Al.4h0QHNU9.jpg",
-               comicAuthorAvatar: "https://mir-s3-cdn-cf.behance.net/project_modules/disp/a9475211889067.562541caf0859.png"
+                  "https://dw9to29mmj727.cloudfront.net/promo/2016/5256-SeriesHeaders_OPM_2000x800.jpg",
+               comicAvatarPicture: "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/5710/5710418_sa.jpg;maxHeight=640;maxWidth=550",
+               comicAuthorAvatar:
+                  "https://mir-s3-cdn-cf.behance.net/project_modules/disp/a9475211889067.562541caf0859.png"
             }
          ]
       };
    }
 
+   //TODO: Change dynamically comic pictures on the chart
+
    render() {
       const { comics } = this.state;
-      const listComics = comics.map(comic => (  
+      const listComics = comics.map(comic => (
          <Link
             to={{
                pathname: "/comics/" + comic.comicId,
@@ -125,10 +137,11 @@ export default class Chart extends Component {
                   comic
                }
             }}
-            key={comic.comicId}>
+            key={comic.comicId}
+         >
             <div className="chart-item">
                <p className="rank">{comic.comicId}</p>
-               <img className="img" src={demo} />
+               <img className="img" src={comic.comicAvatarPicture} />
                <div className="content">
                   <p className="name-title">{comic.comicTitle}</p>
                   <p className="side-title">{comic.comicAuthors}</p>
