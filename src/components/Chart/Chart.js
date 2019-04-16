@@ -16,6 +16,14 @@ export default class Chart extends Component {
          comics: [
             {
                comicId: 1,
+               comicGenres: [
+                  'Fiction',
+                  'Comedy',
+                  'Detective',
+                  'Romantic',
+                  'Youth',
+                  'Manga'
+               ],
                comicNumberOfChapters: 17,
                comicTitle: "1 Tales of Demons and Gods",
                comicAuthors: "Mad Snail, Jiang Ruotai",
@@ -26,6 +34,21 @@ export default class Chart extends Component {
             },
             {
                comicId: 2,
+               comicGenres: [
+                  'Fiction',
+                  'Comedy',
+                  'Detective',
+                  'Romantic',
+                  'Youth',
+                  'Manga',
+                  'A',
+                  'B',
+                  'C',
+                  'D',
+                  'E',
+                  'F',
+                  'G',
+               ],
                comicNumberOfChapters: 4,
                comicTitle: "2 Tales of Demons and Gods",
                comicAuthors: "Mad Snail, Jiang Ruotai",
@@ -36,6 +59,14 @@ export default class Chart extends Component {
             },
             {
                comicId: 3,
+               comicGenres: [
+                  'Fiction',
+                  'Comedy',
+                  'Detective',
+                  'Romantic',
+                  'Youth',
+                  'Manga'
+               ],
                comicNumberOfChapters: 8,
                comicTitle: "3 Tales of Demons and Gods",
                comicAuthors: "Mad Snail, Jiang Ruotai",
@@ -46,6 +77,14 @@ export default class Chart extends Component {
             },
             {
                comicId: 4,
+               comicGenres: [
+                  'Fiction',
+                  'Comedy',
+                  'Detective',
+                  'Romantic',
+                  'Youth',
+                  'Manga'
+               ],
                comicNumberOfChapters: 30,
                comicTitle: "4 Tales of Demons and Gods",
                comicAuthors: "Mad Snail, Jiang Ruotai",
@@ -56,6 +95,14 @@ export default class Chart extends Component {
             },
             {
                comicId: 5,
+               comicGenres: [
+                  'Fiction',
+                  'Comedy',
+                  'Detective',
+                  'Romantic',
+                  'Youth',
+                  'Manga'
+               ],
                comicNumberOfChapters: 2,
                comicTitle: "5 Tales of Demons and Gods",
                comicAuthors: "Mad Snail, Jiang Ruotai",

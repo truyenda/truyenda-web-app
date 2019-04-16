@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styles from "./ComicSummary.scss";
+import ComicGenreTags from "../ComicGenreTags/ComicGenreTags";
 
 export default class ComicSummary extends Component {
    constructor(props) {
@@ -15,6 +16,7 @@ export default class ComicSummary extends Component {
          <div className="comic-summary-container">
             <h2>Summary</h2>
             <div className="comic-summary-content">
+               <ComicGenreTags details={comic}/>
                <ul>
                   <li>
                      Nie Lie uses his past life's knowledge to survive, save the
