@@ -6,24 +6,34 @@
    @include shadow;
    overflow: hidden;
    background-color: $white;
-   padding: 20px;
    margin-top: 5px;
    font-size: 0.85em;
    color: $dark-gray-1;
+   position: relative;
 
    h2 {
       color: $blue;
       margin-bottom: 30px;
+      margin-top: 20px;
+      margin-left: 20px;
    }
 
    li {
       margin: 5px 0;
+   }
+
+   .comic-summary-content {
+      margin: 20px;
+   }
+
+   .comic-summary-show-more {
+      @include showMore;
    }
 }
 
 @media only screen and (min-width: 768px) {
    .comic-summary-container {
       margin-right: 2.5px;
-      height: 150px; 
+      height: 190px; 
    }
 }

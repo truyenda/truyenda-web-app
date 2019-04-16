@@ -4,24 +4,30 @@
 .comic-description-container {
    height: auto;
    @include shadow;
-   background-color: $white;
-   padding: 20px;
+   background-color: $white;  
    margin-top: 5px;
    font-size: 0.85em;
    color: $dark-gray-1;
    overflow: hidden;
+   position: relative;
 
    h2 {
       color: $blue;
       margin-bottom: 5px;
+      margin-top: 20px;
+      margin-left: 20px;
    }
 
    p {
       margin-bottom: 10px;
    }
 
+   .comic-description-content {
+      margin: 5px 20px;
+   }
+
    .comic-description-show-more {
-      // @include showMore;
+      @include showMore;
    }
 }
 
@@ -29,7 +35,7 @@
    
    .comic-description-container {
       margin-left: 2.5px;
-      height: 345px;
+      height: 385px;
    }
    // TODO: Add show more mixin
 }

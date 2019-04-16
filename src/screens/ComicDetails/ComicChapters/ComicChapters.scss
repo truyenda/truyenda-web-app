@@ -16,7 +16,7 @@
       color: $blue;
       margin-bottom: 10px;
       margin-top: 20px;
-      margin-left: 20px; 
+      margin-left: 20px;
    }
 
    .comic-chapters-wrapper {
@@ -47,12 +47,17 @@
    }
 
    .comic-chapters-show-more {
-      height: 80px;
+      height: 100px;
       width: 100%;
       // opacity: 0.4;
-      display: block;   
-      background: $dark-gray-1; 
-      background: linear-gradient(0deg,#fff 0,hsla(0,0%,100%, .8) 60%,hsla(0,0%,96%,0.1));
+      display: block;
+      background: $dark-gray-1;
+      background: linear-gradient(
+         0deg,
+         #fff 0,
+         hsla(0, 0%, 100%, 0.8) 60%,
+         hsla(0, 0%, 96%, 0.1)
+      );
       position: absolute;
       bottom: 0px;
       margin-left: 0;

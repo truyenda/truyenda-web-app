@@ -24,6 +24,9 @@ export default class ComicAuthors extends Component {
                <Avatar src={comic.comicAuthorAvatar} />
                <Avatar src={comic.comicAuthorAvatar} />
             </div>
+            <div className="comic-authors-show-more">
+               <p>Show more</p>
+            </div>
          </div>
       );
    }

@@ -8,12 +8,20 @@
    font-size: 0.85em;
    color: $dark-gray-1;
    background-color: $white;
-   padding: 20px;
+   // padding: 20px;
    margin-top: 5px;
+   position: relative;
 
    h2 {
       color: $blue;
       margin-bottom: 5px;
+      margin-top: 20px;
+      margin-left: 20px;
+   }
+
+   p {
+      margin-top: 10px;
+      margin-left: 20px; 
    }
 
    .comic-list-authors {
@@ -21,12 +29,17 @@
       flex-direction: row;
       flex-wrap: wrap;
       justify-content: left;
+      margin: 20px;
+   }
+
+   .comic-authors-show-more {
+      @include showMore;
    }
 }
 
 @media only screen and (min-width: 768px) {
    .comic-authors-container {
-      height: 150px;
+      height: 190px;
       margin-right: 2.5px;
    }
 }
