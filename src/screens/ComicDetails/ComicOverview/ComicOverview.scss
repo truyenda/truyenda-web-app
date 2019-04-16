@@ -93,7 +93,12 @@
       }
 
       .comic-overview-bar {
-         display: none  ;
+         .comic-overview-bar-item {
+            display: none;
+         }
+         .comic-overview-bar-main-item {
+            display: block;
+         }
       }
    }
 }
