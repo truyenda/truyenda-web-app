@@ -8,7 +8,6 @@ TODO:
   3. Add attribute comicGenres
   4. Render as tag
   5. Combine Author component into Description 
-
 */
 export default class ComicChapters extends Component {
    constructor(props) {
@@ -33,7 +32,7 @@ export default class ComicChapters extends Component {
             <h2>Chapters</h2>
             <div className="comic-chapters-wrapper">{listChapters}</div>
             <div className="comic-chapters-show-more">
-               <p>Show more >></p>
+               <p>Show more</p>
             </div>
          </div>
       );

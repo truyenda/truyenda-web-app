@@ -7,17 +7,19 @@
    position: relative;
    @include shadow;
    background-color: $white;
-   padding: 20px 0;
+   color: $dark-gray-1;
+   font-size: 0.85em;
+   // padding: 20px;
    margin: 5px 0 10px;
 
    h2 {
       color: $blue;
-      margin-left: 10px;
       margin-bottom: 10px;
+      margin-top: 20px;
+      margin-left: 20px;
    }
 
    .comic-chapters-wrapper {
-      padding: 0 10px;
       display: flex;
       flex-direction: column-reverse;
       flex-wrap: wrap;
@@ -25,7 +27,7 @@
       .comic-chapters-item {
          border: 1px solid $white;
          padding: 17px;
-         margin-bottom: 5px;
+         margin: 5px 20px;
          @include shadow;
          display: flex;
          justify-content: space-between;
@@ -45,26 +47,32 @@
    }
 
    .comic-chapters-show-more {
-      height: 70px;
+      height: 100px;
       width: 100%;
       // opacity: 0.4;
       display: block;
-      background: $dark-gray-1; 
-      background: linear-gradient(0deg,#fff 0,hsla(0,0%,100%, .8) 60%,hsla(0,0%,96%,0.1));
+      background: $dark-gray-1;
+      background: linear-gradient(
+         0deg,
+         #fff 0,
+         hsla(0, 0%, 100%, 0.8) 60%,
+         hsla(0, 0%, 96%, 0.1)
+      );
       position: absolute;
       bottom: 0px;
-
+      margin-left: 0;
       p {
-         color: $blue-3;
-         font-weight: bold;
          position: absolute;
-         left: 45%;
+         left: 50%;
+         margin-left: -34px;
          bottom: 10px;
+         color: $blue;
+         font-weight: bold;
 
          // TODO: 1. Check onclick method to show more
          // TODO: 2. Check length (if small -> no need)
-         // TODO: 4. Combine...
-         // TODO: 5. ReadingPage component (initial)
+         // TODO: 3. Add attribute comicGenres
+         // TODO: 4. Render as tag
       }
    }
 }

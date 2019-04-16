@@ -3,6 +3,7 @@
 
 .comic-cover-picture-container {
    width: 100%;
+   @include shadow;
    margin-top: -5px;
 
    // a {
