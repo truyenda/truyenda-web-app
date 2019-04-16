@@ -1,37 +1,40 @@
-@import '../../scss/mixins';
-@import '../../scss/variables';
+@import "../../scss/mixins";
+@import "../../scss/variables";
 
 .comic-detail-container {
    height: auto;
    width: 100%;
    display: flex;
+   margin: 0 auto;
    flex-direction: column;
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 1200px) {
+   .comic-detail-container {
+      width: 85%;
 
-   .comic-detail-row {
-      display: flex;
-      flex-direction: row;
-      justify-content: stretch;
-
-
-      .comic-detail-row-left {
-         flex: 0 0 50%;
+      .comic-detail-row {
          display: flex;
-         flex-direction: column;
-         justify-content: flex-start;
-         
-         // .comic-detail-row-left-summary {
-         // }
-         // .comic-detail-row-left-authors {
-         // }
-      }
+         flex-direction: row;
+         justify-content: stretch;
 
-      .comic-detail-row-right {
-         height: auto;
-         margin-bottom: 5px;
-         flex: 0 0 50%;
+         .comic-detail-row-left {
+            flex: 0 0 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+
+            // .comic-detail-row-left-summary {
+            // }
+            // .comic-detail-row-left-authors {
+            // }
+         }
+
+         .comic-detail-row-right {
+            height: auto;
+            margin-bottom: 5px;
+            flex: 0 0 50%;
+         }
       }
-   }  
+   }
 }
