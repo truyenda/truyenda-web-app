@@ -1,14 +1,35 @@
 @mixin shadow() {
-  border-bottom: 0 none;
-  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.12),
-    0 2px 4px 0 rgba(0, 0, 0, 0.14);
-  border-radius: 0.6%;
+   border-bottom: 0 none;
+   box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.12),
+      0 2px 4px 0 rgba(0, 0, 0, 0.14);
+   border-radius: 0.6%;
 }
 
 @mixin clearFix {
-  &:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
+   &:after {
+      content: "";
+      display: table;
+      clear: both;
+   }
+}
+
+@mixin showMore {
+   width: 100%;
+   display: block;
+   background: $dark-gray-1;
+   background: linear-gradient(
+      0deg,
+      #fff 0,
+      hsla(0, 0%, 100%, 0.8) 60%,
+      hsla(0, 0%, 96%, 0.1)
+   );
+   position: absolute;
+   bottom: 0;
+
+   p {
+     position: absolute;
+     left: 50%;
+     bottom: 10px;
+   }
+
 }

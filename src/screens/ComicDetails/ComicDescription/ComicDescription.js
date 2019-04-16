@@ -46,6 +46,9 @@ export default class ComicDescription extends Component {
                abandoned their duty and betrayed the city in his past life.
             </p>
             <h2>{comic.comicStatus}</h2>
+            <div className="comic-description-show-more">
+               <p>Show More</p>
+            </div>
          </div>
       );
    }
