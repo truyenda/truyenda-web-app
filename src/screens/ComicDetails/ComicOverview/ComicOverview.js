@@ -20,16 +20,15 @@ export default class ComicOverview extends Component {
                }
             }}
          >
-            <p className="comic-overview-bar-item comic-overview-bar-main-item">READ</p>
+            <p className="comic-overview-bar-item comic-overview-bar-main-item">
+               READ
+            </p>
          </Link>
       );
       return (
          <div className="comic-overview-container">
             <div className="comic-overview-picture">
-               <img
-                  src="https://img.webnovel.com/bookcover/8094015805004305/300/300.jpg?coverUpdateTime=1548301512855"
-                  alt={comic.comicTitle}
-               />
+               <img src={comic.comicAvatarPicture} alt={comic.comicTitle} />
             </div>
             <div className="comic-overview-content">
                <p className="comic-overview-title">{comic.comicTitle}</p>
@@ -38,7 +37,10 @@ export default class ComicOverview extends Component {
             </div>
             <div className="comic-overview-bar">
                {linkResult}
-               <p className="comic-overview-bar-item">Chapters</p>
+               <p className="comic-overview-bar-item">
+                  <span>{comic.comicNumberOfChapters}</span>
+                   Chapters
+               </p>
                <p className="comic-overview-bar-item">Favorite</p>
             </div>
          </div>

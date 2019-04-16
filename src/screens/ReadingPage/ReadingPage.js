@@ -24,6 +24,22 @@ export default class ReadingPage extends Component {
                   src={comic.comicCoverPicture}
                   alt="Page"
                />
+               <img
+                  src={comic.comicCoverPicture}
+                  alt="Page"
+               />
+               <img
+                  src={comic.comicCoverPicture}
+                  alt="Page"
+               />
+               <img
+                  src={comic.comicCoverPicture}
+                  alt="Page"
+               />
+               <img
+                  src={comic.comicCoverPicture}
+                  alt="Page"
+               />
             </div>
          </div>
       );
