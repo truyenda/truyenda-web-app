@@ -5,7 +5,7 @@
    height: auto;
    @include shadow;
    background-color: $white;  
-   margin-top: 5px;
+   margin-top: 5px; 
    font-size: 0.85em;
    color: $dark-gray-1;
    overflow: hidden;
@@ -35,7 +35,7 @@
    
    .comic-description-container {
       margin-left: 2.5px;
-      height: 385px;
+      height: 100%;
    }
    // TODO: Add show more mixin
 }
