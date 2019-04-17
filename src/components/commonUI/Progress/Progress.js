@@ -6,7 +6,7 @@ class Progress extends Component {
         return (
             <div className='progress-bar'>
                 <progress className="pure-material-progress-circular" />
-                <p>Đang tải...</p>
+                {this.props.display?<p>{this.props.display}</p>:''}
             </div>
         );
     }
