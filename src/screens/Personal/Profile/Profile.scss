@@ -15,7 +15,7 @@
     margin-bottom: 0.5em;
   }
 }
-.avatar-container {
+.profile-avatar-container {
   display: flex;
   margin-bottom: 1em;
 }
@@ -84,6 +84,40 @@
   margin: auto;
 }
 
+.profile-route-container{
+  margin-bottom: 0.5em;
+  div{
+    margin: 0 auto;
+    width: 500px;
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    span{
+      color: $blue-2;
+      cursor: pointer;
+      font-weight: normal;
+      text-align: center;
+      padding-top: 0.3em;
+      padding-bottom: 0.3em;
+      border-radius: 3px;
+      flex-basis: 0;
+      flex-grow: 1;
+      
+    }
+    span:hover{
+      color:$blue;
+    }
+    .active{
+      color:$blue;
+    }
+  }
+}
+
+
+.description-team{
+  min-height: 160px;
+}
+
 @media screen and (max-width: 560px) {
   .profile-container {
     width: 100%;
@@ -96,4 +130,11 @@
   .btn-logout {
     width: 100%;
   }
+  .profile-route-container{
+    div{
+      width: 100%;
+      flex-direction: column;
+    }
+  }
 }
+

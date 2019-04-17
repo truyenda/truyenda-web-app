@@ -2,7 +2,8 @@ import { sessionService } from "redux-react-session";
 import * as sessionApi from "../api/SessionApi";
 import Toast from "../components/commonUI/Toast";
 import Cookies from "universal-cookie";
-export const login = (user, history) => {
+
+export const login = (user, history, callback) => {
   return () => {
     return sessionApi
       .login(user)
@@ -18,38 +19,75 @@ export const login = (user, history) => {
           sessionService.saveSession(token);
           var user = res.Data.Profile;
           sessionService.saveUser(user);
-          const cookies = new Cookies();
-          var date = new Date();
-          let days = 4;
-          date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-          cookies.set("token", res.Data.Token, {
-            path: "/",
-            domain: ".truyenda.tk",
-            expires: date
-          });
         } else {
           if (res.Code < 300)
             Toast.error("Tài khoản đăng nhập không đúng", "Error " + res.Code);
           else Toast.error(res.MsgEror);
+          callback();
         }
       })
       .catch(err => {
         Toast.error("Có lỗi trong quá trình kết nối");
+        callback();
       });
   };
 };
 
 export const logout = history => {
-    return () => {
-    // return sessionApi
-    //   .logout()
-    //   .then(() => {
-    //     sessionService.deleteSession();
-    //     sessionService.deleteUser();
-    //     history.push("/");
-    //   })
-    //   .catch(err => {
-    //     throw err;
-    //   });
+  return () => {
+    return sessionApi
+      .logout()
+      .then(res => {
+        if(res.data.Code && res.data.Code === 200 && res.data.IsSuccess && res.data.IsValid){
+          console.log("logout");
+          sessionService.deleteSession();
+          sessionService.deleteUser();
+          var cookie = new Cookies();
+          cookie.remove("ToKen", {
+            path: "/",
+            domain: ".truyenda.tk"
+          });
+          Toast.success("Bạn đã đăng xuất");
+          history.push("/");
+        }else{
+          Toast.notify("Phiên đăng xuất thất bại");
+        }
+      })
+      .catch(err => {Toast.error('Có lỗi trong quá trình kết nối')});
   };
+};
+
+export const validateSession = session => {
+  var cookie = new Cookies();
+  var token = cookie.get("ToKen");
+  if (token) {
+    return sessionApi
+      .valid()
+      .then(res => {
+        if (res.data.Code === 200) {
+          sessionService.saveSession({ token: token });
+          sessionService.saveUser(res.data.Data);
+          console.log("Loaded session");
+          return true;
+        } else {
+          console.log("Fail session");
+          cookie.remove("ToKen", {
+            path: "/",
+            domain: ".truyenda.tk"
+          });
+          return false;
+        }
+      })
+      .catch(err => {
+        console.log("Error valid");
+        cookie.remove("ToKen", {
+          path: "/",
+          domain: ".truyenda.tk"
+        });
+        return false;
+      });
+  } else {
+    console.log("Not contain token");
+    return false;
+  }
 };

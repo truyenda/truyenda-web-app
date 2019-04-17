@@ -132,6 +132,8 @@ a {
 .user-avatar{
    height: 45px;
    width: 45px;
+   min-height: 45px;
+   min-width: 45px;
    @include shadow;
    border-radius: 50%;
 }
@@ -145,4 +147,7 @@ a {
    background: white;
    border-radius: 5px;
    @include shadow;
+   a{
+      cursor: pointer;
+   }
 }
