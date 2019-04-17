@@ -8,5 +8,10 @@ export const login = (user) => {
 
 export const logout = () => {
     const uri = 'logout';
-    return new Promise(resolve => setTimeout(resolve, 1000));
+    return Caller(uri,'POST');
+}
+
+export const valid = () => {
+    const uri = 'accounts/my';
+    return Caller(uri, "GET");
 }
