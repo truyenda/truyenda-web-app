@@ -8,30 +8,29 @@ import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import { sessionService } from 'redux-react-session';
 import Caller from './utils/APICaller.js';
+import Cookies from "universal-cookie";
 require('./assets/favicon.ico');
+import {validateSession} from "./actions/SessionActions.js";
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(
     AppReducer,
     composeEnhancer(applyMiddleware(thunk)),
 );
-const validateSession = (session) => {
-  console.log('valid session');
-  console.log(session);
-  return true;
-}
+
 const options = {
   refreshOnCheckAuth: true,
   redirectPath: "/",
   driver: "LOCALSTORAGE",
   validateSession
 };
-Caller('/', 'GET', {}).then(res => {
-  
+
+sessionService.initSessionService(store, options).then(() => {
+  validateSession();
 }).catch(err => {
-  console.log('Lỗi kết nối');
-})
-sessionService.initSessionService(store, options);
+  console.log(err);
+});
+
 ReactDOM.render(
   <Provider store = {store}>
     <App />
