@@ -1,0 +1,42 @@
+@import "../../../scss/mixins";
+@import "../../../scss/variables";
+
+.comic-cover-picture-container {
+   width: 100%;
+   @include shadow;
+   margin-top: -5px;
+
+   // a {
+   //    display: none;
+   //    text-decoration: none;
+   //    border: 1px solid $blue;
+   //    padding: 9px 20px;
+   //    color: $white;
+   //    background: $blue;
+   //    font-weight: bold;
+   //    @include shadow;
+   // }
+
+   &:hover {
+      img {
+         opacity: 0.15;
+         background-color: $blue;
+         transition: opacity 1s;
+      }
+      // a {
+      //    display: block;
+      //    position: absolute;
+      //    top: 50%;
+      //    left: 50%;
+      //    transform: translate(-50%, -50%);
+      // }
+   }
+
+   img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      opacity: 0.8;
+   }
+}
+//// Mobile first dude!

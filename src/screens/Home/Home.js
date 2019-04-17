@@ -12,8 +12,6 @@ class Home extends Component {
             <div className="title-type-chart">
                <p>Daily Chart</p>
                <Chart />
-               <Chart />
-               <Chart />
             </div>
          )
       };
@@ -42,7 +40,6 @@ class Home extends Component {
                <div className="title-type-chart">
                   <p>Weekly Chart</p>
                   <Chart />
-                  <Chart />
                </div>
             );
             this.setState({
@@ -69,9 +66,7 @@ class Home extends Component {
                <Main />
             </div>
             <div className="side-content-col">
-               <div className="browse-col">
-                  <Browse />
-               </div>
+               <Browse />
                <div className="chart-col">
                   <div className="chart-header">
                      <p className="chart-title">MOST POPULAR</p>
