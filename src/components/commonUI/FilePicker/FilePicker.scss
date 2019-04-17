@@ -1,0 +1,38 @@
+@import "../../../scss/variables";
+
+.file-picker-container {
+  .file-dropzone {
+    background-color: lighten($gray-1, 10%);
+    padding: 0.75em 0.5em;
+    border: dashed 1px $dark-gray-1;
+    text-align: center;
+    p{
+      color:$dark-gray-1;
+      font-size: 12px;
+    }
+  }
+
+  .file-name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-top:0.2em;
+      div{
+          display: inline-block;
+          border-radius: 50%;
+          min-width: 14px;
+          min-height: 14px;
+          padding:0.2em;
+          font-size: 10px;
+          text-align: center;
+          line-height: 14px;
+          background-color: $green;
+          margin-right:0.25em;
+      }
+  }
+  aside{
+      margin-top: 0.75em;
+      ol{
+        list-style-type: decimal-leading-zero;
+      }
+  }
+}
