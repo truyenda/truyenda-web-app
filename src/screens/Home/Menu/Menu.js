@@ -5,10 +5,9 @@ import logo from "../../../assets/85e9f040-5369-4fdb-8463-90e3d8dabf86.png";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { sessionService } from "redux-react-session";
-import Cookies from "universal-cookie";
 import * as SessionAction from "../../../actions/SessionActions.js";
-import Toast from "../../../components/commonUI/Toast";
+import { withRouter } from 'react-router-dom'
+import DefPhoto from '../../../assets/photo.png';
 class Menu extends Component {
   constructor(props) {
     super(props);
@@ -17,14 +16,8 @@ class Menu extends Component {
     };
   }
   LogoutEvent() {
-    sessionService.deleteSession();
-    sessionService.deleteUser();
-    var cookie = new Cookies();
-    cookie.remove("token", {
-      path: "/",
-      domain: ".truyenda.tk"
-    });
-    Toast.success('Bạn đã đăng xuất')
+    const { logout } = this.props.actions;
+    logout(this.props.history);
   }
   render() {
     return (
@@ -36,13 +29,13 @@ class Menu extends Component {
           <Link to="/">Trang chủ</Link>
           <Link to="/all-manga">Danh sách</Link>
           <Link to="/latest-update">Mới nhất</Link>
-          {this.props.user.Id ? (
+          {this.props.authenticated ? (
             <div className="user-profile-icon">
               <Link to="/personal/profile">
                 <img
                   alt={this.props.user.Ten}
                   className="user-avatar"
-                  src="https://avatars0.githubusercontent.com/u/31062901?s=88&v=4"
+                  src={DefPhoto}
                 />
               </Link>
               <div className="dropdown">
@@ -52,14 +45,13 @@ class Menu extends Component {
                 <Link to="/personal/comics">
                   <i className="fas fa-book-reader" /> Truyện của tôi
                 </Link>
-                <Link
-                  to="/"
+                <a
                   onClick={() => {
                     this.LogoutEvent();
                   }}
                 >
                   <i className="fas fa-sign-out-alt" /> Đăng xuất
-                </Link>
+                </a>
               </div>
             </div>
           ) : (
@@ -69,7 +61,7 @@ class Menu extends Component {
               </span>
             </Link>
           )}
-          {this.props.user.Id ? (
+          {this.props.user.Email ? (
             <Link to="/dashboard">
               <Button display="Quản lí" type="btn-Green" />
             </Link>
@@ -93,7 +85,7 @@ const mapDispatch = dispatch => {
   };
 };
 
-export default connect(
+export default withRouter(connect(
   mapState,
   mapDispatch
-)(Menu);
+)(Menu));
