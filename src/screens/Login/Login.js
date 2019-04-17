@@ -5,9 +5,10 @@ import CheckBox from "../../components/commonUI/CheckBox";
 import Button from "../../components/commonUI/Button";
 import { Link, Redirect } from "react-router-dom";
 import Cookies from "universal-cookie";
-import * as SessionAction from '../../actions/SessionActions.js';
+import * as SessionAction from "../../actions/SessionActions.js";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import Progress from "../../components/commonUI/Progress";
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -17,15 +18,16 @@ class Login extends Component {
       usernameMes: "",
       password: "",
       passwordMes: "",
-      remember: false
+      remember: false,
+      inProgress: false
     };
   }
-
   componentWillMount() {
     var cookies = new Cookies();
     var isLogined = false;
-    if (cookies.get("token")) {
+    if (cookies.get("ToKen")) {
       isLogined = true;
+      SessionAction.validateSession();
     } else {
       isLogined = false;
     }
@@ -55,11 +57,19 @@ class Login extends Component {
   LoginEvent() {
     this.setState({ log: "Đang đăng nhập..." });
     if (this.ValidInput()) {
+      const loginCallback = () => {
+        this.setState({ inProgress: false });
+      };
       const { login } = this.props.actions;
-      const user = { username: this.state.username, password: this.state.password, remember: this.state.remember };
-      login(user, this.props.history);
+      const user = {
+        username: this.state.username,
+        password: this.state.password,
+        remember: this.state.remember
+      };
+      login(user, this.props.history, loginCallback);
     }
   }
+
   setStateForm(key, value) {
     this.setState({
       [key]: value
@@ -112,8 +122,12 @@ class Login extends Component {
                 display="Đăng nhập"
                 submit="submit"
                 style="rep-btn"
+                disabled={this.state.inProgress}
                 onClick={() => {
-                  this.LoginEvent();
+                  if (!this.props.inProgress) {
+                    this.setState({ inProgress: true });
+                    this.LoginEvent();
+                  }
                 }}
               />
               <Link to="/signup">
@@ -124,6 +138,12 @@ class Login extends Component {
                 />
               </Link>
             </div>
+
+            {this.state.inProgress ? (
+              <Progress display="Đang đăng nhập..." />
+            ) : (
+              ""
+            )}
           </form>
           <div className="break-line-block">
             <span>HOẶC</span>
