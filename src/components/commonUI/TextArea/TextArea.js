@@ -38,6 +38,7 @@ class TextArea extends Component {
             autoComplete={this.props.id}
             disabled={this.props.disabled ? this.props.disabled : false}
             required={this.props.required ? this.props.required : false}
+            className={this.props.style?this.props.style:''}
           />
           <span>{this.props.display}</span>
         </label>
