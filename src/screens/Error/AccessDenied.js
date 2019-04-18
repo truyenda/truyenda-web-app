@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import "./Error.scss";
-import ErrorImg from "../../assets/404.png";
+import ErrorImg from "../../assets/403.png";
 import Button from "../../components/commonUI/Button";
 import { Link } from "react-router-dom";
-class NotFound extends Component {
+class AccessDenied extends Component {
   componentDidMount() {
-    document.title = "Không tìm thấy trang yêu cầu";
+    document.title = "Trang bị hạn chế truy cập";
   }
   render() {
     return (
@@ -13,7 +13,7 @@ class NotFound extends Component {
         <div className="error-img">
           <img src={ErrorImg} />
         </div>
-        <span>Xin lỗi! Trang bạn muốn đến không tồn tại 😴</span>
+        <span>Xin lỗi! Bạn không đủ quyền để truy cập trang này ☢</span>
         <Link className="link-to-home" to="/">
           <Button display="Trang chủ" style="btn-back-home" />
         </Link>
@@ -22,4 +22,4 @@ class NotFound extends Component {
   }
 }
 
-export default NotFound;
+export default AccessDenied;
