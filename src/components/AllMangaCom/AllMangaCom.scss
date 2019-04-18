@@ -1,0 +1,22 @@
+@import "../../scss/mixins";
+@import "../../scss/variables";
+.all_manga {
+  display: -webkit-flex; /* Safari */
+  -webkit-flex-wrap: wrap; /* Safari 6.1+ */
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 8px;
+  min-width: 195px;
+}
+// @media screen and (min-width: 769px) {
+// }
+
+// @media screen and (min-device-width: 481px) and (max-device-width: 768px) { 
+// }
+
+@media only screen and (max-device-width: 480px) {
+  .all_manga{
+    align-items: center;
+    justify-content: center;
+  }
+}
