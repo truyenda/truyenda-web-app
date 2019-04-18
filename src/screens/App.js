@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import Home from "./Home";
 import Login from "./Login";
 import LatestUpdate from "./LatestUpdate"
+import AllManga from "./AllManga"
 import Menu from "./Home/Menu";
 import Footer from "./Home/Footer/Footer";
 import SignUp from "./SignUp/SignUp";
@@ -23,6 +24,7 @@ class App extends Component {
             <div className="container">
                <Switch>
                   <Route path="/latest-update" component={LatestUpdate}/>
+                  <Route path="/all-manga" component={AllManga}/>
                   <Route path="/" exact={true} component={Home} />
                   <Route path="/login" component={Login} />
                   <Route
