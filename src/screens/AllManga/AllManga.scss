@@ -2,8 +2,15 @@
 @import '../../scss/variables';
 
 .all-manga-container {
-   height: 700px;
    background-color: $white;
    @include shadow;
-   padding: 1em;
+  //  padding: 1em;
+}
+.title_all_manga {
+  color: rgba(0,0,0,.87);
+  font-size: 36px;
+  font-size: 2.25rem;
+  font-weight: 500;
+  line-height: 42px;
+  margin-bottom: 20px;
 }
