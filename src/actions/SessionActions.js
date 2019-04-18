@@ -70,6 +70,9 @@ export const validateSession = session => {
           console.log("Loaded session");
           return true;
         } else {
+          if(res.data.Code === 500){
+            Toast.error(res.data.MsgError, "Lỗi");
+          }
           console.log("Fail session");
           cookie.remove("ToKen", {
             path: "/",
