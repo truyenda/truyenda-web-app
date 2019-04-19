@@ -34,6 +34,7 @@ export default class ComicOverview extends Component {
                <p className="comic-overview-title">{comic.comicTitle}</p>
                <p className="comic-overview-subtitle">{comic.comicAuthors}</p>
                <p className="comic-overview-subtitle">{comic.comicStatus}</p>
+               <p className="comic-overview-subtitle">{comic.comicView} views</p>
             </div>
             <div className="comic-overview-bar">
                {linkResult}
