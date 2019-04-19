@@ -16,6 +16,7 @@ export default class Chart extends Component {
          comics: [
             {
                comicId: 1,
+               comicView: 35590,
                comicGenres: [
                   "Fiction",
                   "Comedy",
@@ -37,6 +38,7 @@ export default class Chart extends Component {
             },
             {
                comicId: 2,
+               comicView: 32884,
                comicGenres: [
                   "Fiction",
                   "Comedy",
@@ -64,6 +66,7 @@ export default class Chart extends Component {
             },
             {
                comicId: 3,
+               comicView: 29061,
                comicGenres: [
                   "Fiction",
                   "Comedy",
@@ -83,6 +86,7 @@ export default class Chart extends Component {
             },
             {
                comicId: 4,
+               comicView: 23985,
                comicGenres: [
                   "Fiction",
                   "Comedy",
@@ -103,6 +107,7 @@ export default class Chart extends Component {
             },
             {
                comicId: 5,
+               comicView: 20080,
                comicGenres: [
                   "Fiction",
                   "Comedy",
@@ -124,9 +129,6 @@ export default class Chart extends Component {
          ]
       };
    }
-
-   //TODO: Change dynamically comic pictures on the chart
-
    render() {
       const { comics } = this.state;
       const listComics = comics.map(comic => (
@@ -145,7 +147,7 @@ export default class Chart extends Component {
                <div className="content">
                   <p className="name-title">{comic.comicTitle}</p>
                   <p className="side-title">{comic.comicAuthors}</p>
-                  <p className="status-title">{comic.comicStatus}</p>
+                  <p className="status-title">{comic.comicStatus} | {comic.comicView} views</p>
                </div>
             </div>
          </Link>
