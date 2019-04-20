@@ -16,6 +16,7 @@ import ComicDetails from "../screens/ComicDetails";
 import ReadingPage from "./ReadingPage/ReadingPage";
 import Dashboard from "./Dashboard/Dashboard";
 import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
+import '../assets/react-table.css';
 class App extends Component {
   render() {
     return (
