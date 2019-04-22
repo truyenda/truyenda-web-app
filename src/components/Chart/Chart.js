@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styles from "./Chart.scss";
 import demo from "../../assets/demo.jpg";
 import { Link } from "react-router-dom";
+import { convertToFriendlyPath } from "../../utils/StringUtils";
 export default class Chart extends Component {
    constructor(props) {
       super(props);
@@ -60,7 +61,8 @@ export default class Chart extends Component {
                comicStatus: "Ongoing",
                comicCoverPicture:
                   "https://www.cartoonbrew.com/wp-content/uploads/2019/02/lasthuman_main.jpg",
-               comicAvatarPicture: "https://www.cartoonbrew.com/wp-content/uploads/2019/02/lasthuman_bookcover.jpg",
+               comicAvatarPicture:
+                  "https://www.cartoonbrew.com/wp-content/uploads/2019/02/lasthuman_bookcover.jpg",
                comicAuthorAvatar:
                   "https://www.cartoonbrew.com/wp-content/uploads/2019/02/lasthuman_bookcover.jpg"
             },
@@ -80,7 +82,8 @@ export default class Chart extends Component {
                comicAuthors: "Eiichiro Oda",
                comicStatus: "Ongoing",
                comicCoverPicture: `https://images-eds-ssl.xboxlive.com/image?url=8Oaj9Ryq1G1_p3lLnXlsaZgGzAie6Mnu24_PawYuDYIoH77pJ.X5Z.MqQPibUVTcJTdjtktMdh6m8AhJtGzjcBQlBuElg62IYoML9TIiBwdjoC0rhzFG6pQwboB15yyjja3KW3wsRTQSjFNikG4NZvcAtwgLoevdtnikz67kYwiPCcbOgu45gB898T7vYAwkHcage5GQsSxsy.4HUbTsPJq9dTR2ciyyiMRAUmOe51Y-&h=1080&w=1920&format=jpg`,
-               comicAvatarPicture: "https://upload.wikimedia.org/wikipedia/en/thumb/a/aa/One_Piece_DVD_18.png/200px-One_Piece_DVD_18.png",
+               comicAvatarPicture:
+                  "https://upload.wikimedia.org/wikipedia/en/thumb/a/aa/One_Piece_DVD_18.png/200px-One_Piece_DVD_18.png",
                comicAuthorAvatar:
                   "https://ya-webdesign.com/images/girl-avatar-png-19.png"
             },
@@ -101,7 +104,8 @@ export default class Chart extends Component {
                comicStatus: "Ongoing",
                comicCoverPicture:
                   "https://res.cloudinary.com/sfp/image/upload/c_fill,q_60,h_750,w_1920/oth/FunimationStoreFront/1899700/Latvian/1899700_Latvian_ShowDetailHeaderDesktop_09a8faf6-a013-e911-8175-020165574d09.jpg",
-               comicAvatarPicture: "https://prodimage.images-bn.com/pimages/9781935548706_p0_v1_s550x406.jpg",
+               comicAvatarPicture:
+                  "https://prodimage.images-bn.com/pimages/9781935548706_p0_v1_s550x406.jpg",
                comicAuthorAvatar:
                   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYm-KcyvHy3PDkmh0V9KzkUk26255h0RwthshiaoanTnfH2B_IRg"
             },
@@ -122,7 +126,8 @@ export default class Chart extends Component {
                comicStatus: "Ongoing",
                comicCoverPicture:
                   "https://dw9to29mmj727.cloudfront.net/promo/2016/5256-SeriesHeaders_OPM_2000x800.jpg",
-               comicAvatarPicture: "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/5710/5710418_sa.jpg;maxHeight=640;maxWidth=550",
+               comicAvatarPicture:
+                  "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/5710/5710418_sa.jpg;maxHeight=640;maxWidth=550",
                comicAuthorAvatar:
                   "https://mir-s3-cdn-cf.behance.net/project_modules/disp/a9475211889067.562541caf0859.png"
             }
@@ -134,7 +139,7 @@ export default class Chart extends Component {
       const listComics = comics.map(comic => (
          <Link
             to={{
-               pathname: "/comics/" + comic.comicId,
+               pathname: convertToFriendlyPath("/comics", comic.comicTitle, comic.comicId),
                state: {
                   comic
                }
@@ -147,7 +152,9 @@ export default class Chart extends Component {
                <div className="content">
                   <p className="name-title">{comic.comicTitle}</p>
                   <p className="side-title">{comic.comicAuthors}</p>
-                  <p className="status-title">{comic.comicStatus} | {comic.comicView} views</p>
+                  <p className="status-title">
+                     {comic.comicStatus} | {comic.comicView} views
+                  </p>
                </div>
             </div>
          </Link>
