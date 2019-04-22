@@ -1,0 +1,88 @@
+@import "../../../scss/mixins";
+@import "../../../scss/variables";
+.bookmark-container {
+  background-color: white;
+  padding: 1em;
+  min-height: 50vh;
+  @include shadow;
+  .tb-name-wrap {
+    border-bottom: solid #777777 1px;
+    margin-bottom: 1em;
+    span {
+      margin-bottom: 1em;
+      font-weight: bold;
+      color: $blue;
+      text-transform: uppercase;
+      font-size: 16px;
+      border-bottom: solid $blue 3px;
+      line-height: 25px;
+    }
+  }
+  .ReactTable .rt-tbody .rt-td {
+    border-right: 1px solid lighten($gray-1,0%);
+}
+  .ReactTable .rt-th  {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 0 0px;
+    flex: 1 0 0;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: 7px 5px;
+    overflow: hidden;
+    transition: 0.3s ease;
+    transition-property: width, min-width, padding, opacity;
+    background: $gray-1;
+    i{
+      color: $blue-5;
+    }
+  }
+  .ReactTable .rt-tr:hover .action {
+    transform: scale(1.3);
+  }
+
+  .ReactTable .rt-tr:hover .rt-td {
+    background: $gray-1;
+  }
+  a {
+    color: $blue-4;
+    :hover,
+    :visited {
+      text-decoration: none;
+    }
+  }
+  .action-group-bookmark {
+    font-weight: bold;
+    display: flex;
+    justify-content: space-around;
+    i {
+      color: $dark-gray-1;
+      text-align: center;
+      line-height: 22px;
+      padding: 0.25em;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    .check {
+      width: 32px;
+    }
+    .check:hover {
+      background-color: $green;
+    }
+    .delete {
+      width: 32px;
+    }
+    .delete:hover {
+      background-color: lighten($orange-1, 25%);
+    }
+  }
+}
+
+.loadingcmp {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+}
