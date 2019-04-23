@@ -10,9 +10,7 @@ class LatestUpdate extends Component {
       this.state = {
          chartList: (
             <div className="title-type-chart">
-               <p>Daily Chart</p>
-               <Chart />
-               <Chart />
+               <p className="title-type-chart-content">Daily Chart</p>
                <Chart />
             </div>
          )
@@ -38,7 +36,6 @@ class LatestUpdate extends Component {
             let weeklyChart = (
                <div className="title-type-chart">
                   <p>Weekly Chart</p>
-                  <Chart />
                   <Chart />
                </div>
             );

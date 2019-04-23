@@ -11,7 +11,7 @@ export default class ComicGenreTags extends Component {
    render() {
       const { comic } = this.state;
       const listGenres = comic.comicGenres.map(genre => (
-         <a href="#">{genre}</a>
+         <a href="#" key={genre}>{genre}</a>
       ));
       return (
          <div className="comic-genre-tags-container">
