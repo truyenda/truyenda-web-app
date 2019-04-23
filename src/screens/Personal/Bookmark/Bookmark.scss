@@ -19,9 +19,9 @@
     }
   }
   .ReactTable .rt-tbody .rt-td {
-    border-right: 1px solid lighten($gray-1,0%);
-}
-  .ReactTable .rt-th  {
+    border-right: 1px solid lighten($gray-1, 0%);
+  }
+  .ReactTable .rt-th {
     -webkit-box-flex: 1;
     -ms-flex: 1 0 0px;
     flex: 1 0 0;
@@ -32,7 +32,7 @@
     transition: 0.3s ease;
     transition-property: width, min-width, padding, opacity;
     background: $gray-1;
-    i{
+    i {
       color: $blue-5;
     }
   }
