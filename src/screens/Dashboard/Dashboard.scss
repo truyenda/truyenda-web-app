@@ -3,11 +3,9 @@
 .dashboard-container {
   margin-top: 1em;
   display: flex;
-  max-height: 768px;
-  height: 100vh;
+  min-height: 80vh;
   .side-bar {
-    flex-grow: 1;
-    flex-basis: auto;
+    flex: 0 0 230px;
     .header-side {
       display: block;
       font-size: 12px;
@@ -78,5 +76,14 @@
         color: $dark-gray-2;
       }
     }
+  }
+}
+
+@media screen and (max-width: 560px) {
+  .dashboard-container {
+    flex-direction: column;
+  }
+  .board-container {
+    margin-top: 0.75em;
   }
 }
