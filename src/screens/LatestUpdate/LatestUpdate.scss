@@ -64,8 +64,9 @@
 }
 
 .title-type-chart {
-   p {
-      color: $blue;
+
+   .title-type-chart-content {
+      color: $orange-1;
       width: 30%;
       font-weight: bold;
       font-size: 0.8em;

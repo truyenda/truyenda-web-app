@@ -1,8 +1,8 @@
 @import "../../../scss/mixins";
 @import "../../../scss/variables";
 
-.comic-summary-container {
-   height: auto;
+.comic-summary-container-close {
+   height: 220px;
    @include shadow;
    overflow: hidden;
    background-color: $white;
@@ -31,9 +31,46 @@
    }
 }
 
+.comic-summary-container-open {
+   height: auto;
+   @include shadow;
+   overflow: hidden;
+   background-color: $white;
+   margin-top: 5px;
+   font-size: 0.85em;
+   color: $dark-gray-1;
+   position: relative;
+
+   h2 {
+      color: $blue;
+      margin-bottom: 10px;
+      margin-top: 20px;
+      margin-left: 20px;
+   }
+
+   li {
+      margin: 5px 0;
+   }
+
+   .comic-summary-content {
+      margin: 20px 20px 50px;
+   }
+
+   .comic-summary-show-more {
+      @include showMoreOpen;
+      // @include showMore;
+      // display: none;
+   }
+}
+
 @media only screen and (min-width: 768px) {
-   .comic-summary-container {
+   .comic-summary-container-close {
       margin-right: 2.5px;
-      height: auto; 
+      height: 220px;
+   }
+
+   .comic-summary-container-open {
+      margin-right: 2.5px;
+      height: auto;
    }
 }
