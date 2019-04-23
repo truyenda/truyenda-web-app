@@ -1,4 +1,15 @@
+<<<<<<< HEAD
 module.exports.ConvertToPath = str => {
+=======
+//TODO: friendly URL
+//TODO: if not => 404 page
+//TODO: Real data (get API)
+//TODO: Progress circle (load)
+//TODO: React Table
+//TODO: React Responsive Modal
+
+module.exports.convertToPath = str => {
+>>>>>>> ab07065958525bf832c0dab4e12430bb3cecacbd
    str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
    str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
    str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
@@ -13,8 +24,18 @@ module.exports.ConvertToPath = str => {
    str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, "U");
    str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, "Y");
    str = str.replace(/Đ/g, "D");
+<<<<<<< HEAD
    str = str.replace(/\s+/g, '-');
    return str;
+=======
+   str = str.replace(/\s+/g, "-");
+   return str;
+};
+
+module.exports.convertToFriendlyPath = (endpoint, title, id) => {
+   let pathWithRegex = this.convertToPath(title).toLowerCase();
+   return endpoint + "/" + pathWithRegex + "-" + id;
+>>>>>>> ab07065958525bf832c0dab4e12430bb3cecacbd
 };
 
 module.exports.validateEmail = email => {
@@ -28,7 +49,11 @@ module.exports.validateDate = date => {
 };
 
 module.exports.validUsername = username => {
+<<<<<<< HEAD
    var re = '^(?=.{8,24}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$';
+=======
+   var re = "^(?=.{8,24}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$";
+>>>>>>> ab07065958525bf832c0dab4e12430bb3cecacbd
    return username.match(re);
 };
 

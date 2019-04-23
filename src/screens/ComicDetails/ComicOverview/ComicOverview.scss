@@ -38,11 +38,23 @@
       }
       .comic-overview-subtitle {
          font-size: 0.9em;
-         margin-bottom: 4px;
+         margin-bottom: 7px;
 
-         &:last-child {
-            color: $blue;
+         &:nth-last-of-type(1) {
+            color: $dark-gray;
+            font-size: 0.7em;
          }
+
+         &:nth-last-of-type(2) {
+            color: $orange-1;
+            font-size: 0.7em;
+         }
+
+         // &:last-child {
+         //    color: $dark-gray;
+         //    margin-top: 10px;
+         //    font-size: 0.65em;
+         // }
       }
    }
 
