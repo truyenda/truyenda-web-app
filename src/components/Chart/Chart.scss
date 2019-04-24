@@ -4,7 +4,7 @@
 .chart-wrapper {
    display: flex;
    flex-wrap: wrap;
-   flex-direction: column-reverse;
+   flex-direction: column;
 
    &:after {
       last-child {

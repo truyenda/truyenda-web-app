@@ -31,24 +31,24 @@ export default class Chart extends Component {
       const { comics } = this.state;
       const listComics = comics.map(comic => (
          <Link
-            to={{
-               pathname: convertToFriendlyPath(
-                  "/comics",
+         to={{
+            pathname: convertToFriendlyPath(
+               "/comics",
                   comic.TenTruyen,
                   comic.Id
-               ),
-               state: {
-                  comic
-               }
-            }}
-            key={comic.Id}
-         >
+                  ),
+                  state: {
+                     comic
+                  }
+               }}
+               key={comic.Id}
+               >
             <div className="chart-item">
                <p className="rank">{comic.Id}</p>
                <img className="img" src={comic.AnhDaiDien} />
                <div className="content">
                   <p className="name-title">{comic.TenTruyen}</p>
-                  {/* <p className="side-title">{comic.DanhSachTacGia}</p> */}
+                  <p className="side-title"></p>
                   <p className="status-title">
                      {comic.TrangThai} | 202020 views
                   </p>
