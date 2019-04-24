@@ -2,6 +2,7 @@ import "./Dashboard.scss";
 import React, { Component } from "react";
 import { Link, Switch, Route } from "react-router-dom";
 import Logo from "../../assets/b725a56c-207a-4c5c-af91-beb98632d3d8.png";
+import ComicsDashBoard from "./ComicsDashBoard/ComicsDashBoard";
 class Dashboard extends Component {
   render() {
     return (
@@ -10,6 +11,7 @@ class Dashboard extends Component {
         <div className="board-container">
           <Switch>
             {/* <Route path='/dashboard/accounts' exact={true} component={}/> */}
+            <Route path="/dashboard/comics" component={ComicsDashBoard}/>
             <Route component={WelcomePanel} />
           </Switch>
         </div>
