@@ -1,12 +1,7 @@
 import React, { Component } from "react";
 import "./CategoryTable.scss";
 import ReactTable from "react-table";
-import {
-  getAllCategory,
-  addCategory,
-  updateCategory,
-  deleteCategory
-} from "../../../api/CategoryApi.js";
+import CategoryApi from "../../../api/CategoryApi.js";
 import Toast from "../../../components/commonUI/Toast";
 import Progress from "../../../components/commonUI/Progress";
 import Button from "../../../components/commonUI/Button";
@@ -35,7 +30,7 @@ class CategoryTable extends Component {
   }
 
   componentDidMount() {
-    getAllCategory()
+    CategoryApi.list()
       .then(res => {
         if (res.data.Code === 200) {
           this.setState({
@@ -111,7 +106,7 @@ class CategoryTable extends Component {
       });
       let category = this.state.category;
       this.onCloseModal();
-      addCategory(category)
+      CategoryApi.add(category)
         .then(res => {
           if (res.data.Code === 200) {
             Toast.success(category.name, "Đã tạo thành công");
@@ -166,7 +161,7 @@ class CategoryTable extends Component {
       });
       let category = this.state.category;
       this.onCloseModal();
-      updateCategory(category)
+      CategoryApi.update(category)
         .then(res => {
           if (res.data.Code === 200) {
             Toast.success(category.name, "Cập nhật thể loại thành công");
@@ -199,7 +194,7 @@ class CategoryTable extends Component {
         this.setState({
           loading: true
         });
-        deleteCategory(category)
+        CategoryApi.delete(category)
           .then(res => {
             if (res.data.Code && res.data.Code === 200) {
               Toast.success(category.TenLoaiTruyen, "Đã xóa loại truyện");
@@ -274,7 +269,7 @@ class CategoryTable extends Component {
       return <Link to="/dashboard/categories">Thử lại</Link>;
     }
     return (
-      <div className="category-container">
+      <div className="dashboard-table">
         <div className="tb-name-wrap">
           <span>Thể loại truyện</span>
         </div>
@@ -358,6 +353,7 @@ class CategoryTable extends Component {
             pageText="Trang"
             ofText="trên"
             rowsText="thể loại"
+            
             defaultFilterMethod={(filter, row, column) => {
               const id = filter.pivotId || filter.id;
               return row[id] !== undefined
