@@ -13,11 +13,23 @@ export default class ComicChapters extends Component {
    constructor(props) {
       super(props);
       this.state = {
-         comic: this.props.details
+         comic: this.props.details,
+         isOpen: false
       };
    }
+
+   toggle() {
+      this.setState({
+         isOpen: !this.state.isOpen
+      });
+   }
+
    render() {
-      const { comic } = this.state;
+      const { comic, isOpen } = this.state;
+      const showMoreClassName = isOpen
+         ? "comic-chapters-container-open"
+         : "comic-chapters-container-close";
+      const innerShowMore = isOpen ? "Show Less" : "Show More";
       const chapterIndexes = [...Array(comic.comicNumberOfChapters).keys()];
 
       const listChapters = chapterIndexes.map(index => (
@@ -28,11 +40,15 @@ export default class ComicChapters extends Component {
       ));
 
       return (
-         <div className="comic-chapters-container">
+         <div className={showMoreClassName}>
             <h2>Chapters</h2>
             <div className="comic-chapters-wrapper">{listChapters}</div>
             <div className="comic-chapters-show-more">
-               <p>Show more</p>
+               <p
+                  onClick={() => {
+                     this.toggle();
+                  }}
+               >{innerShowMore}</p>
             </div>
          </div>
       );
