@@ -138,6 +138,14 @@
   width: 100%;
   text-align: center;
 }
+
+//style for comic images
+.comic-avatar {
+  width: 100%;
+  height: auto;
+  @include shadow;  
+}
+
 //style for button add
 .btn-add-wrapper {
   width: 100%;

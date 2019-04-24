@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+//TODO:
 export default function uploadPhoto(file){
     var formData = new FormData();
     formData.set('image', file);
@@ -14,7 +15,6 @@ export default function uploadPhoto(file){
             }
         }
         rs.send(formData);
-
     })
     // return axios(
     //     'https://shieldmanga.icu',
