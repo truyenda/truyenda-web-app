@@ -8,8 +8,7 @@ export default {
     return Caller(prefix, "POST", data);
   },
   list(index) {
-    //TODO: fix page parameter
-    return Caller(prefix + index, "GET");
+    return Caller(prefix + "page/" + index, "GET");
   },
   search(query, index) {
     return Caller(prefix + "search/" + query + "/page/" + index, "GET");
