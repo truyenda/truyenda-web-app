@@ -131,3 +131,34 @@
     line-height: 25px;
   }
 }
+
+//style for id cell
+.Id-center {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+//style for button add
+.btn-add-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.5em;
+}
+//style for action row
+.action-group {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 0.5em;
+  i:hover {
+    color: $dark-gray-1;
+    cursor: pointer;
+  }
+}
+//style for modal
+.modal-add {
+  width: 500px;
+  h2 {
+    margin-bottom: 1em;
+  }
+}

@@ -1,29 +1,6 @@
 @import "../../../scss/variables";
 
-.Id-center {
-  display: block;
-  width: 100%;
-  text-align: center;
-}
-
-.btn-add-wrapper {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 0.5em;
-}
-.action-group {
-  display: flex;
-  justify-content: space-evenly;
-  i:hover {
-    color: $dark-gray-1;
-    cursor: pointer;
-  }
-}
-
-.modal-add-cate {
-  width: 500px;
-  h2 {
-    margin-bottom: 1em;
-  }
+.tip-200 {
+  width: 200px;
+  white-space: normal;
 }

@@ -10,6 +10,8 @@ import TextArea from "../../../components/commonUI/TextArea";
 import Modal from "react-responsive-modal";
 import Alert from "../../../components/commonUI/Alert";
 import { Link } from "react-router-dom";
+
+import ReactTooltip from "react-tooltip";
 class CategoryTable extends Component {
   constructor(props) {
     super(props);
@@ -239,7 +241,16 @@ class CategoryTable extends Component {
         width: 150,
         maxWidth: 150
       },
-      { Header: "Mô tả", accessor: "MoTa" },
+      {
+        Header: "Mô tả",
+        accessor: "MoTa",
+        Cell: cell => (
+          <span data-for="des-tip" data-tip={cell.value}>
+            {cell.value}
+            <ReactTooltip multiline={true} id="des-tip" getContent={v => <p className='tip-200'>{v}</p>}/>
+          </span>
+        )
+      },
       {
         Header: "",
         sortable: false,
@@ -273,6 +284,7 @@ class CategoryTable extends Component {
         <div className="tb-name-wrap">
           <span>Thể loại truyện</span>
         </div>
+
         <div className="btn-add-wrapper">
           <Button
             display=" Tạo mới"
@@ -284,7 +296,7 @@ class CategoryTable extends Component {
             }}
           />
           <Modal
-            classNames={{ modal: "modal-add-cate" }}
+            classNames={{ modal: "modal-add" }}
             open={this.state.openModal}
             onClose={() => {
               this.onCloseModal();
@@ -353,7 +365,6 @@ class CategoryTable extends Component {
             pageText="Trang"
             ofText="trên"
             rowsText="thể loại"
-            
             defaultFilterMethod={(filter, row, column) => {
               const id = filter.pivotId || filter.id;
               return row[id] !== undefined
