@@ -4,6 +4,8 @@ import { Link, Switch, Route } from "react-router-dom";
 import Logo from "../../assets/b725a56c-207a-4c5c-af91-beb98632d3d8.png";
 import CategoryTable from './CategoryTable';
 import AuthorTable from './AuthorTable';
+import FrequencyTable from './FrequencyTable';
+import StoryStatusTable from './StoryStatusTable';
 class Dashboard extends Component {
   componentDidMount(){
     document.title = 'Trang quản lý'
@@ -16,6 +18,8 @@ class Dashboard extends Component {
           <Switch>
             <Route path='/dashboard/authors' exact={true} component={AuthorTable}/>
             <Route path='/dashboard/categories' exact={true} component={CategoryTable}/>
+            <Route path='/dashboard/frequencies' exact={true} component={FrequencyTable}/>
+            <Route path='/dashboard/status' exact={true} component={StoryStatusTable}/>
             <Route component={WelcomePanel} />
           </Switch>
         </div>
