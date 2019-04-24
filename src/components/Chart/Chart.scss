@@ -52,16 +52,16 @@
       font-size: 1em;
 
       .name-title {
-         line-height: 1.4em;
+         line-height: 1em;
          width: 80%;
          font-size: 0.9em;
-         height: 1em;
          color: $blue-5;
          font-weight: bold;
          overflow: hidden;
          text-overflow: ellipsis;
          margin-bottom: 3%;
          display: block;
+         max-height: 2.22em;
       }
 
       .side-title {

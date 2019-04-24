@@ -2,6 +2,7 @@ import "./Dashboard.scss";
 import React, { Component } from "react";
 import { Link, Switch, Route } from "react-router-dom";
 import Logo from "../../assets/b725a56c-207a-4c5c-af91-beb98632d3d8.png";
+import ComicsDashBoard from './ComicsDashBoard';
 import CategoryTable from './CategoryTable';
 import AuthorTable from './AuthorTable';
 import FrequencyTable from './FrequencyTable';
@@ -16,6 +17,7 @@ class Dashboard extends Component {
         <SideBar groups={accessFilter(routeList)} />
         <div className="board-container">
           <Switch>
+            <Route path="/dashboard/comics" component={ComicsDashBoard}/>
             <Route path='/dashboard/authors' exact={true} component={AuthorTable}/>
             <Route path='/dashboard/categories' exact={true} component={CategoryTable}/>
             <Route path='/dashboard/frequencies' exact={true} component={FrequencyTable}/>

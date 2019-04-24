@@ -1,7 +1,7 @@
 @import "../../../scss/mixins";
 @import "../../../scss/variables";
 
-.comic-chapters-container {
+.comic-chapters-container-close {
    height: 350px;
    overflow: hidden;
    position: relative;
@@ -68,7 +68,86 @@
          bottom: 10px;
          color: $blue;
          font-weight: bold;
+         cursor: pointer;
 
+         // TODO: 1. Check onclick method to show more
+         // TODO: 2. Check length (if small -> no need)
+         // TODO: 3. Add attribute comicGenres
+         // TODO: 4. Render as tag
+      }
+   }
+}
+
+.comic-chapters-container-open {
+   height: auto;
+   overflow: hidden;
+   position: relative;
+   @include shadow;
+   background-color: $white;
+   color: $dark-gray-1;
+   font-size: 0.85em;
+   // padding: 20px;
+   margin: 5px 0 10px;
+
+   h2 {
+      color: $blue;
+      margin-bottom: 10px;
+      margin-top: 20px;
+      margin-left: 20px;
+   }
+
+   .comic-chapters-wrapper {
+      display: flex;
+      flex-direction: column-reverse;
+      flex-wrap: wrap;
+      margin-bottom: 50px; 
+
+      .comic-chapters-item {
+         border: 1px solid $white;
+         padding: 17px;
+         margin: 5px 20px;
+         @include shadow;
+         display: flex;
+         justify-content: space-between;
+
+         .comic-chapters-item-left {
+            font-size: 0.85em;
+            color: $dark-gray-1;
+            margin: auto 0;
+         }
+
+         .comic-chapters-item-right {
+            font-size: 0.6em;
+            color: $orange-1;
+            margin: auto 0;
+         }
+      }
+   }
+
+   .comic-chapters-show-more {
+      height: 50px;
+      width: 100%;
+      // opacity: 0.4;
+      display: block;
+      background: $dark-gray-1;
+      background: linear-gradient(
+         0deg,
+         #fff 0,
+         hsla(0, 0%, 100%, 0.8) 60%,
+         hsla(0, 0%, 96%, 0.1)
+      );
+      position: absolute;
+      bottom: 0px;
+      margin-left: 0;
+      p {
+         position: absolute;
+         left: 50%;
+         margin-left: -34px;
+         bottom: 10px;
+         color: $blue;
+         font-weight: bold;
+         cursor: pointer;
+         
          // TODO: 1. Check onclick method to show more
          // TODO: 2. Check length (if small -> no need)
          // TODO: 3. Add attribute comicGenres

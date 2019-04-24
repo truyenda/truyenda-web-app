@@ -18,7 +18,7 @@ export default class ComicDetails extends Component {
       const { comic } = this.state.comic;
       return (
          <div className="comic-detail-container">
-            <ComicCoverPicture details={comic.comicCoverPicture} />
+            <ComicCoverPicture details={comic.AnhBia} />
             <ComicOverview details={comic} />
             <div className="comic-detail-row">
                <div className="comic-detail-row-left">

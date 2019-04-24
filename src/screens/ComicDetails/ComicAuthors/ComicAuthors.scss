@@ -1,7 +1,43 @@
 @import "../../../scss/mixins";
 @import "../../../scss/variables";
 
-.comic-authors-container {
+.comic-authors-container-close {
+   height: 300px;
+   @include shadow;
+   overflow: hidden;
+   font-size: 0.85em;
+   color: $dark-gray-1;
+   background-color: $white;
+   // padding: 20px;
+   margin-top: 5px;
+   position: relative;
+
+   h2 {
+      color: $blue;
+      margin-bottom: 5px;
+      margin-top: 20px;
+      margin-left: 20px;
+   }
+
+   p {
+      margin-top: 10px;
+      margin-left: 20px;
+   }
+
+   .comic-list-authors {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: left;
+      margin: 20px;
+   }
+
+   .comic-authors-show-more {
+      @include showMore;
+   }
+}
+
+.comic-authors-container-open {
    height: auto;
    @include shadow;
    overflow: hidden;
@@ -21,7 +57,7 @@
 
    p {
       margin-top: 10px;
-      margin-left: 20px; 
+      margin-left: 20px;
    }
 
    .comic-list-authors {
@@ -29,17 +65,24 @@
       flex-direction: row;
       flex-wrap: wrap;
       justify-content: left;
-      margin: 20px;
+      margin: 20px 20px 50px;
    }
 
    .comic-authors-show-more {
-      @include showMore;
+      @include showMoreOpen;
+      // @include showMore;
+      // display: none;
    }
 }
 
 @media only screen and (min-width: 768px) {
-   .comic-authors-container {
-      height: auto;
+   .comic-authors-container-close {
+      height: 300px;
       margin-right: 2.5px;
+   }
+
+   .comic-authors-container-open {
+      margin-right: 2.5px;
+      height: auto;
    }
 }
