@@ -44,12 +44,8 @@ class AuthorTable extends Component {
     this.setState({
       loading: true
     });
-    if (state.filtered[0]) {
-      console.log(
-        "search=" + state.filtered[0].value + "|page=" + (state.page + 1)
-      );
-    }
-    AuthorApi.list(state.page + 1)
+    if (state.filtered[0] && state.filtered[0].value.trim().length !== 0) {
+      AuthorApi.search(state.filtered[0].value, state.page+1)
       .then(res => {
         if (res.data.Code && res.data.Code === 200) {
           this.setState({
@@ -68,6 +64,28 @@ class AuthorTable extends Component {
           loading: false
         });
       });
+    }else{
+
+      AuthorApi.list(state.page + 1)
+        .then(res => {
+          if (res.data.Code && res.data.Code === 200) {
+            this.setState({
+              data: res.data.Data.listTacGia,
+              pages: res.data.Data.Paging.TotalPages
+            });
+          } else {
+            Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
+          }
+        })
+        .catch(err => {
+          Toast.error("Có lỗi trong quá trình kêt nối máy chủ");
+        })
+        .finally(() => {
+          this.setState({
+            loading: false
+          });
+        });
+    }
   }
 
   setFormData(key, value) {
@@ -312,6 +330,7 @@ class AuthorTable extends Component {
             LoadingComponent={LoadingCmp}
             showPageSizeOptions={false}
             filterable={true}
+            defaultPageSize={20}
             manual
             onFetchData={(state, instance) => {
               this.loadPage(state, instance);
