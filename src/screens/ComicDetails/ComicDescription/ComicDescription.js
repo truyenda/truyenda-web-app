@@ -59,9 +59,9 @@ export default class ComicDescription extends Component {
                </p>
             </div>
             <h2>{comic.comicStatus}</h2>
-            <div className="comic-description-show-more">
+            {/* <div className="comic-description-show-more">
                <p>Show More</p>
-            </div>
+            </div> */}
          </div>
       );
    }

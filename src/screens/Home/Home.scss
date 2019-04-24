@@ -21,11 +21,12 @@
       margin-bottom: 1em;
    }
 
-   .chart-col {
+   .chart-col-close {
       background-color: $white;
       @include shadow;
-      padding: 1em;
-
+      overflow: hidden;
+      height: 470px;
+      position: relative;
       .chart-title {
          font-weight: bold;
          color: $blue-5;
@@ -35,12 +36,83 @@
             font-size: 80%;
          }
       }
+
+      .chart-show-more {
+         height: 90px;
+         width: 100%;
+         display: block;
+         background: $dark-gray-1;
+         background: linear-gradient(
+            0deg,
+            #fff 0,
+            hsla(0, 0%, 100%, 0.8) 60%,
+            hsla(0, 0%, 96%, 0.1)
+         );
+         position: absolute;
+         bottom: 0;
+      
+         p {
+            position: absolute;
+            font-size: 0.75em;
+            left: 50%;
+            margin-left: -30px;
+            bottom: 10px;
+            color: $orange-1;
+            font-weight: bold;
+            cursor: pointer;
+         }
+      }
+   }
+
+   .chart-col-open {
+      background-color: $white;
+      @include shadow;
+      overflow: hidden;
+      height: auto;
+      position: relative;
+      .chart-title {
+         font-weight: bold;
+         color: $blue-5;
+         margin: 10px 0;
+
+         #show-more {
+            font-size: 80%;
+         }
+      }
+
+      .chart-show-more {
+         height: 5px;
+         display: none;
+         width: 100%;
+         display: block;
+         background: $dark-gray-1;
+         background: linear-gradient(
+            0deg,
+            #fff 0,
+            hsla(0, 0%, 100%, 0.8) 60%,
+            hsla(0, 0%, 96%, 0.1)
+         );
+         position: absolute;
+         bottom: 0;
+      
+         p {
+            display: none;
+            position: absolute;
+            left: 50%;
+            margin-left: -40px;
+            bottom: 10px;
+            color: $blue;
+            font-weight: bold;
+            cursor: pointer;
+         }
+      }
    }
 }
 
 .chart-header {
    display: flex;
    justify-content: space-between;
+   margin: 10px;
 
    .chart-type {
       display: flex;
@@ -64,6 +136,7 @@
 }
 
 .title-type-chart {
+   margin: 0 10px;
    p {
       color: $blue;
       width: 30%;
