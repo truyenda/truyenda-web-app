@@ -1,1 +1,1 @@
-export {dafault} from './ComicsDashBoard';
+export {default} from './ComicsDashBoard';

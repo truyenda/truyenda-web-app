@@ -2,16 +2,22 @@ import "./Dashboard.scss";
 import React, { Component } from "react";
 import { Link, Switch, Route } from "react-router-dom";
 import Logo from "../../assets/b725a56c-207a-4c5c-af91-beb98632d3d8.png";
-import ComicsDashBoard from "./ComicsDashBoard/ComicsDashBoard";
+import ComicsDashBoard from './ComicsDashBoard';
+import CategoryTable from './CategoryTable';
+import AuthorTable from './AuthorTable';
 class Dashboard extends Component {
+  componentDidMount(){
+    document.title = 'Trang quản lý'
+  }
   render() {
     return (
       <div className="dashboard-container">
-        <SideBar groups={routeList} />
+        <SideBar groups={accessFilter(routeList)} />
         <div className="board-container">
           <Switch>
-            {/* <Route path='/dashboard/accounts' exact={true} component={}/> */}
             <Route path="/dashboard/comics" component={ComicsDashBoard}/>
+            <Route path='/dashboard/authors' exact={true} component={AuthorTable}/>
+            <Route path='/dashboard/categories' exact={true} component={CategoryTable}/>
             <Route component={WelcomePanel} />
           </Switch>
         </div>
@@ -89,6 +95,12 @@ const routeList = [
     ]
   }
 ];
+
+const accessFilter = (routeList) => {
+  //TODO: get user permissions and check to visible the right route
+  var acceptRoutes = routeList;
+  return acceptRoutes;
+}
 
 const SideBar = props => {
   const GroupTags = props.groups.map((g, i) => {

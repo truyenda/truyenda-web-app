@@ -24,6 +24,7 @@
     "react-scroll-up-button": "^1.6.4",
     "react-table": "^6.9.2",
     "react-toastify": "^5.0.0-rc.3",
+    "react-tooltip": "^3.10.0",
     "redux": "^4.0.1",
     "redux-react-session": "^2.5.0",
     "redux-thunk": "^2.3.0",

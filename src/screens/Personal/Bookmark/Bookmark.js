@@ -3,11 +3,7 @@ import "./Bookmark.scss";
 import ReactTable from "react-table";
 import Progress from "../../../components/commonUI/Progress";
 import { Link } from "react-router-dom";
-import {
-  getMyBookmark,
-  updateBookmark,
-  deleteBookmark
-} from "../../../api/BookmarkApi.js";
+import BookmarkApi from "../../../api/BookmarkApi.js";
 import Toast from "../../../components/commonUI/Toast";
 import Alert from "../../../components/commonUI/Alert";
 import {
@@ -25,7 +21,7 @@ class Bookmark extends Component {
   }
   componentDidMount() {
     document.title = "Danh sách truyện theo dõi của bạn";
-    getMyBookmark().then(res => {
+    BookmarkApi.list().then(res => {
       if (res.data.Code === 200) {
         this.setState({
           data: res.data.Data.ListBookmark
@@ -45,7 +41,7 @@ class Bookmark extends Component {
   }
   updateBookmark(bookmark) {
     this.toggleLoading(true);
-    updateBookmark(bookmark.Id_BookMark, bookmark.Id_ChuongMoiNhat)
+    BookmarkApi.update(bookmark.Id_BookMark, bookmark.Id_ChuongMoiNhat)
       .then(res => {
         if (res.data.Code === 200) {
           Toast.success("Đã đánh dấu truyện " + bookmark.TenTruyen);
@@ -88,7 +84,7 @@ class Bookmark extends Component {
 
   removeBookmark(bookmark) {
     this.toggleLoading(true);
-    deleteBookmark(bookmark.Id_BookMark)
+    BookmarkApi.delete(bookmark.Id_BookMark)
       .then(res => {
         if (res.data.Code === 200) {
           Toast.success("Đã bỏ theo dõi " + bookmark.TenTruyen);
