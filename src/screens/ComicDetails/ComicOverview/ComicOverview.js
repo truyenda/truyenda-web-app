@@ -33,7 +33,7 @@ export default class ComicOverview extends Component {
             </div>
             <div className="comic-overview-content">
                <p className="comic-overview-title">{comic.TenTruyen}</p>
-               <p className="comic-overview-subtitle">{comic.comicAuthors}</p>
+               <p className="comic-overview-subtitle">{[...comic.DanhSachTacGia].map(e => e.TenTacGia).join(',')}</p>
                <p className="comic-overview-subtitle">{comic.TrangThai}</p>
                <p className="comic-overview-subtitle">202020 views</p>
             </div>

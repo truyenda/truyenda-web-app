@@ -48,7 +48,7 @@ export default class Chart extends Component {
                <img className="img" src={comic.AnhDaiDien} />
                <div className="content">
                   <p className="name-title">{comic.TenTruyen}</p>
-                  <p className="side-title"></p>
+                  <p className="side-title">{[...comic.DanhSachTacGia].map(e => e.TenTacGia).join(",")}</p>
                   <p className="status-title">
                      {comic.TrangThai} | 202020 views
                   </p>
