@@ -30,7 +30,8 @@ export default class ComicChapters extends Component {
          ? "comic-chapters-container-open"
          : "comic-chapters-container-close";
       const innerShowMore = isOpen ? "Show Less" : "Show More";
-      const chapterIndexes = [...Array(comic.comicNumberOfChapters).keys()];
+      const chapterIndexes = [...Array(100).keys()];
+      // const chapterIndexes = [...Array(comic.comicNumberOfChapters).keys()];
 
       const listChapters = chapterIndexes.map(index => (
          <div className="comic-chapters-item" key={index}>

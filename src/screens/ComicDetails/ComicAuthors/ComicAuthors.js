@@ -26,14 +26,20 @@ export default class ComicAuthors extends Component {
       return (
          <div className={showMoreClassName}>
             <h2>Authors</h2>
-            <p>{comic.comicAuthors}</p>
+            {/* <p>{comic.DanhSachTacGia}</p> */}
             <div className="comic-list-authors">
+               <Avatar src="http://impressions.vn/uploads/source/khach-hang/ce54bf11889067.562541ef7cde4.png" />
+               <Avatar src="http://impressions.vn/uploads/source/khach-hang/ce54bf11889067.562541ef7cde4.png" />
+               <Avatar src="http://impressions.vn/uploads/source/khach-hang/ce54bf11889067.562541ef7cde4.png" />
+               <Avatar src="http://impressions.vn/uploads/source/khach-hang/ce54bf11889067.562541ef7cde4.png" />
+               <Avatar src="http://impressions.vn/uploads/source/khach-hang/ce54bf11889067.562541ef7cde4.png" />
+               <Avatar src="http://impressions.vn/uploads/source/khach-hang/ce54bf11889067.562541ef7cde4.png" />
+               {/* <Avatar src={comic.comicAuthorAvatar} />
                <Avatar src={comic.comicAuthorAvatar} />
                <Avatar src={comic.comicAuthorAvatar} />
                <Avatar src={comic.comicAuthorAvatar} />
                <Avatar src={comic.comicAuthorAvatar} />
-               <Avatar src={comic.comicAuthorAvatar} />
-               <Avatar src={comic.comicAuthorAvatar} />
+               <Avatar src={comic.comicAuthorAvatar} /> */}
             </div>
             <div className="comic-authors-show-more">
                <p

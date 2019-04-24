@@ -14,6 +14,7 @@ export default class ComicDescription extends Component {
          <div className="comic-description-container">
             <h2>Description</h2>
             <div className="comic-description-content">
+               <p>{comic.MoTa}</p>
                <p>
                   In his past life, although too weak to protect his home when
                   it counted, out of grave determination Nie Li became the
@@ -58,7 +59,7 @@ export default class ComicDescription extends Component {
                   his past life.
                </p>
             </div>
-            <h2>{comic.comicStatus}</h2>
+            <h2>{comic.TrangThai}</h2>
             {/* <div className="comic-description-show-more">
                <p>Show More</p>
             </div> */}

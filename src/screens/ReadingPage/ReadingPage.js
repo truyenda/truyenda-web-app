@@ -12,32 +12,31 @@ export default class ReadingPage extends Component {
 
    render() {
       const {comic} = this.state.comic;
-      console.log(comic.comicCoverPicture);
       return (
          <div className="reading-page-container">
             <div className="reading-page">
                <img
-                  src={comic.comicCoverPicture}
+                  src={comic.AnhBia}
                   alt="Page"
                />
                <img
-                  src={comic.comicCoverPicture}
+                  src={comic.AnhBia}
                   alt="Page"
                />
                <img
-                  src={comic.comicCoverPicture}
+                  src={comic.AnhBia}
                   alt="Page"
                />
                <img
-                  src={comic.comicCoverPicture}
+                  src={comic.AnhBia}
                   alt="Page"
                />
                <img
-                  src={comic.comicCoverPicture}
+                  src={comic.AnhBia}
                   alt="Page"
                />
                <img
-                  src={comic.comicCoverPicture}
+                  src={comic.AnhBia}
                   alt="Page"
                />
             </div>
