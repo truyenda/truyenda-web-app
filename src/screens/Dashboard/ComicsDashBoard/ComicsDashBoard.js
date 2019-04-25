@@ -5,8 +5,10 @@ import ReactTable from "react-table";
 import Progress from "../../../components/commonUI/Progress";
 import Modal from "react-responsive-modal";
 import Alert from "../../../components/commonUI/Alert";
+import CheckBox from "../../../components/commonUI/CheckBox";
 import { Link } from "react-router-dom";
 import TextInput from "../../../components/commonUI/TextInput";
+import TextArea from "../../../components/commonUI/TextArea";
 // import ReactTooltip from "react-tooltip";
 import Toast from "../../../components/commonUI/Toast";
 import ComicApi from "../../../api/ComicApi";
@@ -19,8 +21,15 @@ export default class ComicsDashBoard extends Component {
          loading: false,
          openModal: false,
          isEditing: false,
+         // For temp data in Modal
          comic: {
-            name: ""
+            name: "",
+            anotherName: "",
+            authorsName: "",
+            releasedYear: "",
+            coverPicture: "",
+            avatarPicture: "",
+            groupName: ""
          },
          alert: {
             name: ""
@@ -132,7 +141,7 @@ export default class ComicsDashBoard extends Component {
          .finally(() => {
             this.setState({
                loading: false
-            })
+            });
          });
    }
 
@@ -142,12 +151,27 @@ export default class ComicsDashBoard extends Component {
       this.setState({
          comic: {
             Id: comic.Id,
-            name: comic.TenTruyen
+            name: comic.TenTruyen,
+            authorsName: "Fixed",
+            anotherName: "Fixed",
+            releasedYear: "Fixed",
+            coverPicture: "Fixed",
+            avatarPicture: comic.AnhDaiDien,
+            groupName: comic.TenNhom,
+            categories: "Fixed",
+            status: "Fixed",
+            description: "Fixed"
          },
          isEditing: true
       });
       this.onShowModal();
    }
+
+   // setStateForm(key, value) {
+   //    this.setState({
+   //       [key]: value
+   //    });
+   // }
 
    //TODO: Update
    //TODO: Submit
@@ -187,7 +211,7 @@ export default class ComicsDashBoard extends Component {
                      <i
                         className="far fa-edit"
                         onClick={() => {
-                          this.onEditAuthor(cell.original);
+                           this.onEditComic(cell.original);
                         }}
                      />
                      <i
@@ -228,8 +252,8 @@ export default class ComicsDashBoard extends Component {
                >
                   <h2>
                      {this.state.isEditing
-                        ? "Chỉnh sửa tác giả"
-                        : "Thêm tác giả mới"}
+                        ? "Chỉnh sửa truyện"
+                        : "Thêm truyện mới"}
                   </h2>
                   <TextInput
                      id="name"
@@ -237,8 +261,114 @@ export default class ComicsDashBoard extends Component {
                         this.setFormData(key, value);
                      }}
                      alert={this.state.alert.name}
-                     display="Tên tác giả"
+                     display="Tên truyện"
                      value={this.state.isEditing ? this.state.comic.name : null}
+                  />
+                  <TextInput
+                     id="anotherName"
+                     onChanged={(key, value) => {
+                        this.setFormData(key, value);
+                     }}
+                     alert={this.state.alert.anotherName}
+                     display="Tên khác"
+                     value={
+                        this.state.isEditing
+                           ? this.state.comic.anotherName
+                           : null
+                     }
+                  />
+                  <TextInput
+                     id="authorsName"
+                     onChanged={(key, value) => {
+                        this.setFormData(key, value);
+                     }}
+                     alert={this.state.alert.name}
+                     display="Tên tác giả"
+                     value={
+                        this.state.isEditing
+                           ? this.state.comic.authorsName
+                           : null
+                     }
+                  />
+                  <TextInput
+                     id="releasedYear"
+                     onChanged={(key, value) => {
+                        this.setFormData(key, value);
+                     }}
+                     alert={this.state.alert.name}
+                     display="Năm phát hành"
+                     value={
+                        this.state.isEditing
+                           ? this.state.comic.releasedYear
+                           : null
+                     }
+                  />
+                  <TextInput
+                     id="coverPicture"
+                     onChanged={(key, value) => {
+                        this.setFormData(key, value);
+                     }}
+                     alert={this.state.alert.name}
+                     display="Ảnh bìa"
+                     value={
+                        this.state.isEditing
+                           ? this.state.comic.coverPicture
+                           : null
+                     }
+                  />
+                  <TextInput
+                     id="avatarPicture"
+                     onChanged={(key, value) => {
+                        this.setFormData(key, value);
+                     }}
+                     alert={this.state.alert.name}
+                     display="Ảnh đại diện"
+                     value={
+                        this.state.isEditing
+                           ? this.state.comic.avatarPicture
+                           : null
+                     }
+                  />
+                  <TextInput
+                     id="groupName"
+                     onChanged={(key, value) => {
+                        this.setFormData(key, value);
+                     }}
+                     alert={this.state.alert.name}
+                     display="Nhóm dịch"
+                     value={
+                        this.state.isEditing ? this.state.comic.groupName : null
+                     }
+                  />
+                  <span>Thể loại</span>
+                  <CheckBox
+                     display={this.state.comic.name}
+                     id={this.state.comic.Id}
+                     // onChanged={(key, value) => this.setStateForm(key, value)}
+                  />
+                  <TextInput
+                     id="status"
+                     onChanged={(key, value) => {
+                        this.setFormData(key, value);
+                     }}
+                     alert={this.state.alert.name}
+                     display="Tình trạng"
+                     value={
+                        this.state.isEditing ? this.state.comic.status : null
+                     }
+                  />
+                  <TextArea
+                     id="description"
+                     onChanged={(key, value) => {
+                        this.setFormData(key, value);
+                     }}
+                     alert={this.state.alert.name}
+                     display="Mô tả"
+                     value={
+                        this.state.isEditing
+                           ? this.state.comic.description
+                           : null
+                     }
                   />
                   <div className="action-group">
                      <Button
