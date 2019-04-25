@@ -15,7 +15,7 @@ export default class ComicOverview extends Component {
       const linkResult = (
          <Link
             to={{
-               pathname: convertToFriendlyPath('/comics/reading', comic.comicTitle, comic.comicId),
+               pathname: convertToFriendlyPath('/comics/reading', comic.TenTruyen, comic.Id),
                state: {
                   comic
                }
@@ -29,18 +29,19 @@ export default class ComicOverview extends Component {
       return (
          <div className="comic-overview-container">
             <div className="comic-overview-picture">
-               <img src={comic.comicAvatarPicture} alt={comic.comicTitle} />
+               <img src={comic.AnhDaiDien} alt={comic.TenTruyen} />
             </div>
             <div className="comic-overview-content">
-               <p className="comic-overview-title">{comic.comicTitle}</p>
-               <p className="comic-overview-subtitle">{comic.comicAuthors}</p>
-               <p className="comic-overview-subtitle">{comic.comicStatus}</p>
-               <p className="comic-overview-subtitle">{comic.comicView} views</p>
+               <p className="comic-overview-title">{comic.TenTruyen}</p>
+               <p className="comic-overview-subtitle">{[...comic.DanhSachTacGia].map(e => e.TenTacGia).join(',')}</p>
+               <p className="comic-overview-subtitle">{comic.TrangThai}</p>
+               <p className="comic-overview-subtitle">202020 views</p>
             </div>
             <div className="comic-overview-bar">
                {linkResult}
                <p className="comic-overview-bar-item">
-                  <span>{comic.comicNumberOfChapters}</span>
+                  {/* <span>{comic.comicNumberOfChapters}</span> */}
+                  <span>100</span>
                    Chapters
                </p>
                <p className="comic-overview-bar-item">Favorite</p>

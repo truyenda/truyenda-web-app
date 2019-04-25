@@ -20,7 +20,7 @@ class CategoryTable extends Component {
       loading: false,
       openModal: false,
       isEditing: false,
-      category: {
+      category: { 
         name: "",
         description: ""
       },

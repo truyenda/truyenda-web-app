@@ -13,13 +13,14 @@ class Home extends Component {
                <p>Daily Chart</p>
                <Chart />
             </div>
-         )
+         ),
+         isOpen: false
       };
 
       this.handleClick = this.handleClick.bind(this);
    }
    componentDidMount() {
-      document.title = 'Trang chủ'
+      document.title = "Trang chủ";
    }
 
    handleClick(event) {
@@ -59,7 +60,19 @@ class Home extends Component {
       }
    }
 
+   toggle() {
+      this.setState({
+         isOpen: !this.state.isOpen
+      });
+   }
+
    render() {
+      const { chartList, isOpen } = this.state;
+      const showMoreClassName = isOpen
+         ? "chart-col-open"
+         : "chart-col-close";
+      const innerShowMore = isOpen ? "Show Less" : "Show More";
+      console.log(`%c ${isOpen}`, 'color: orange; font-weight: bold;');
       return (
          <div className="home-wrapper">
             <div className="main-content-col">
@@ -67,7 +80,7 @@ class Home extends Component {
             </div>
             <div className="side-content-col">
                <Browse />
-               <div className="chart-col">
+               <div className={showMoreClassName}>
                   <div className="chart-header">
                      <p className="chart-title">MOST POPULAR</p>
                      <ul className="chart-type">
@@ -88,7 +101,18 @@ class Home extends Component {
                         </li>
                      </ul>
                   </div>
-                  <div className="chart-container">{this.state.chartList}</div>
+                  <div className="chart-container">
+                     {this.state.chartList}
+                  </div>
+                  <div className="chart-show-more">
+                        <p
+                           onClick={() => {
+                              this.toggle();
+                           }}
+                        >
+                           {innerShowMore}
+                        </p>
+                     </div>
                </div>
             </div>
          </div>

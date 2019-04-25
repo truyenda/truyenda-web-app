@@ -31,7 +31,9 @@
       // min-width: 550px;
       flex-wrap: wrap;
       .comic-overview-title {
-         margin: 10px 0;
+         margin: 10px 10px;
+         max-height: 1em;
+         overflow: hidden; 
          color: $blue;
          font-weight: bold;
          font-size: 1.3em;
