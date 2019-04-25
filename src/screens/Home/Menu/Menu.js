@@ -29,7 +29,7 @@ class Menu extends Component {
           <Link to="/">Trang chủ</Link>
           <Link to="/all-manga">Danh sách</Link>
           <Link to="/latest-update">Mới nhất</Link>
-          <Link className='nav-mycomic' to="/personal/comics">Truyện của tôi</Link>
+          {this.props.authenticated?<Link className='nav-mycomic' to="/personal/comics">Truyện của tôi</Link>:''}
           {this.props.authenticated ? (
             <div className="user-profile-icon">
               <Link to="/personal/profile">
