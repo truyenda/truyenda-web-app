@@ -170,3 +170,12 @@
     margin-bottom: 1em;
   }
 }
+
+//style for modal (comic) much more larger
+.modal-add-comic {
+  width: 100%;
+  @include shadow;
+  h2 {
+    margin-bottom: 1.5em;
+  }
+}

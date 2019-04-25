@@ -33,7 +33,12 @@ export default class ComicsDashBoard extends Component {
          },
          alert: {
             name: ""
-         }
+         },
+         customStyles: {
+            content : {
+              width                   : '1000px',
+            }
+          }
       };
    }
 
@@ -243,7 +248,7 @@ export default class ComicsDashBoard extends Component {
                   }}
                />
                <Modal
-                  classNames={{ modal: "modal-add" }}
+                  classNames={{ modal: "modal-add-comic" }}
                   open={this.state.openModal}
                   onClose={() => {
                      this.onCloseModal();
