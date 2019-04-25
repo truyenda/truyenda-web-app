@@ -12,6 +12,7 @@ import TextArea from "../../../components/commonUI/TextArea";
 // import ReactTooltip from "react-tooltip";
 import Toast from "../../../components/commonUI/Toast";
 import ComicApi from "../../../api/ComicApi";
+import { convertToFriendlyPath } from "../../../utils/StringUtils";
 export default class ComicsDashBoard extends Component {
    constructor(props) {
       super(props);
@@ -25,11 +26,14 @@ export default class ComicsDashBoard extends Component {
          comic: {
             name: "",
             anotherName: "",
+            status: "",
             authorsName: "",
-            releasedYear: "",
+            genres: "",
+            releasedDate: "",
             coverPicture: "",
             avatarPicture: "",
-            groupName: ""
+            groupName: "",
+            description: "",
          },
          alert: {
             name: ""
@@ -45,9 +49,19 @@ export default class ComicsDashBoard extends Component {
                   data: res.data.Data.listTruyen,
                   pages: res.data.Data.Paging.TotalPages
                });
+            } else {
+               Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
+               this.setState({
+                  isError: true
+               });
             }
          })
-         .catch(err => {});
+         .catch(err => {
+            Toast.error("Có lỗi trong quá trình kêt nối máy chủ");
+            this.setState({
+               isError: true
+            });
+         });
    }
 
    loadPage(state, instance) {
@@ -191,15 +205,15 @@ export default class ComicsDashBoard extends Component {
          comic: {
             Id: comic.Id,
             name: comic.TenTruyen,
-            authorsName: "Fixed",
-            anotherName: "Fixed",
-            releasedYear: "Fixed",
-            coverPicture: "Fixed",
+            authorsName: comic.TacGia[0].TenTacGia,
+            anotherName: comic.TenKhac,
+            releasedDate: comic.NgayXuatBan,
+            coverPicture: comic.AnhBia,
             avatarPicture: comic.AnhDaiDien,
             groupName: comic.TenNhom,
-            categories: "Fixed",
-            status: "Fixed",
-            description: "Fixed"
+            categories: [...comic.TheLoai].map(e => e.TenTheLoai).join(","),
+            status: comic.TenTrangThai,
+            description: comic.MoTa
          },
          isEditing: true
       });
@@ -234,13 +248,45 @@ export default class ComicsDashBoard extends Component {
          },
          {
             Header: "Tên truyện",
-            sortable: true,
-            accessor: "TenTruyen"
+            sortable: false,
+            accessor: "TenTruyen",
+            Cell: cell => <Link 
+                              to={{
+                                 pathname: convertToFriendlyPath(
+                                    "/dashboard/comics",
+                                    cell.value,
+                                    cell.original.Id
+                                 ),
+                                 state: {
+                                    comic: cell.original
+                                 }
+                              }} 
+                          >{cell.value}</Link>
          },
          {
             Header: "Tên nhóm",
             accessor: "TenNhom",
-            sortable: true,
+            Cell: cell => <span className="Id-center">{cell.value}</span>,
+            sortable: false,
+            maxWidth: 150,
+            filterable: false
+         },
+         {
+            Header: "Trạng thái truyện",
+            accessor: "TenTrangThai",
+            Cell: cell => <span className="Id-center">{cell.value}</span>,
+            filterable: false
+         },
+         {
+            Header: "Ngày xuất bản",
+            accessor: "NgayXuatBan",
+            filterable: false,
+            Cell: cell => <span className="Id-center">{cell.value}</span>,
+            maxWidth: 100
+         },
+         {
+            Header: "Mô tả",
+            accessor:  "MoTa",
             filterable: false
          },
          {
@@ -268,7 +314,9 @@ export default class ComicsDashBoard extends Component {
             maxWidth: 100
          }
       ];
-
+      if(this.state.isError) {
+         return <Link to="/dashboard/comics">Thử lại</Link>
+      }
       return (
          <div className="comics-dashboard-container">
             <div className="tb-name-wrap">
@@ -341,7 +389,7 @@ export default class ComicsDashBoard extends Component {
                      display="Năm phát hành"
                      value={
                         this.state.isEditing
-                           ? this.state.comic.releasedYear
+                           ? this.state.comic.releasedDate
                            : null
                      }
                   />
@@ -384,7 +432,7 @@ export default class ComicsDashBoard extends Component {
                   />
                   <span>Thể loại</span>
                   <CheckBox
-                     display={this.state.comic.name}
+                     display={this.state.comic.categories}
                      id={this.state.comic.Id}
                      // onChanged={(key, value) => this.setStateForm(key, value)}
                   />
@@ -454,6 +502,11 @@ export default class ComicsDashBoard extends Component {
                   noDataText="Không có dữ liệu"
                   pageText="Trang"
                   ofText="trên"
+                  defaultSorted={[
+                     {
+                        id: "Id"
+                     }
+                  ]}
                />
             )}
          </div>
