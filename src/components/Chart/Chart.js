@@ -20,7 +20,7 @@ export default class Chart extends Component {
    }
 
    componentDidMount() {
-      Caller("story/all")
+      Caller("stories/all")
          .then(res => {
             this.setState({
                comics: res.data.Data
