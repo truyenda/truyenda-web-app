@@ -5,11 +5,14 @@ import ReactTable from "react-table";
 import Progress from "../../../components/commonUI/Progress";
 import Modal from "react-responsive-modal";
 import Alert from "../../../components/commonUI/Alert";
+import CheckBox from "../../../components/commonUI/CheckBox";
 import { Link } from "react-router-dom";
 import TextInput from "../../../components/commonUI/TextInput";
+import TextArea from "../../../components/commonUI/TextArea";
 // import ReactTooltip from "react-tooltip";
 import Toast from "../../../components/commonUI/Toast";
 import ComicApi from "../../../api/ComicApi";
+import { convertToFriendlyPath } from "../../../utils/StringUtils";
 export default class ComicsDashBoard extends Component {
    constructor(props) {
       super(props);
@@ -19,8 +22,18 @@ export default class ComicsDashBoard extends Component {
          loading: false,
          openModal: false,
          isEditing: false,
+         // For temp data in Modal
          comic: {
-            name: ""
+            name: "",
+            anotherName: "",
+            status: "",
+            authorsName: "",
+            genres: "",
+            releasedDate: "",
+            coverPicture: "",
+            avatarPicture: "",
+            groupName: "",
+            description: "",
          },
          alert: {
             name: ""
@@ -36,23 +49,32 @@ export default class ComicsDashBoard extends Component {
                   data: res.data.Data.listTruyen,
                   pages: res.data.Data.Paging.TotalPages
                });
+            } else {
+               Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
+               this.setState({
+                  isError: true
+               });
             }
          })
-         .catch(err => {});
+         .catch(err => {
+            Toast.error("Có lỗi trong quá trình kêt nối máy chủ");
+            this.setState({
+               isError: true
+            });
+         });
    }
 
    loadPage(state, instance) {
       this.setState({
          loading: true
       });
-      if (state.filtered[2] && state.filtered[2].value.trim().length !== 0) {
-         ComicApi.search(state.filtered[2].value, state.page + 1)
+      if (state.filtered[0] && state.filtered[0].value.trim().length !== 0) {
+         ComicApi.search(state.filtered[0].value, state.page + 1)
             .then(res => {
                if (res.data.Code && res.data.Code === 200) {
                   this.setState({
-                     data: res.data.Data
-                     //TODO: Wait API
-                     // pages: res.data.Data.Pagin
+                     data: res.data.Data.listComic,
+                     pages: res.data.Data.Paging.TotalPages
                   });
                } else {
                   Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
@@ -71,9 +93,8 @@ export default class ComicsDashBoard extends Component {
             .then(res => {
                if (res.data.Code && res.data.Code === 200) {
                   this.setState({
-                     data: res.data.Data.listTruyen
-                     //TODO: Wait API
-                     // pages: res.data.Data.Paging.TotalPages
+                     data: res.data.Data.listTruyen,
+                     pages: res.data.Data.Paging.TotalPages
                   });
                } else {
                   Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
@@ -88,6 +109,47 @@ export default class ComicsDashBoard extends Component {
                });
             });
       }
+      // if (state.filtered[1] && state.filtered[1].value.trim().length !== 0) {
+      //    ComicApi.search(state.filtered[0].value, state.page + 1)
+      //       .then(res => {
+      //          if (res.data.Code && res.data.Code === 200) {
+      //             this.setState({
+      //                data: res.data.Data.listComic,
+      //                pages: res.data.Data.Paging.TotalPages
+      //             });
+      //          } else {
+      //             Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
+      //          }
+      //       })
+      //       .catch(err => {
+      //          Toast.error("Có lỗi trong quá trình kêt nối máy chủ");
+      //       })
+      //       .finally(() => {
+      //          this.setState({
+      //             loading: false
+      //          });
+      //       });
+      // } else {
+      //    ComicApi.list(state.page + 1)
+      //       .then(res => {
+      //          if (res.data.Code && res.data.Code === 200) {
+      //             this.setState({
+      //                data: res.data.Data.listTruyen,
+      //                pages: res.data.Paging.TotalPages
+      //             });
+      //          } else {
+      //             Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
+      //          }
+      //       })
+      //       .catch(err => {
+      //          Toast.error("Có lỗi trong quá trình kêt nối máy chủ");
+      //       })
+      //       .finally(() => {
+      //          this.setState({
+      //             loading: false
+      //          });
+      //       });
+      // }
    }
 
    setFormData(key, value) {
@@ -132,7 +194,7 @@ export default class ComicsDashBoard extends Component {
          .finally(() => {
             this.setState({
                loading: false
-            })
+            });
          });
    }
 
@@ -142,12 +204,27 @@ export default class ComicsDashBoard extends Component {
       this.setState({
          comic: {
             Id: comic.Id,
-            name: comic.TenTruyen
+            name: comic.TenTruyen,
+            authorsName: comic.TacGia[0].TenTacGia,
+            anotherName: comic.TenKhac,
+            releasedDate: comic.NgayXuatBan,
+            coverPicture: comic.AnhBia,
+            avatarPicture: comic.AnhDaiDien,
+            groupName: comic.TenNhom,
+            categories: [...comic.TheLoai].map(e => e.TenTheLoai).join(","),
+            status: comic.TenTrangThai,
+            description: comic.MoTa
          },
          isEditing: true
       });
       this.onShowModal();
    }
+
+   // setStateForm(key, value) {
+   //    this.setState({
+   //       [key]: value
+   //    });
+   // }
 
    //TODO: Update
    //TODO: Submit
@@ -166,16 +243,52 @@ export default class ComicsDashBoard extends Component {
             Header: "Ảnh truyện",
             Cell: cell => <img className="comic-avatar" src={cell.value} />,
             accessor: "AnhDaiDien",
-            maxWidth: 80,
+            maxWidth: 120,
             filterable: false
          },
          {
             Header: "Tên truyện",
-            accessor: "TenTruyen"
+            sortable: false,
+            accessor: "TenTruyen",
+            Cell: cell => <Link 
+                              to={{
+                                 pathname: convertToFriendlyPath(
+                                    "/dashboard/comics",
+                                    cell.value,
+                                    cell.original.Id
+                                 ),
+                                 state: {
+                                    comic: cell.original
+                                 }
+                              }} 
+                          >{cell.value}</Link>
          },
          {
             Header: "Tên nhóm",
-            accessor: "TenNhom"
+            accessor: "TenNhom",
+            Cell: cell => <span className="Id-center">{cell.value}</span>,
+            sortable: false,
+            maxWidth: 150,
+            filterable: false
+         },
+         {
+            Header: "Trạng thái truyện",
+            accessor: "TenTrangThai",
+            Cell: cell => <span className="Id-center">{cell.value}</span>,
+            filterable: false,
+            maxWidth: 150
+         },
+         {
+            Header: "NXB",
+            accessor: "NgayXuatBan",
+            filterable: false,
+            Cell: cell => <span className="Id-center">{cell.value}</span>,
+            maxWidth: 70
+         },
+         {
+            Header: "Mô tả",
+            accessor:  "MoTa",
+            filterable: false
          },
          {
             Header: "",
@@ -187,7 +300,7 @@ export default class ComicsDashBoard extends Component {
                      <i
                         className="far fa-edit"
                         onClick={() => {
-                          this.onEditAuthor(cell.original);
+                           this.onEditComic(cell.original);
                         }}
                      />
                      <i
@@ -202,7 +315,9 @@ export default class ComicsDashBoard extends Component {
             maxWidth: 100
          }
       ];
-
+      if(this.state.isError) {
+         return <Link to="/dashboard/comics">Thử lại</Link>
+      }
       return (
          <div className="comics-dashboard-container">
             <div className="tb-name-wrap">
@@ -219,7 +334,7 @@ export default class ComicsDashBoard extends Component {
                   }}
                />
                <Modal
-                  classNames={{ modal: "modal-add" }}
+                  classNames={{ modal: "modal-add-comic" }}
                   open={this.state.openModal}
                   onClose={() => {
                      this.onCloseModal();
@@ -228,8 +343,8 @@ export default class ComicsDashBoard extends Component {
                >
                   <h2>
                      {this.state.isEditing
-                        ? "Chỉnh sửa tác giả"
-                        : "Thêm tác giả mới"}
+                        ? "Chỉnh sửa truyện"
+                        : "Thêm truyện mới"}
                   </h2>
                   <TextInput
                      id="name"
@@ -237,8 +352,114 @@ export default class ComicsDashBoard extends Component {
                         this.setFormData(key, value);
                      }}
                      alert={this.state.alert.name}
-                     display="Tên tác giả"
+                     display="Tên truyện"
                      value={this.state.isEditing ? this.state.comic.name : null}
+                  />
+                  <TextInput
+                     id="anotherName"
+                     onChanged={(key, value) => {
+                        this.setFormData(key, value);
+                     }}
+                     alert={this.state.alert.anotherName}
+                     display="Tên khác"
+                     value={
+                        this.state.isEditing
+                           ? this.state.comic.anotherName
+                           : null
+                     }
+                  />
+                  <TextInput
+                     id="authorsName"
+                     onChanged={(key, value) => {
+                        this.setFormData(key, value);
+                     }}
+                     alert={this.state.alert.name}
+                     display="Tên tác giả"
+                     value={
+                        this.state.isEditing
+                           ? this.state.comic.authorsName
+                           : null
+                     }
+                  />
+                  <TextInput
+                     id="releasedYear"
+                     onChanged={(key, value) => {
+                        this.setFormData(key, value);
+                     }}
+                     alert={this.state.alert.name}
+                     display="Năm phát hành"
+                     value={
+                        this.state.isEditing
+                           ? this.state.comic.releasedDate
+                           : null
+                     }
+                  />
+                  <TextInput
+                     id="coverPicture"
+                     onChanged={(key, value) => {
+                        this.setFormData(key, value);
+                     }}
+                     alert={this.state.alert.name}
+                     display="Ảnh bìa"
+                     value={
+                        this.state.isEditing
+                           ? this.state.comic.coverPicture
+                           : null
+                     }
+                  />
+                  <TextInput
+                     id="avatarPicture"
+                     onChanged={(key, value) => {
+                        this.setFormData(key, value);
+                     }}
+                     alert={this.state.alert.name}
+                     display="Ảnh đại diện"
+                     value={
+                        this.state.isEditing
+                           ? this.state.comic.avatarPicture
+                           : null
+                     }
+                  />
+                  <TextInput
+                     id="groupName"
+                     onChanged={(key, value) => {
+                        this.setFormData(key, value);
+                     }}
+                     alert={this.state.alert.name}
+                     display="Nhóm dịch"
+                     value={
+                        this.state.isEditing ? this.state.comic.groupName : null
+                     }
+                  />
+                  <span>Thể loại</span>
+                  <CheckBox
+                     display={this.state.comic.categories}
+                     id={this.state.comic.Id}
+                     // onChanged={(key, value) => this.setStateForm(key, value)}
+                  />
+                  <TextInput
+                     id="status"
+                     onChanged={(key, value) => {
+                        this.setFormData(key, value);
+                     }}
+                     alert={this.state.alert.name}
+                     display="Tình trạng"
+                     value={
+                        this.state.isEditing ? this.state.comic.status : null
+                     }
+                  />
+                  <TextArea
+                     id="description"
+                     onChanged={(key, value) => {
+                        this.setFormData(key, value);
+                     }}
+                     alert={this.state.alert.name}
+                     display="Mô tả"
+                     value={
+                        this.state.isEditing
+                           ? this.state.comic.description
+                           : null
+                     }
                   />
                   <div className="action-group">
                      <Button
@@ -282,6 +503,11 @@ export default class ComicsDashBoard extends Component {
                   noDataText="Không có dữ liệu"
                   pageText="Trang"
                   ofText="trên"
+                  defaultSorted={[
+                     {
+                        id: "Id"
+                     }
+                  ]}
                />
             )}
          </div>

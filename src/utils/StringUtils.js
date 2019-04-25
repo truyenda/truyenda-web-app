@@ -15,8 +15,10 @@ module.exports.convertToPath = str => {
    str = str.replace(/Đ/g, "D");
    str = str.replace(/\s+/g, "-");
    str = str.replace(/\[+/g, "");
+   str = str.replace(/\]+/g, "");
    str = str.replace(/『+/g, "");
    str = str.replace(/』+/g, "");
+   str = str.replace(/\++/g, "");
    return str;
 };
 

@@ -25,6 +25,6 @@ export default {
       return Caller(prefix + "page/" + index, "GET");
    },
    search(query, index) {
-      return Caller("story/" + "search/" + query + "/page/" + index, "GET");
+      return Caller(prefix + "search/" + query + "/page/" + index, "GET");
    }
 };
