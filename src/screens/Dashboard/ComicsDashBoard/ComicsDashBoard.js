@@ -243,7 +243,7 @@ export default class ComicsDashBoard extends Component {
             Header: "Ảnh truyện",
             Cell: cell => <img className="comic-avatar" src={cell.value} />,
             accessor: "AnhDaiDien",
-            maxWidth: 80,
+            maxWidth: 120,
             filterable: false
          },
          {
@@ -275,14 +275,15 @@ export default class ComicsDashBoard extends Component {
             Header: "Trạng thái truyện",
             accessor: "TenTrangThai",
             Cell: cell => <span className="Id-center">{cell.value}</span>,
-            filterable: false
+            filterable: false,
+            maxWidth: 150
          },
          {
-            Header: "Ngày xuất bản",
+            Header: "NXB",
             accessor: "NgayXuatBan",
             filterable: false,
             Cell: cell => <span className="Id-center">{cell.value}</span>,
-            maxWidth: 100
+            maxWidth: 70
          },
          {
             Header: "Mô tả",
