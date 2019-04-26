@@ -23,8 +23,8 @@ module.exports.convertToPath = str => {
    str = str.replace(/『+/g, "");
    str = str.replace(/』+/g, "");
    str = str.replace(/\++/g, "");
-   str = str.replace(/,+/g, "");
-   str = str.replace(/.+/g, "");
+   str = str.replace(/\,+/g, "");
+   str = str.replace(/\.+/g, "");
    return str;
 };
 
