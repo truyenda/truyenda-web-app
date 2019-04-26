@@ -182,6 +182,7 @@ export default class ComicsDashBoard extends Component {
 
    onAddComic() {
       let comic = this.state.comic;
+      this.onCloseModal();
       ComicApi.add(comic)
          .then(res => {
             if (res.data.Code && res.data.Code === 200) {
@@ -254,6 +255,44 @@ export default class ComicsDashBoard extends Component {
    //TODO: Update
    //TODO: Submit
    //TODO: Remove
+
+   onRemoveComic(comic) {
+      Alert.warn(
+         "Bạn có muốn xóa truyện này không?",
+         comic.TenTruyen,
+         () => {
+            this.setState({
+               loading: true
+            });
+            ComicApi.delete(comic)
+               .then(res => {
+                  if(res.data.Code && res.data.Code === 200) {
+                     Toast.success(comic.TenTruyen, "Đã xóa truyện");
+                     var newData = [];
+                     this.state.data.forEach(e => {
+                        if(e.Id !== comic.Id) {
+                           newData.push(e);
+                        }
+                     });
+                     this.setState({
+                        data: newData
+                     });
+                  } else {
+                     Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
+                  }
+               })
+               .catch(err => {
+                  Toast.error("Có lỗi trong quá trình kêt nối máy chủ");
+               })
+               .finally(() => {
+                  this.setState({
+                     loading: false
+                  });
+               });
+         },
+         () => {}
+      )
+   }
 
    render() {
       const columns = [
@@ -330,9 +369,9 @@ export default class ComicsDashBoard extends Component {
                      />
                      <i
                         className="fas fa-times fa-lg"
-                        // onClick={() => {
-                        //   this.onRemoveAuthor(cell.original);
-                        // }}
+                        onClick={() => {
+                          this.onRemoveComic(cell.original);
+                        }}
                      />
                   </div>
                );

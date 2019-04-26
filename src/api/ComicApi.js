@@ -10,10 +10,10 @@ export default {
       const data = {
          //TODO: Wait for API stories/add
          //TODO: Change story.attribute
-         Id_Nhom: 3,
+         Id_Nhom: 2,
          Id_TrangThai: 7,
          Id_ChuKy: 9,
-         TenTruyen: "Testing3",
+         TenTruyen: "Testing",
          TenKhac: "Nope",
          NamPhatHanh: 2017,
          AnhBia:
