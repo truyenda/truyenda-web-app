@@ -20,7 +20,7 @@ class CategoryTable extends Component {
       loading: false,
       openModal: false,
       isEditing: false,
-      category: { 
+      category: {
         name: "",
         description: ""
       },
@@ -233,13 +233,27 @@ class CategoryTable extends Component {
         accessor: "Id",
         Cell: cell => <span className="Id-center">{cell.value}</span>,
         width: 50,
-        maxWidth: 50
+        maxWidth: 50,
+        Filter: ({ filter, onChange }) => (
+          <input
+            placeholder="Tìm ID"
+            onChange={event => onChange(event.target.value)}
+            style={{ width: "100%" }}
+          />
+        )
       },
       {
         Header: "Tên thể loại",
         accessor: "TenLoaiTruyen",
         width: 150,
-        maxWidth: 150
+        maxWidth: 150,
+        Filter: ({ filter, onChange }) => (
+          <input
+            placeholder="Tìm thể loại"
+            onChange={event => onChange(event.target.value)}
+            style={{ width: "100%" }}
+          />
+        )
       },
       {
         Header: "Mô tả",
@@ -247,8 +261,19 @@ class CategoryTable extends Component {
         Cell: cell => (
           <span data-for="des-tip" data-tip={cell.value}>
             {cell.value}
-            <ReactTooltip multiline={true} id="des-tip" getContent={v => <p className='tip-200'>{v}</p>}/>
+            <ReactTooltip
+              multiline={true}
+              id="des-tip"
+              getContent={v => <p className="tip-200">{v}</p>}
+            />
           </span>
+        ),
+        Filter: ({ filter, onChange }) => (
+          <input
+            placeholder="Tìm theo mô tả"
+            onChange={event => onChange(event.target.value)}
+            style={{ width: "100%" }}
+          />
         )
       },
       {

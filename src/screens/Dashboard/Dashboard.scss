@@ -138,14 +138,6 @@
   width: 100%;
   text-align: center;
 }
-
-//style for comic images
-.comic-avatar {
-  width: 100%;
-  height: auto;
-  @include shadow;  
-}
-
 //style for button add
 .btn-add-wrapper {
   width: 100%;
@@ -157,7 +149,6 @@
 .action-group {
   display: flex;
   justify-content: space-evenly;
-  margin-top: 0.5em;
   i:hover {
     color: $dark-gray-1;
     cursor: pointer;
@@ -169,13 +160,7 @@
   h2 {
     margin-bottom: 1em;
   }
-}
-
-//style for modal (comic) much more larger
-.modal-add-comic {
-  width: 100%;
-  @include shadow;
-  h2 {
-    margin-bottom: 1.5em;
+  .action-group {
+    margin-top: 0.5em;
   }
 }
