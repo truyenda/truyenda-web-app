@@ -303,18 +303,18 @@ export default class ComicsDashBoard extends Component {
             filterable: false,
             maxWidth: 150
          },
-         {
-            Header: "NXB",
-            accessor: "NgayXuatBan",
-            filterable: false,
-            Cell: cell => <span className="Id-center">{cell.value}</span>,
-            maxWidth: 70
-         },
-         {
-            Header: "Mô tả",
-            accessor:  "MoTa",
-            filterable: false
-         },
+         // {
+         //    Header: "NXB",
+         //    accessor: "NgayXuatBan",
+         //    filterable: false,
+         //    Cell: cell => <span className="Id-center">{cell.value}</span>,
+         //    maxWidth: 70
+         // },
+         // {
+         //    Header: "Mô tả",
+         //    accessor:  "MoTa",
+         //    filterable: false
+         // },
          {
             Header: "",
             sortable: false,
@@ -540,12 +540,22 @@ export default class ComicsDashBoard extends Component {
                   loadingText="Đang tải..."
                   noDataText="Không có dữ liệu"
                   pageText="Trang"
+                  resizable={false}
                   ofText="trên"
-                  defaultSorted={[
+                  defaultFilterMethod={(filter, row, column) => {
+                     const id = filter.pivotId || filter.id;
+                     return row[id] !== undefined
+                       ? String(row[id])
+                           .toLowerCase()
+                           .includes(filter.value.toLowerCase())
+                       : true;
+                   }}
+                   defaultSorted={[
                      {
-                        id: "Id"
+                       id: "Id",
+                       desc: !false
                      }
-                  ]}
+                   ]}
                />
             )}
          </div>
