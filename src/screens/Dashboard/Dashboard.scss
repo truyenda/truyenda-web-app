@@ -52,6 +52,7 @@
     flex-grow: 9;
     margin-left: 0.5em;
     @include shadow;
+    border-radius: 5px;
     padding: 1em;
     background-color: white;
     .welcome-container {

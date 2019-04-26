@@ -8,9 +8,21 @@ export default {
    },
    add(story) {
       const data = {
-         //
+         //TODO: Wait for API stories/add
+         //TODO: Change story.attribute
+         Id_Nhom: 3,
+         Id_TrangThai: 7,
+         Id_ChuKy: 9,
+         TenTruyen: "Testing3",
+         TenKhac: "Nope",
+         NamPhatHanh: 2017,
+         AnhBia:
+            "https://juiceboxinteractive.com/app/uploads/2018/05/Color-Cover-960x547.png",
+         AnhDaiDien:
+            "https://juiceboxinteractive.com/app/uploads/2018/05/Color-Cover-960x547.png",
+         MoTa: "Nothing"
       };
-      return Caller(prefix, "POST", data);
+      return Caller(prefix + "add", "POST", data);
    },
    update(story) {
       const data = {
