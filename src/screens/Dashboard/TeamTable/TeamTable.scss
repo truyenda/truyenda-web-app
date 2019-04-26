@@ -1,0 +1,39 @@
+@import "../../../scss/variables";
+
+.logo-team-form {
+  display: flex;
+  flex-direction: row;
+  .logo-display-container {
+    margin-right: 0.5em;
+    position: relative;
+    .normal-avatar {
+      background-color: $gray-1;
+      width: 80px;
+      height: 120px;
+    }
+    .loadingcmp {
+      top: 0;
+    }
+  }
+  .logo-input {
+    flex-basis: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    .group-input {
+      margin-bottom: 0px;
+    }
+  }
+  .file-picker-container {
+    aside {
+      display: none;
+      visibility: hidden !important;
+    }
+  }
+}
+
+.team-logo {
+  background-color: $gray-1;
+  width: 80px;
+  height: 120px;
+}

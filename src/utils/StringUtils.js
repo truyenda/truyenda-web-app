@@ -66,3 +66,8 @@ module.exports.getAge = dateString => {
    }
    return age;
 };
+
+module.exports.validateLinkPhoto = str => {
+   var re = /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/;
+   return re.test(String(str).toLowerCase());
+}
