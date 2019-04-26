@@ -4,6 +4,8 @@ import Browse from "../../components/Browse/Browse";
 import Main from "../../components/Main/Main";
 import { Link, Switch, BrowserRouter, Route } from "react-router-dom";
 import styles from "./Home.scss";
+import LatestUpdate from "../LatestUpdate";
+import Manga from "../../components/Manga/Manga";
 class Home extends Component {
    constructor(props) {
       super(props);
@@ -76,7 +78,11 @@ class Home extends Component {
       return (
          <div className="home-wrapper">
             <div className="main-content-col">
-               <Main />
+              <Switch>
+                 <Route path="/latest-update" exact={true} component={Manga} />
+                 <Route path="/" exact={true} component={Main} />
+              </Switch>
+              {/* <Home /> */}
             </div>
             <div className="side-content-col">
                <Browse />
