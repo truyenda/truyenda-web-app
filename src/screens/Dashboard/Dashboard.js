@@ -8,6 +8,7 @@ import AuthorTable from './AuthorTable';
 import FrequencyTable from './FrequencyTable';
 import StoryStatusTable from './StoryStatusTable';
 import ComicDetailsTable from "./ComicDetailsTable/ComicDetailsTable";
+import TeamTable from './TeamTable';
 class Dashboard extends Component {
   componentDidMount(){
     document.title = 'Trang quản lý'
@@ -20,6 +21,7 @@ class Dashboard extends Component {
           <Switch>
             <Route path="/dashboard/comics" exact={true} component={ComicsDashBoard}/>
             <Route path="/dashboard/comics/:id" exact={true} component={ComicDetailsTable}/>
+            <Route path="/dashboard/teams" exact={true} component={TeamTable}/>
             <Route path='/dashboard/authors' exact={true} component={AuthorTable}/>
             <Route path='/dashboard/categories' exact={true} component={CategoryTable}/>
             <Route path='/dashboard/frequencies' exact={true} component={FrequencyTable}/>
