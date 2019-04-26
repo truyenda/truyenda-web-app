@@ -52,7 +52,7 @@ class FrequencyTable extends Component {
 
   clearDataState() {
     this.setState({
-      frequency: { name: ""},
+      frequency: { name: "" },
       alert: {},
       isEditing: false
     });
@@ -217,11 +217,25 @@ class FrequencyTable extends Component {
         accessor: "Id",
         Cell: cell => <span className="Id-center">{cell.value}</span>,
         width: 50,
-        maxWidth: 50
+        maxWidth: 50,
+        Filter: ({ filter, onChange }) => (
+          <input
+            placeholder="Tìm ID"
+            onChange={event => onChange(event.target.value)}
+            style={{ width: "100%" }}
+          />
+        )
       },
       {
         Header: "Tên chu kỳ",
         accessor: "TenChuKy",
+        Filter: ({ filter, onChange }) => (
+          <input
+            placeholder="Tìm chu kỳ"
+            onChange={event => onChange(event.target.value)}
+            style={{ width: "100%" }}
+          />
+        )
       },
       {
         Header: "",
@@ -276,9 +290,7 @@ class FrequencyTable extends Component {
             center
           >
             <h2>
-              {this.state.isEditing
-                ? "Chỉnh sửa chu kỳ"
-                : "Tạo chu kỳ mới"}
+              {this.state.isEditing ? "Chỉnh sửa chu kỳ" : "Tạo chu kỳ mới"}
             </h2>
             <TextInput
               id="name"
