@@ -50,7 +50,7 @@ class StoryStatusTable extends Component {
 
   clearDataState() {
     this.setState({
-      sstatus: { name: ""},
+      sstatus: { name: "" },
       alert: {},
       isEditing: false
     });
@@ -215,11 +215,25 @@ class StoryStatusTable extends Component {
         accessor: "Id",
         Cell: cell => <span className="Id-center">{cell.value}</span>,
         width: 50,
-        maxWidth: 50
+        maxWidth: 50,
+        Filter: ({ filter, onChange }) => (
+          <input
+            placeholder="Tìm ID"
+            onChange={event => onChange(event.target.value)}
+            style={{ width: "100%" }}
+          />
+        )
       },
       {
         Header: "Tên trạng thái",
         accessor: "TentrangThai",
+        Filter: ({ filter, onChange }) => (
+          <input
+            placeholder="Tìm trạng thái"
+            onChange={event => onChange(event.target.value)}
+            style={{ width: "100%" }}
+          />
+        )
       },
       {
         Header: "",
