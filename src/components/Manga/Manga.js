@@ -5,7 +5,7 @@ import LatestFilter from './LatestFilter';
 import Button from '../commonUI/Button';
 
 
-export default class Main extends Component {
+export default class Manga extends Component {
   constructor(props) {
     super(props);
     this.state = {
