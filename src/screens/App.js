@@ -26,7 +26,7 @@ class App extends Component {
           <Switch>
             <Route path="/" exact={true} component={Home} />
             <Route path="/all-manga" component={AllManga}/>
-            <Route path="/latest-update" exact={true} component={LatestUpdate} />
+            <Route path="/latest-update" exact={true} component={Home} />
             <Route path="/login" exact={true} component={Login} />
             <Route path="/signup" exact={true} component={SignUp} />
             <PrivateRoute path="/personal" component={Personal} />
