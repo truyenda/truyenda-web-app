@@ -27,6 +27,7 @@ export default class ComicsDashBoard extends Component {
             name: "",
             anotherName: "",
             status: "",
+            frequency: 9,
             authorsName: "",
             genres: "",
             releasedDate: "",
@@ -179,11 +180,34 @@ export default class ComicsDashBoard extends Component {
 
    //TODO: Add
 
-   onAddComic(comic) {
+   onAddComic() {
+      let comic = this.state.comic;
       ComicApi.add(comic)
          .then(res => {
             if (res.data.Code && res.data.Code === 200) {
                Toast.success(comic.name, "Done");
+               let data = this.state.data;
+               data.push({
+                  // Id: res.data.ThongTinBoSung1,
+                  // Id_Nhom: comic.authorsName,
+                  // Id_TrangThai: comic.status,
+                  // Id_ChuKy: comic.frequency,
+                  // TenTruyen: comic.name,
+                  // TenKhac: comic.anotherName,
+                  // NamPhatHanh: comic.releasedDate,
+                  // AnhBia: comic.coverPicture,
+                  // AnhDaiDien: comic.avatarPicture,
+                  // MoTa: comic.description
+                  Id_Nhom: 3,
+                  Id_TrangThai: 7,
+                  Id_ChuKy: 9,
+                  TenTruyen: "Testing3",
+                  TenKhac: "Nope",
+                  NamPhatHanh: 2017,
+                  AnhBia: "https://juiceboxinteractive.com/app/uploads/2018/05/Color-Cover-960x547.png",
+                  AnhDaiDien: "https://juiceboxinteractive.com/app/uploads/2018/05/Color-Cover-960x547.png",
+                  MoTa: "Nothing"
+               });
             } else {
                Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
             }
@@ -205,14 +229,15 @@ export default class ComicsDashBoard extends Component {
          comic: {
             Id: comic.Id,
             name: comic.TenTruyen,
-            authorsName: comic.TacGia[0].TenTacGia,
+            authorsName: [...comic.TacGia].map(e => e.TenTacGia).join(","),
             anotherName: comic.TenKhac,
             releasedDate: comic.NgayXuatBan,
             coverPicture: comic.AnhBia,
             avatarPicture: comic.AnhDaiDien,
-            groupName: comic.TenNhom,
+            groupName: comic.Id_Nhom,
             categories: [...comic.TheLoai].map(e => e.TenTheLoai).join(","),
-            status: comic.TenTrangThai,
+            status: comic.Id_TrangThai,
+            // frequency: comic.ChuKyPhatHanh,
             description: comic.MoTa
          },
          isEditing: true
@@ -394,6 +419,19 @@ export default class ComicsDashBoard extends Component {
                            : null
                      }
                   />
+                  {/* <TextInput
+                     id="frequency"
+                     onChanged={(key, value) => {
+                        this.setFormData(key, value);
+                     }}
+                     alert={this.state.alert.name}
+                     display="Chu kỳ phát hành"
+                     value={
+                        this.state.isEditing
+                           ? this.state.comic.frequency
+                           : null
+                     }
+                  /> */}
                   <TextInput
                      id="coverPicture"
                      onChanged={(key, value) => {
@@ -466,7 +504,7 @@ export default class ComicsDashBoard extends Component {
                         display={this.state.isEditing ? "Cập nhật" : "Tạo"}
                         type="btn-Green"
                         onClick={() => {
-                           this.onSubmitForm();
+                           this.onAddComic();
                         }}
                      />
                      <Button
