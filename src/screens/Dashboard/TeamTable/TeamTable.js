@@ -26,13 +26,13 @@ class TeamTable extends Component {
         Id: "",
         name: "",
         description: "",
-        logo: ""
+        Logo: ""
       },
       alert: {
         Id: "",
         name: "",
         description: "",
-        logo: ""
+        Logo: ""
       }
     };
   }
