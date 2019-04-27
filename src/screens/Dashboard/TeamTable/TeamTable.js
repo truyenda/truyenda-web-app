@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 import "./TeamTable.scss";
 import StringUtils from "../../../utils/StringUtils";
 import PhotoApi from "../../../api/PhotoApi";
+import { toTeamLink } from "../../../utils/LinkUtils";
 class TeamTable extends Component {
   constructor(props) {
     super(props);
@@ -26,13 +27,13 @@ class TeamTable extends Component {
         Id: "",
         name: "",
         description: "",
-        logo: ""
+        Logo: ""
       },
       alert: {
         Id: "",
         name: "",
         description: "",
-        logo: ""
+        Logo: ""
       }
     };
   }
@@ -263,7 +264,9 @@ class TeamTable extends Component {
         Header: "Logo",
         accessor: "Logo",
         Cell: cell => (
-          <img className="team-logo" src={cell.value ? cell.value : ""} />
+          <Link to={toTeamLink(cell.original.TenNhomDich, cell.original.Id)}>
+            <img className="team-logo" src={cell.value ? cell.value : ""} />
+          </Link>
         ),
         maxWidth: 90,
         filterable: false
@@ -277,6 +280,11 @@ class TeamTable extends Component {
             onChange={event => onChange(event.target.value)}
             style={{ width: "100%" }}
           />
+        ),
+        Cell: cell => (
+          <Link to={toTeamLink(cell.value, cell.original.Id)}>
+            {cell.value}
+          </Link>
         ),
         maxWidth: 200
       },
