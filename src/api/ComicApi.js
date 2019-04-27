@@ -6,32 +6,29 @@ export default {
    get(idComic) {
       return Caller();
    },
-   add(story) {
+   add(comic) {
       const data = {
-         //TODO: Wait for API stories/add
-         //TODO: Change story.attribute
-         Id_Nhom: 3,
+         TenTruyen: comic.name,
+         TenKhac: comic.anotherName,
+         TheLoai: [2, 9, 11, 19, 7],
+         TacGia: comic.authorsName,
          Id_TrangThai: 7,
-         Id_ChuKy: 9,
-         TenTruyen: "Testing3",
-         TenKhac: "Nope",
-         NamPhatHanh: 2017,
-         AnhBia:
-            "https://juiceboxinteractive.com/app/uploads/2018/05/Color-Cover-960x547.png",
-         AnhDaiDien:
-            "https://juiceboxinteractive.com/app/uploads/2018/05/Color-Cover-960x547.png",
-         MoTa: "Nothing"
+         NamPhatHanh: comic.releasedDate,
+         Id_ChuKy: 11,
+         AnhBia: comic.coverPicture,
+         AnhDaiDien: comic.avatarPicture,
+         MoTa: comic.description
       };
-      return Caller(prefix + "add", "POST", data);
+      return Caller(prefix, "POST", data);
    },
-   update(story) {
+   update(comic) {
       const data = {
          //
       };
-      return Caller(prefix + story.Id, "PUT", data);
+      return Caller(prefix + comic.Id, "PUT", data);
    },
-   delete(story) {
-      return Caller(prefix + story.Id, "DELETE");
+   delete(comic) {
+      return Caller(prefix + comic.Id, "DELETE");
    },
    list(index) {
       return Caller(prefix + "page/" + index, "GET");
