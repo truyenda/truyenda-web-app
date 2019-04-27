@@ -26,15 +26,15 @@ export default class ComicsDashBoard extends Component {
          comic: {
             name: "",
             anotherName: "",
-            status: "",
-            frequency: 9,
+            categories: "",
             authorsName: "",
-            genres: "",
+            status: "", 
             releasedDate: "",
+            frequency: "",
             coverPicture: "",
             avatarPicture: "",
             groupName: "",
-            description: "",
+            description: ""
          },
          alert: {
             name: ""
@@ -189,25 +189,16 @@ export default class ComicsDashBoard extends Component {
                Toast.success(comic.name, "Done");
                let data = this.state.data;
                data.push({
-                  // Id: res.data.ThongTinBoSung1,
-                  // Id_Nhom: comic.authorsName,
-                  // Id_TrangThai: comic.status,
-                  // Id_ChuKy: comic.frequency,
-                  // TenTruyen: comic.name,
-                  // TenKhac: comic.anotherName,
-                  // NamPhatHanh: comic.releasedDate,
-                  // AnhBia: comic.coverPicture,
-                  // AnhDaiDien: comic.avatarPicture,
-                  // MoTa: comic.description
-                  Id_Nhom: 3,
+                  TenTruyen: comic.name,
+                  TenKhac: comic.anotherName,
+                  // TheLoai: comic.categories,
+                  TacGia: comic.authorsName,
                   Id_TrangThai: 7,
-                  Id_ChuKy: 9,
-                  TenTruyen: "Testing3",
-                  TenKhac: "Nope",
-                  NamPhatHanh: 2017,
-                  AnhBia: "https://juiceboxinteractive.com/app/uploads/2018/05/Color-Cover-960x547.png",
-                  AnhDaiDien: "https://juiceboxinteractive.com/app/uploads/2018/05/Color-Cover-960x547.png",
-                  MoTa: "Nothing"
+                  NamPhatHanh: comic.releasedDate,
+                  Id_ChuKy: 11,
+                  AnhBia: comic.coverPicture,
+                  AnhDaiDien: comic.avatarPicture,
+                  MoTa: comic.description
                });
             } else {
                Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
@@ -230,14 +221,18 @@ export default class ComicsDashBoard extends Component {
          comic: {
             Id: comic.Id,
             name: comic.TenTruyen,
-            authorsName: [...comic.TacGia].map(e => e.TenTacGia).join(","),
+            authorsName: [...comic.DanhSachTacGia]
+               .map(e => e.TenTacGia)
+               .join(","),
             anotherName: comic.TenKhac,
-            releasedDate: comic.NgayXuatBan,
+            releasedDate: comic.NamPhatHanh,
             coverPicture: comic.AnhBia,
             avatarPicture: comic.AnhDaiDien,
-            groupName: comic.Id_Nhom,
-            categories: [...comic.TheLoai].map(e => e.TenTheLoai).join(","),
-            status: comic.Id_TrangThai,
+            groupName: comic.TenNhom,
+            categories: [...comic.DanhSachTheLoai]
+               .map(e => e.TenTheLoai)
+               .join(","),
+            status: comic.TrangThai,
             // frequency: comic.ChuKyPhatHanh,
             description: comic.MoTa
          },
@@ -266,11 +261,11 @@ export default class ComicsDashBoard extends Component {
             });
             ComicApi.delete(comic)
                .then(res => {
-                  if(res.data.Code && res.data.Code === 200) {
+                  if (res.data.Code && res.data.Code === 200) {
                      Toast.success(comic.TenTruyen, "Đã xóa truyện");
                      var newData = [];
                      this.state.data.forEach(e => {
-                        if(e.Id !== comic.Id) {
+                        if (e.Id !== comic.Id) {
                            newData.push(e);
                         }
                      });
@@ -291,7 +286,7 @@ export default class ComicsDashBoard extends Component {
                });
          },
          () => {}
-      )
+      );
    }
 
    render() {
@@ -314,21 +309,25 @@ export default class ComicsDashBoard extends Component {
             Header: "Tên truyện",
             sortable: false,
             accessor: "TenTruyen",
-            Cell: cell => <Link 
-                              to={{
-                                 pathname: convertToFriendlyPath(
-                                    "/dashboard/comics",
-                                    cell.value,
-                                    cell.original.Id
-                                 ),
-                                 state: {
-                                    comic: cell.original
-                                 }
-                              }} 
-                          >{cell.value}</Link>
+            Cell: cell => (
+               <Link
+                  to={{
+                     pathname: convertToFriendlyPath(
+                        "/dashboard/comics",
+                        cell.value,
+                        cell.original.Id
+                     ),
+                     state: {
+                        comic: cell.original
+                     }
+                  }}
+               >
+                  {cell.value}
+               </Link>
+            )
          },
          {
-            Header: "Tên nhóm",
+            Header: "Tên nhóm dịch",
             accessor: "TenNhom",
             Cell: cell => <span className="Id-center">{cell.value}</span>,
             sortable: false,
@@ -337,7 +336,7 @@ export default class ComicsDashBoard extends Component {
          },
          {
             Header: "Trạng thái truyện",
-            accessor: "TenTrangThai",
+            accessor: "TrangThai",
             Cell: cell => <span className="Id-center">{cell.value}</span>,
             filterable: false,
             maxWidth: 150
@@ -370,7 +369,7 @@ export default class ComicsDashBoard extends Component {
                      <i
                         className="fas fa-times fa-lg"
                         onClick={() => {
-                          this.onRemoveComic(cell.original);
+                           this.onRemoveComic(cell.original);
                         }}
                      />
                   </div>
@@ -379,8 +378,8 @@ export default class ComicsDashBoard extends Component {
             maxWidth: 100
          }
       ];
-      if(this.state.isError) {
-         return <Link to="/dashboard/comics">Thử lại</Link>
+      if (this.state.isError) {
+         return <Link to="/dashboard/comics">Thử lại</Link>;
       }
       return (
          <div className="comics-dashboard-container">
@@ -584,17 +583,17 @@ export default class ComicsDashBoard extends Component {
                   defaultFilterMethod={(filter, row, column) => {
                      const id = filter.pivotId || filter.id;
                      return row[id] !== undefined
-                       ? String(row[id])
-                           .toLowerCase()
-                           .includes(filter.value.toLowerCase())
-                       : true;
-                   }}
-                   defaultSorted={[
+                        ? String(row[id])
+                             .toLowerCase()
+                             .includes(filter.value.toLowerCase())
+                        : true;
+                  }}
+                  defaultSorted={[
                      {
-                       id: "Id",
-                       desc: !false
+                        id: "Id",
+                        desc: !false
                      }
-                   ]}
+                  ]}
                />
             )}
          </div>
