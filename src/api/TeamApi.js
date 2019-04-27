@@ -12,10 +12,13 @@ export default {
     return Caller(prefix, "POST", data);
   },
   list(index = 1) {
-    return Caller(prefix, "GET");
+    return Caller(prefix + "page/" + index, "GET");
   },
   get(idTeam) {
     return Caller(prefix + idTeam, "GET");
+  },
+  search(query, index = 1) {
+    return Caller(prefix + "search/" + query + "/page/" + index);
   },
   update(team) {
     var data = {

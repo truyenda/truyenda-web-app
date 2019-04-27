@@ -19,6 +19,7 @@ class TeamTable extends Component {
     super(props);
     this.state = {
       data: null,
+      pages: 1,
       loading: false,
       uploading: false,
       openModal: false,
@@ -42,9 +43,18 @@ class TeamTable extends Component {
     TeamApi.list()
       .then(res => {
         if (res.data.Code === 200) {
-          this.setState({
-            data: res.data.Data
-          });
+          this.setState(
+            {
+              data: res.data.Data.listNhomDich,
+              pages: res.data.Data.Paging.TotalPages
+            },
+            () => {
+              document
+                .getElementsByClassName("rt-th")[7]
+                .getElementsByTagName("input")[0]
+                .setAttribute("placeholder", "Tìm nhóm");
+            }
+          );
         } else {
           Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
           this.setState({
@@ -246,11 +256,56 @@ class TeamTable extends Component {
     );
   }
 
+  loadPage(state, instance) {
+    this.setState({
+      loading: true
+    });
+    if (state.filtered[0] && state.filtered[0].value.trim().length !== 0) {
+      TeamApi.search(state.filtered[0].value, state.page + 1)
+        .then(res => {
+          if (res.data.Code && res.data.Code === 200) {
+            this.setState({
+              data: res.data.Data.listNhomDich,
+              pages: res.data.Data.Paging.TotalPages
+            });
+          } else {
+            Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
+          }
+        })
+        .catch(err => {
+          Toast.error("Có lỗi trong quá trình kêt nối máy chủ");
+        })
+        .finally(() => {
+          this.setState({
+            loading: false
+          });
+        });
+    } else {
+      TeamApi.list(state.page + 1)
+        .then(res => {
+          if (res.data.Code && res.data.Code === 200) {
+            this.setState({
+              data: res.data.Data.listNhomDich,
+              pages: res.data.Data.Paging.TotalPages
+            });
+          } else {
+            Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
+          }
+        })
+        .catch(err => {
+          Toast.error("Có lỗi trong quá trình kêt nối máy chủ");
+        })
+        .finally(() => {
+          this.setState({
+            loading: false
+          });
+        });
+    }
+  }
   render() {
     if (this.state.isError) {
       return <Link to="/dashboard/teams">Thử lại</Link>;
     }
-
     const columns = [
       {
         Header: "ID",
@@ -274,13 +329,6 @@ class TeamTable extends Component {
       {
         Header: "Tên nhóm",
         accessor: "TenNhomDich",
-        Filter: ({ filter, onChange }) => (
-          <input
-            placeholder="Tìm nhóm dịch"
-            onChange={event => onChange(event.target.value)}
-            style={{ width: "100%" }}
-          />
-        ),
         Cell: cell => (
           <Link to={toTeamLink(cell.value, cell.original.Id)}>
             {cell.value}
@@ -324,7 +372,6 @@ class TeamTable extends Component {
         maxWidth: 100
       }
     ];
-
     return (
       <div className="dashboard-table">
         <div className="tb-name-wrap">
@@ -453,11 +500,19 @@ class TeamTable extends Component {
         ) : (
           <ReactTable
             data={this.state.data}
+            pages={this.state.pages}
             columns={columns}
             loading={this.state.loading}
             LoadingComponent={LoadingCmp}
+            showPageSizeOptions={false}
             filterable={true}
             resizable={false}
+            defaultPageSize={20}
+            manual
+            onFetchData={(state, instance) => {
+              this.loadPage(state, instance);
+            }}
+            sortable={false}
             previousText="Trang trước"
             nextText="Trang tiếp"
             loadingText="Đang tải..."
@@ -493,7 +548,6 @@ class TeamTable extends Component {
     );
   }
 }
-
 const LoadingCmp = props => {
   return props.loading ? (
     <div className="loadingcmp">
