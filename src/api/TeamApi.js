@@ -30,5 +30,8 @@ export default {
   },
   delete(team) {
     return Caller(prefix + team.Id, "DELETE");
+  },
+  getComicList(IdTeam, index = 1) {
+    return Caller("stories/team/" + IdTeam + "/page/" + index);
   }
 };

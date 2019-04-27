@@ -17,6 +17,7 @@ import ReadingPage from "./ReadingPage/ReadingPage";
 import Dashboard from "./Dashboard/Dashboard";
 import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
 import '../assets/react-table.css';
+import TeamProfile from './TeamProfile';
 class App extends Component {
   render() {
     return (
@@ -33,6 +34,7 @@ class App extends Component {
             <PrivateRoute path="/dashboard" per="TEST" component={Dashboard} />
             <Route path="/comics/reading/:id" component={ReadingPage} />
             <Route path="/comics/:id" component={ComicDetails} />
+            <Route path="/teams" component={TeamProfile}/>
             <Route component={NotFound} />
           </Switch>
         </div>

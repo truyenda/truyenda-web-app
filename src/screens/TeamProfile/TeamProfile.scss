@@ -1,0 +1,113 @@
+@import "../../scss/mixins";
+@import "../../scss/variables";
+.team-profile {
+  min-height: 70vh;
+  .team-info {
+    @include shadow;
+    display: flex;
+    width: 60%;
+    margin: 0 auto;
+    border-bottom: solid gray 1px;
+    padding: 1em;
+    margin-top: 1em;
+    background-color: white;
+    .logo-team {
+      height: 150px;
+      width: 150px;
+      img {
+        border-radius: 50%;
+      }
+    }
+    .team-name {
+      margin-left: 1em;
+      span {
+        font-weight: bold;
+        text-transform: capitalize;
+        font-size: 20px;
+        color: $blue-4;
+        b {
+          color: white;
+          background-color: $blue;
+          padding: 0.2em;
+          border-radius: 5px;
+        }
+      }
+      p {
+        margin-top: 1em;
+      }
+    }
+  }
+  .team-comic-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    span {
+      font-size: 18px;
+      margin-top: 1em;
+      text-transform: uppercase;
+      font-weight: bold;
+      color: $blue;
+      text-align: center;
+    }
+  }
+  .list-story {
+    width: 60%;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    .link {
+      width: inherit;
+    }
+    a,
+    a:visited,
+    a:hover,
+    a:active {
+      color: $blue;
+    }
+    .story-thumb-container {
+      padding: 0.2em;
+      border-radius: 4px;
+      display: inline-block;
+      width: 180px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-top: 1em;
+      .thumb {
+        @include shadow;
+        height: 240px;
+        width: inherit;
+        margin-bottom: 0.5em;
+      }
+    }
+    :hover {
+      background-color: white;
+    }
+    .tip-200 {
+      b {
+        display: inline-block;
+        padding-bottom: 0.2em;
+        border-bottom: solid white 1px;
+      }
+      p {
+        margin-top: 0.2em;
+      }
+    }
+  }
+}
+@media screen and (max-width: 720px) {
+  .team-profile {
+    .team-info {
+      width: 100%;
+    }
+    .list-story {
+      width: 100%;
+    }
+  }
+}
+
+.loadmore-container {
+  margin-top: 1em;
+  text-align: center;
+}

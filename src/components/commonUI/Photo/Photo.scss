@@ -1,0 +1,13 @@
+@import '../../../scss/variables';
+.loadimg {
+    display: block;
+  position: relative;
+  #load-img {
+    width: inherit;
+    height: inherit;
+    background-color: $gray-1;
+  }
+  .loadingcmp{
+    top:0;
+  }
+}
