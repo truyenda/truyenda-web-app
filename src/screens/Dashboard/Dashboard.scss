@@ -4,6 +4,12 @@
   margin-top: 1em;
   display: flex;
   min-height: 80vh;
+  a,
+  a:visited,
+  a:hover,
+  a:active {
+    color: $blue;
+  }
   .side-bar {
     flex: 0 0 230px;
     .header-side {
