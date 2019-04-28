@@ -11,22 +11,40 @@ import TextInput from "../../../components/commonUI/TextInput";
 import TextArea from "../../../components/commonUI/TextArea";
 import Modal from "react-responsive-modal";
 import ReactTooltip from "react-tooltip";
+import Select from "react-select";
 import SelectBox from "../../../components/commonUI/SelectBox";
+import ManagerPressions from "../../../api/ManagerPressions";
+import TeamApi from "../../../api/TeamApi";
 class Account extends Component {
   constructor(props) {
     super(props);
     this.state = {
       data: null,
+      pages: 1,
       loading: false,
       openModal: false,
       isEditing: false,
+      TenQuyen: [],
+      teams: [],
+      status: [
+        {
+          value: 1,
+          label: "Bình Thường"
+        },
+        {
+          value: 2,
+          label: "Khóa Tài Khoản"
+        }
+      ],
       profile: {
         Username: "",
         Email: "",
         IdQuyen: "",
         TenQuyen: "",
         IdNhom: "",
-        TenNhom: ""
+        TenNhom: "",
+        IdTrangThai: "",
+        TenTrangThai: ""
       },
       alert: {
         Username: "",
@@ -34,7 +52,9 @@ class Account extends Component {
         IdQuyen: "",
         TenQuyen: "",
         IdNhom: "",
-        TenNhom: ""
+        TenNhom: "",
+        IdTrangThai: "",
+        TenTrangThai: ""
       }
     };
   }
@@ -42,7 +62,8 @@ class Account extends Component {
     AccountListApi.list().then(res => {
       if (res.data.Code === 200) {
         this.setState({
-          data: res.data.Data.listTaiKhoan
+          data: res.data.Data.listTaiKhoan,
+          pages: res.data.Data.Paging.TotalPages
         });
       } else {
         this.setState({
@@ -51,6 +72,8 @@ class Account extends Component {
         Toast.notify(res.data.MsgError, "Mã lỗi: " + res.data.Code);
       }
     });
+    this.getPressions();
+    this.getTeams();
   }
   toggleLoading(status) {
     this.setState({
@@ -66,7 +89,9 @@ class Account extends Component {
         IdQuyen: "",
         TenQuyen: "",
         IdNhom: "",
-        TenNhom: ""
+        TenNhom: "",
+        IdTrangThai: "",
+        TenTrangThai: ""
       },
       alert: {},
       isEditing: false
@@ -90,62 +115,6 @@ class Account extends Component {
     });
   }
 
-  checkValidation() {
-    var isValid = true;
-    var alert = {};
-    if (!this.state.name || this.state.name.length === 0) {
-      alert.name = "Tên hiển thị không được để trống";
-      isValid = false;
-    } else {
-      if (this.state.name.length > 32) {
-        alert.name = "Tên hiển thị tối đa 32 ký tự";
-        isValid = false;
-      }
-    }
-    if (!this.state.birthday || this.state.birthday.length === 0) {
-      alert.birthday = "Ngày sinh không được để trống";
-      isValid = false;
-    } else {
-      if (!StringUtils.validateDate(this.state.birthday)) {
-        alert.birthday = "Ngày sinh không đúng định dạng";
-        isValid = false;
-      } else {
-        var age = StringUtils.getAge(this.state.birthday);
-        if (age <= 10 || age >= 100) {
-          alert.birthday = "Tuổi không được chấp nhận";
-          isValid = false;
-        }
-      }
-    }
-    if (!this.state.cfPassword || this.state.cfPassword.length === 0) {
-      alert.cfPassword = "Bạn cần nhập mật khẩu để thực hiện";
-      isValid = false;
-    }
-    if (!this.state.newPassword || this.state.newPassword.length === 0) {
-      alert.newPassword = "Mật khẩu không được để trống";
-      isValid = false;
-    } else {
-      if (
-        this.state.newPassword.length < 6 ||
-        this.state.newPassword.length > 32
-      ) {
-        alert.newPassword = "Mật khẩu phải ít nhất từ 6 đến 32 ký tự";
-        isValid = false;
-      }
-    }
-    if (!this.state.reNewPassword || this.state.reNewPassword.length === 0) {
-      alert.reNewPassword = "Bạn cần nhập xác nhận lại mật khẩu";
-      isValid = false;
-    } else {
-      if (this.state.newPassword !== this.state.reNewPassword) {
-        alert.rePassword = "Mật khẩu mới không khớp";
-        isValid = false;
-      }
-    }
-    this.setState({ alert: alert });
-    return isValid;
-  }
-
   onShowModal() {
     this.setState({
       openModal: true
@@ -160,17 +129,42 @@ class Account extends Component {
   }
 
   onEditAccount(profile) {
+    const getTenQuyenById = (Id) => {
+      let data = []
+      this.state.TenQuyen.forEach(TenQuyen => {
+         if(TenQuyen.value.toString() === Id.toString()){
+            data = TenQuyen;
+         }
+      });
+      return data;
+    }
+    const getTeamById = (Id) => {
+      let data = []
+      this.state.teams.forEach(team => {
+        if(team.value.toString() === Id.toString()){
+            data = team;
+        }
+      });
+      return data;
+    }
+    const getStatusById = (Id) => {
+      let data = []
+      this.state.status.forEach(status => {
+        if(status.value.toString() === Id.toString()){
+            data = status;
+        }
+      });
+      return data;
+    }
     this.setState({
       isEditing: true,
       profile: {
         Id: profile.Id,
         Username: profile.Username,
         Email: profile.Email,
-        IdTrangThai: profile.IdTrangThai,
-        IdQuyen: profile.IdQuyen,
-        TenQuyen: profile.TenQuyen,
-        IdNhom: profile.IdNhom,
-        TenNhom: profile.TenNhom
+        TenQuyen: getTenQuyenById(profile.IdQuyen),
+        TenNhom: getTeamById(profile.IdNhom),
+        TenTrangThai: getStatusById(profile.IdTrangThai)
       }
     });
     this.onShowModal();
@@ -191,6 +185,9 @@ class Account extends Component {
               if (c.Id === profile.Id) {
                 c.Username = profile.Username;
                 c.Email = profile.Email;
+                c.IdNhom = profile.IdNhom;
+                c.IdQuyen = profile.IdQuyen;
+                c.IdTrangThai = profile.IdTrangThai;
               }
             });
           } else {
@@ -206,7 +203,105 @@ class Account extends Component {
           });
         });
     }
-  } 
+  }
+
+  onRemoveAccount(account) {
+    Alert.warn(
+      "Bạn có muốn xóa nhóm này không?",
+      account.Username,
+      () => {
+        this.setState({
+          loading: true
+        });
+        AccountListApi.delete(account)
+          .then(res => {
+            if (res.data.Code && res.data.Code === 200) {
+              Toast.success(account.Username, "Đã xóa account");
+              var newData = [];
+              this.state.data.forEach(s => {
+                if (s.Id !== account.Id) {
+                  newData.push(s);
+                }
+              });
+              this.setState({
+                data: newData
+              });
+            } else {
+              Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
+            }
+          })
+          .catch(err => {
+            Toast.error("Có lỗi trong quá trình kêt nối máy chủ");
+          })
+          .finally(() => {
+            this.setState({
+              loading: false
+            });
+          });
+      },
+      () => {}
+    );
+  }
+
+
+
+  getPressions() {
+    let data = [];
+    ManagerPressions.list()
+      .then(res => {
+        res.data.Data.forEach(TenQuyen => {
+          data.push({ label: TenQuyen.TenVaiTro, value: TenQuyen.Id });
+        });
+      })
+      .catch(err => {})
+      .finally(() => {
+        this.setState({
+          TenQuyen: data
+        });
+      });
+  }
+
+  getTeams() {
+    let data = [];
+    TeamApi.list()
+      .then(res => {
+        res.data.Data.listNhomDich.forEach(team => {
+          data.push({ label: team.TenNhomDich, value: team.Id });
+        });
+      })
+      .catch(err => {})
+      .finally(() => {
+        this.setState({
+          teams: data
+        });
+      });
+  }
+
+
+  loadPage(state, instance) {
+    this.setState({
+      loading: true
+    });
+    AccountListApi.list(state.page + 1)
+      .then(res => {
+        if (res.data.Code && res.data.Code === 200) {
+          this.setState({
+            data: res.data.Data.listTaiKhoan,
+            pages: res.data.Data.Paging.TotalPages
+          });
+        } else {
+          Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
+        }
+      })
+      .catch(err => {
+        Toast.error("Có lỗi trong quá trình kêt nối máy chủ");
+      })
+      .finally(() => {
+        this.setState({
+          loading: false
+        });
+      });
+  }
 
   render() {
     if (this.state.error) {
@@ -218,13 +313,15 @@ class Account extends Component {
         accessor: "Id",
         Cell: cell => <span className="Id-center">{cell.value}</span>,
         width: 50,
-        maxWidth: 50
+        maxWidth: 50,
+        filterable: false
       },
       {
         Header: "Username",
         accessor: "Username",
         width: 150,
-        maxWidth: 150
+        maxWidth: 150,
+        filterable: false
       },
       {
         Header: "Email",
@@ -234,7 +331,8 @@ class Account extends Component {
             {cell.value}
             <ReactTooltip multiline={true} id="des-tip" getContent={v => <p className='tip-200'>{v}</p>}/>
           </span>
-        )
+        ),
+        filterable: false
       },
       {
         Header: "Tên Nhóm",
@@ -244,7 +342,8 @@ class Account extends Component {
             {cell.value}
             <ReactTooltip multiline={true} id="des-tip" getContent={v => <p className='tip-200'>{v}</p>}/>
           </span>
-        )
+        ),
+        filterable: false
       },
       {
         Header: "",
@@ -262,7 +361,7 @@ class Account extends Component {
               <i
                 className="fas fa-times fa-lg"
                 onClick={() => {
-                  // this.onRemoveAccount(cell.original);
+                  this.onRemoveAccount(cell.original);
                 }}
               />
             </div>
@@ -308,6 +407,33 @@ class Account extends Component {
             value={this.state.isEditing ? this.state.profile.Email : null}
           />
 
+          <Select
+            placeholder="Chọn nhóm..."
+            options={this.state.teams}
+            value={this.state.profile.TenNhom}
+            onChange={v => {
+              this.setFormData("TenNhom", v);
+            }}
+          />
+
+          <Select
+            placeholder="Trạng thái..."
+            options={this.state.status}
+            value={this.state.profile.TenTrangThai}
+            onChange={v => {
+              this.setFormData("TenTrangThai", v);
+            }}
+          />
+
+          <Select
+            placeholder="Chọn quyền..."
+            options={this.state.TenQuyen}
+            value={this.state.profile.TenQuyen}
+            onChange={v => {
+              this.setFormData("TenQuyen", v);
+            }}
+          />
+
           <div className="action-group">
             <Button
               display={this.state.isEditing ? "Cập nhật" : "Tạo"}
@@ -332,20 +458,26 @@ class Account extends Component {
         ) : (
           <ReactTable
             data={this.state.data}
+            pages={this.state.pages}
             columns={columns}
-            LoadingComponent={LoadingCmp}
             loading={this.state.loading}
-            sortable={true}
-            multiSort={true}
+            LoadingComponent={LoadingCmp}
+            showPageSizeOptions={false}
             filterable={true}
             resizable={false}
+            defaultPageSize={20}
+            manual
+            onFetchData={(state, instance) => {
+              this.loadPage(state, instance);
+            }}
+            sortable={false}
             previousText="Trang trước"
             nextText="Trang tiếp"
             loadingText="Đang tải..."
             noDataText="Không có dữ liệu"
             pageText="Trang"
             ofText="trên"
-            rowsText="user"
+            rowsText="hàng"
             defaultFilterMethod={(filter, row, column) => {
               const id = filter.pivotId || filter.id;
               return row[id] !== undefined
@@ -360,10 +492,14 @@ class Account extends Component {
                 desc: !true
               }
             ]}
-            defaultPageSize={20}
-            onPageChange={p => console.log(p)}
             className="-striped -highlight"
-            // minRows={5}
+            getTdProps={() => ({
+              style: {
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center"
+              }
+            })}
           />
         )}
       </div>
