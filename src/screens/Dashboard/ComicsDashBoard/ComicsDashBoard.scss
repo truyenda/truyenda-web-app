@@ -17,4 +17,44 @@
    .action-group {
      margin-top: 0.5em;
    }
+   textarea{
+     margin-top: 0.5em;
+     height: 200px;
+   }
+ }
+
+ .photo-form{
+   margin-top: 0.5em;
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   .photo-display-container{
+     position: relative;
+    .photo{
+      width: 80px;
+      height: 120px;
+    }
+    .cover{
+      width: 300px;
+    }
+    .loadingcmp{
+      top: 0; 
+    }
+   }
+   .photo-input{
+    flex-basis: 100%;
+    margin-left: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    .group-input{
+       margin-bottom: 0px;
+    }
+    aside{
+      display: none;
+    }
+   }
+ }
+ .css-1pcexqc-container{
+   margin-top: 0.5em;
  }

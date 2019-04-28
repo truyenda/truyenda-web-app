@@ -14,6 +14,7 @@ import "./TeamTable.scss";
 import StringUtils from "../../../utils/StringUtils";
 import PhotoApi from "../../../api/PhotoApi";
 import { toTeamLink } from "../../../utils/LinkUtils";
+import Photo from '../../../components/commonUI/Photo';
 class TeamTable extends Component {
   constructor(props) {
     super(props);
@@ -320,7 +321,7 @@ class TeamTable extends Component {
         accessor: "Logo",
         Cell: cell => (
           <Link to={toTeamLink(cell.original.TenNhomDich, cell.original.Id)}>
-            <img className="team-logo" src={cell.value ? cell.value : ""} />
+            <Photo className="team-logo" src={cell.value ? cell.value :'/70fa8d92aab8c65c6b9acca88204487c.png'} />
           </Link>
         ),
         maxWidth: 90,
@@ -421,7 +422,7 @@ class TeamTable extends Component {
             />
             <div className="logo-team-form">
               <div className="logo-display-container">
-                <img src={this.state.team.Logo} className="normal-avatar" />
+                <img src={this.state.team.Logo?this.state.team.Logo:'/70fa8d92aab8c65c6b9acca88204487c.png'} className="normal-avatar" />
                 {this.state.uploading && (
                   <div className="loadingcmp">
                     <Progress />
