@@ -22,6 +22,7 @@ import CategoryApi from "../../../api/CategoryApi";
 import StoryStatusApi from "../../../api/StoryStatusApi";
 import Photo from "../../../components/commonUI/Photo";
 import FrequencyApi from "../../../api/FrequencyApi";
+import { toComicLink, toComicDashboardLink } from "../../../utils/LinkUtils";
 export default class ComicsDashBoard extends Component {
   constructor(props) {
     super(props);
@@ -413,8 +414,7 @@ export default class ComicsDashBoard extends Component {
         Cell: cell => (
           <Link
             to={{
-              pathname: convertToFriendlyPath(
-                "/dashboard/comics",
+              pathname: toComicDashboardLink(
                 cell.value,
                 cell.original.Id
               ),
