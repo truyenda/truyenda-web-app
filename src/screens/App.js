@@ -18,6 +18,7 @@ import Dashboard from "./Dashboard/Dashboard";
 import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
 import '../assets/react-table.css';
 import TeamProfile from './TeamProfile';
+import Account from "./Dashboard/Account/Account";
 class App extends Component {
   render() {
     return (
