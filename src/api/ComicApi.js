@@ -4,7 +4,7 @@ const prefix = "stories/";
 
 export default {
    get(idComic) {
-      return Caller();
+      return Caller("commics/" + idComic, "GET");
    },
    add(comic) {
       const data = {
