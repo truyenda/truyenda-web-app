@@ -32,8 +32,8 @@ class App extends Component {
             <Route path="/signup" exact={true} component={SignUp} />
             <PrivateRoute path="/personal" component={Personal} />
             <PrivateRoute path="/dashboard" per="TEST" component={Dashboard} />
-            <Route path="/comics/reading/:id" component={ReadingPage} />
-            <Route path="/comics/:id" component={ComicDetails} />
+            <Route path="/comics/read" component={ReadingPage} />
+            <Route path="/comics" component={ComicDetails} />
             <Route path="/teams" component={TeamProfile}/>
             <Route component={NotFound} />
           </Switch>

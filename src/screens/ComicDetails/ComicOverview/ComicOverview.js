@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styles from "./ComicOverview.scss";
 import { Link } from "react-router-dom";
 import { convertToFriendlyPath } from "../../../utils/StringUtils";
+import { toComicReadLink } from "../../../utils/LinkUtils";
 
 export default class ComicOverview extends Component {
    constructor(props) {
@@ -15,7 +16,10 @@ export default class ComicOverview extends Component {
       const linkResult = (
          <Link
             to={{
-               pathname: convertToFriendlyPath('/comics/reading', comic.TenTruyen, comic.Id),
+               pathname: toComicReadLink(
+                  comic.TenTruyen,
+                  comic.Id
+               ),
                state: {
                   comic
                }

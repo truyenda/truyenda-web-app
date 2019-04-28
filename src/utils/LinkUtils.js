@@ -8,6 +8,10 @@ export const toComicLink = (title, id) => {
   return converter("comics",title, id);
 };
 
+export const toComicReadLink = (title, id) => {
+  return converter("comics/read", title, id);
+}
+
 export const toComicDashboardLink = (title, id) => {
   return converter("dashboard/comics", title, id);
 }
