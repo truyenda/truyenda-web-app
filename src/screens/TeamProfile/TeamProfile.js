@@ -23,6 +23,7 @@ class TeamProfile extends Component {
     };
   }
   componentDidMount() {
+    window.scrollTo(0, 0);
     try {
       var uri = document.location.href;
       var Id = uri.split("teams/")[1].split("-")[0];
@@ -139,6 +140,9 @@ class TeamProfile extends Component {
         {this.state.team && !this.state.data && (
           <Progress display="Đang lấy danh sách truyện" />
         )}
+        {
+          this.state.team && this.state.data && this.state.data.length === 0 && <div className='empty-notify'>Chưa có truyện nào</div>
+        }
         {this.state.data && <div className="list-story">{List}</div>}
         {this.state.page < this.state.totalPages && (
           <div className="loadmore-container">
