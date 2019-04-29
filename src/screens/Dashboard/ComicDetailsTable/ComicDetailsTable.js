@@ -52,6 +52,7 @@ export default class ComicDetailsTable extends Component {
         priority: null,
         links: ""
       },
+      files: [],
       isEditing: false,
       alert: {}
     });
@@ -331,7 +332,7 @@ export default class ComicDetailsTable extends Component {
   }
 
   uploadFileList() {
-    let isUpdate = this.state.links.length === 0;
+    let isUpdate = this.state.chapter.links.length === 0;
     this.state.files.map((file, index) => {
       this.uploadFile(file, index, isUpdate);
     });
