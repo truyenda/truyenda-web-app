@@ -14,7 +14,7 @@ export default class ComicDetails extends Component {
    constructor(props) {
       super(props);
       this.state = {
-         comic: "",
+         comic: null,
          isError: false,
          isError404: false
       };
@@ -44,11 +44,11 @@ export default class ComicDetails extends Component {
    }
 
    render() {
-      const { comic } = this.state.comic;
-      if (this.state.isError404) {
+      const { comic, isError, isError404 } = this.state;
+      if (isError404) {
          return <NotFound />;
       }
-      if (this.state.isError) {
+      if (isError) {
          return <span>Có lỗi xảy ra trong quá trình kết nối</span>;
       }
       return (

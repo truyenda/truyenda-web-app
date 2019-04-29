@@ -44,8 +44,7 @@ export default class ComicOverview extends Component {
             <div className="comic-overview-bar">
                {linkResult}
                <p className="comic-overview-bar-item">
-                  {/* <span>{comic.comicNumberOfChapters}</span> */}
-                  <span>100</span>
+                  <span>{comic.listChuong.length}</span>
                    Chapters
                </p>
                <p className="comic-overview-bar-item">Favorite</p>
