@@ -4,6 +4,7 @@ import demo from "../../assets/demo.jpg";
 import { Link } from "react-router-dom";
 import { convertToFriendlyPath } from "../../utils/StringUtils";
 import Caller from "../../utils/APICaller";
+import { toComicLink } from "../../utils/LinkUtils";
 export default class Chart extends Component {
    constructor(props) {
       super(props);
@@ -34,8 +35,7 @@ export default class Chart extends Component {
       const listComics = comics.map(comic => (
          <Link
             to={{
-               pathname: convertToFriendlyPath(
-                  "/comics",
+               pathname: toComicLink(
                   comic.TenTruyen,
                   comic.Id
                ),

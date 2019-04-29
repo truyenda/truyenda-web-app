@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styles from "./ComicOverview.scss";
 import { Link } from "react-router-dom";
 import { convertToFriendlyPath } from "../../../utils/StringUtils";
+import { toComicReadLink } from "../../../utils/LinkUtils";
 
 export default class ComicOverview extends Component {
    constructor(props) {
@@ -15,7 +16,10 @@ export default class ComicOverview extends Component {
       const linkResult = (
          <Link
             to={{
-               pathname: convertToFriendlyPath('/comics/reading', comic.TenTruyen, comic.Id),
+               pathname: toComicReadLink(
+                  comic.TenTruyen,
+                  comic.Id
+               ),
                state: {
                   comic
                }
@@ -40,8 +44,7 @@ export default class ComicOverview extends Component {
             <div className="comic-overview-bar">
                {linkResult}
                <p className="comic-overview-bar-item">
-                  {/* <span>{comic.comicNumberOfChapters}</span> */}
-                  <span>100</span>
+                  <span>{comic.listChuong.length}</span>
                    Chapters
                </p>
                <p className="comic-overview-bar-item">Favorite</p>

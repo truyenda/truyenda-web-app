@@ -11,7 +11,6 @@ export default class ComicCoverPicture extends Component {
 
    render() {
       const { comicDetails } = this.state;
-      console.log(comicDetails);
       return (
          <div className="comic-cover-picture-container">
             <img src={comicDetails} alt="Cover Picture"/>
