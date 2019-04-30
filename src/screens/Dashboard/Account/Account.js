@@ -129,15 +129,17 @@ class Account extends Component {
   }
 
   onEditAccount(profile) {
+
     const getTenQuyenById = (Id) => {
       let data = []
-      this.state.TenQuyen.forEach(TenQuyen => {
-         if(TenQuyen.value.toString() === Id.toString()){
-            data = TenQuyen;
-         }
+      this.state.TenQuyen.forEach(tenquyen => {
+        if(tenquyen.value.toString() === Id.toString()){
+            data = tenquyen;
+        }
       });
       return data;
     }
+
     const getTeamById = (Id) => {
       let data = []
       this.state.teams.forEach(team => {
