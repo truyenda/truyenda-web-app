@@ -10,7 +10,7 @@ export default {
       const data = {
          TenTruyen: comic.name,
          TenKhac: comic.anotherName,
-         TheLoai: [2, 9, 11, 19, 7],
+         TheLoai: [2, 9, 14, 19, 7],
          TacGia: comic.authorsName,
          Id_TrangThai: 7,
          NamPhatHanh: comic.releasedDate,
