@@ -5,10 +5,15 @@ import TextInput from "../../components/commonUI/TextInput";
 import Button from "../../components/commonUI/Button";
 import SelectBox from "../../components/commonUI/SelectBox";
 import StringUtils from "../../utils/StringUtils.js";
+import AccountApi from "../../api/AccountApi";
+import Toast from "../../components/commonUI/Toast";
+import { withRouter } from "react-router-dom";
+import Cookies from "universal-cookie";
 class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      disableBtn: false,
       name: "",
       username: "",
       email: "",
@@ -26,6 +31,10 @@ class SignUp extends Component {
   }
   componentDidMount() {
     document.title = "Tạo tài khoản mới";
+    var cookies = new Cookies();
+    if (cookies.get("ToKen", { domain: ".truyenda.tk", path: "/" })) {
+      this.props.history.push("/");
+    }
   }
   handleSubmitForm(event) {
     event.preventDefault();
@@ -66,7 +75,7 @@ class SignUp extends Component {
       isValid = false;
     } else {
       if (this.state.password.length < 6 || this.state.password.length > 32) {
-        alert.password = 'Mật khẩu phải ít nhất từ 6 đến 32 ký tự';
+        alert.password = "Mật khẩu phải ít nhất từ 6 đến 32 ký tự";
         isValid = false;
       }
     }
@@ -101,8 +110,30 @@ class SignUp extends Component {
   }
   SignUpEvent() {
     if (this.ValidInput()) {
-      console.log('dang ky tai khoan');
-      console.log(this.state);
+      this.setState({ disableBtn: true });
+      AccountApi.create(
+        this.state.username,
+        this.state.name,
+        this.state.name === 0 ? false : true,
+        this.state.birthday,
+        this.state.email,
+        this.state.password,
+        this.state.rePassword
+      )
+        .then(res => {
+          if (res.data.Code && res.data.Code === 200) {
+            Toast.success("Bạn đã tạo tài khoản thành công", "Thành công");
+            this.props.history.push("/login");
+          } else {
+            Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
+          }
+        })
+        .catch(err => {
+          Toast.error("Có lỗi xảy ra trong quá trình kết nối!");
+        })
+        .finally(() => {
+          this.setState({ disableBtn: false });
+        });
     }
   }
   setStateForm(key, value) {
@@ -179,6 +210,7 @@ class SignUp extends Component {
                 onClick={() => {
                   this.SignUpEvent();
                 }}
+                disabled={this.state.disableBtn}
               />
               <Link to="/">
                 <Button display="Trang chủ" type="btn-ok" />
@@ -190,5 +222,4 @@ class SignUp extends Component {
     );
   }
 }
-
-export default SignUp;
+export default withRouter(SignUp);
