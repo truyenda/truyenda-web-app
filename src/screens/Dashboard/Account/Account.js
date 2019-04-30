@@ -100,6 +100,7 @@ class Account extends Component {
 
   setFormData(key, value) {
     var profile = this.state.profile;
+    // console.log(key+","+value);
     profile[key] = value;
     this.setState({
       profile: profile
@@ -189,6 +190,7 @@ class Account extends Component {
             if (c.Id === profile.Id) {
               c.Username = profile.Username;
               c.Email = profile.Email;
+              c.TenNhom = profile.TenNhom.label;
               c.IdNhom = profile.IdNhom;
               c.IdQuyen = profile.IdQuyen;
               c.IdTrangThai = profile.IdTrangThai;
@@ -425,6 +427,7 @@ class Account extends Component {
             value={this.state.profile.TenNhom}
             onChange={v => {
               this.setFormData("TenNhom", v);
+              this.setFormData("IdNhom", v.value)
             }}
           />
 
@@ -434,6 +437,7 @@ class Account extends Component {
             value={this.state.profile.TenTrangThai}
             onChange={v => {
               this.setFormData("TenTrangThai", v);
+              this.setFormData("IdTrangThai", v.value);
             }}
           />
 
@@ -443,6 +447,7 @@ class Account extends Component {
             value={this.state.profile.TenQuyen}
             onChange={v => {
               this.setFormData("TenQuyen", v);
+              this.setFormData("IdQuyen", v.value);
             }}
           />
 

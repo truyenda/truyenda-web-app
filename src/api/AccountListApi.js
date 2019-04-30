@@ -13,7 +13,6 @@ export default {
       IdNhom: profile.IdNhom,
       IdQuyen: profile.IdQuyen
     };
-    console.log(data);
     return Caller(prefix + profile.Id, "PUT", data);
   },
   delete(account) {
