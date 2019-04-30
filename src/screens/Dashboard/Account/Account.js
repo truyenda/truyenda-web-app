@@ -162,47 +162,57 @@ class Account extends Component {
         Id: profile.Id,
         Username: profile.Username,
         Email: profile.Email,
+        IdQuyen: profile.IdQuyen,
         TenQuyen: getTenQuyenById(profile.IdQuyen),
+        IdNhom: profile.IdNhom,
         TenNhom: getTeamById(profile.IdNhom),
+        IdTrangThai: profile.IdTrangThai,
         TenTrangThai: getStatusById(profile.IdTrangThai)
       }
     });
     this.onShowModal();
   }
 
-  onUpdateAccount() {
-    if (true) {
-      this.setState({
-        loading: true
-      });
-      let profile = this.state.profile;
-      this.onCloseModal();
-      AccountListApi.update(profile)
-        .then(res => {
-          if (res.data.Code === 200) {
-            Toast.success(profile.Username, "Cập nhật thể loại thành công");
-            this.state.data.forEach(c => {
-              if (c.Id === profile.Id) {
-                c.Username = profile.Username;
-                c.Email = profile.Email;
-                c.IdNhom = profile.IdNhom;
-                c.IdQuyen = profile.IdQuyen;
-                c.IdTrangThai = profile.IdTrangThai;
-              }
-            });
-          } else {
-            Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
-          }
-        })
-        .catch(err => {
-          Toast.error("Có lỗi trong quá trình kêt nối máy chủ");
-        })
-        .finally(() => {
-          this.setState({
-            loading: false
+  onUpdateAccount(profile) {
+    this.setState({
+      loading: true
+    });
+    // console.log(profile);
+    this.onCloseModal();
+    AccountListApi.update(profile)
+      .then(res => {
+        if (res.data.Code === 200) {
+          Toast.success(profile.Username, res.data.MsgError);
+          this.state.data.forEach(c => {
+            if (c.Id === profile.Id) {
+              c.Username = profile.Username;
+              c.Email = profile.Email;
+              c.IdNhom = profile.IdNhom;
+              c.IdQuyen = profile.IdQuyen;
+              c.IdTrangThai = profile.IdTrangThai;
+            }
           });
+        } else {
+          Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
+        }
+      })
+      .catch(err => {
+        Toast.error("Có lỗi trong quá trình kêt nối máy chủ");
+      })
+      .finally(() => {
+        this.setState({
+          loading: false
         });
-    }
+      });
+  }
+
+  onSubmitForm() {
+    this.setState({
+      loading: true
+    });
+    let profile = this.state.profile;
+    this.onCloseModal();
+    this.onUpdateAccount(profile);
   }
 
   onRemoveAccount(account) {
@@ -440,7 +450,7 @@ class Account extends Component {
               type="btn-Green"
               onClick={() => {
                 // if (this.state.isEditing) 
-                this.onUpdateAccount();
+                this.onSubmitForm();
                   // : this.onAddAccount();
               }}
             />

@@ -6,7 +6,14 @@ export default {
     return Caller(prefix + "page/" + index, "GET");
   },
   update(profile) {
-    var data = { Username: profile.Username, Email: profile.Email };
+    var data = { 
+      Username: profile.Username, 
+      Email: profile.Email,
+      IdTrangThai: profile.IdTrangThai,
+      IdNhom: profile.IdNhom,
+      IdQuyen: profile.IdQuyen
+    };
+    console.log(data);
     return Caller(prefix + profile.Id, "PUT", data);
   },
   delete(account) {
