@@ -9,9 +9,10 @@
     "deploy": "yarn build && yarn push",
     "push": "node deploy.config.js"
   },
-  "author": "hoangtrongminhduc & nhatquangta",
+  "author": "hoangtrongminhduc & nhatquangta & huynhlv",
   "license": "MIT",
   "dependencies": {
+    "@babel/runtime": "^7.4.4",
     "axios": "^0.18.0",
     "react": "^16.8.4",
     "react-confirm-alert": "^2.4.1",
@@ -33,6 +34,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",
+    "@babel/plugin-transform-runtime": "^7.4.4",
     "@babel/preset-env": "^7.3.4",
     "@babel/preset-es2015": "^7.0.0-beta.53",
     "@babel/preset-react": "^7.0.0",
