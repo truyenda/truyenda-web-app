@@ -41,9 +41,11 @@ export default class ComicsDashBoard extends Component {
         anotherName: "",
         authorsName: "",
         categories: [],
-        status: "",
+        statusId: "",
+        statusName: "",
         releasedDate: "",
-        frequency: "",
+        frequencyId: "",
+        frequencyName: "",
         coverPicture: "",
         avatarPicture: "",
         groupName: "",
@@ -138,47 +140,6 @@ export default class ComicsDashBoard extends Component {
           });
         });
     }
-    // if (state.filtered[1] && state.filtered[1].value.trim().length !== 0) {
-    //    ComicApi.search(state.filtered[0].value, state.page + 1)
-    //       .then(res => {
-    //          if (res.data.Code && res.data.Code === 200) {
-    //             this.setState({
-    //                data: res.data.Data.listComic,
-    //                pages: res.data.Data.Paging.TotalPages
-    //             });
-    //          } else {
-    //             Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
-    //          }
-    //       })
-    //       .catch(err => {
-    //          Toast.error("Có lỗi trong quá trình kêt nối máy chủ");
-    //       })
-    //       .finally(() => {
-    //          this.setState({
-    //             loading: false
-    //          });
-    //       });
-    // } else {
-    //    ComicApi.list(state.page + 1)
-    //       .then(res => {
-    //          if (res.data.Code && res.data.Code === 200) {
-    //             this.setState({
-    //                data: res.data.Data.listTruyen,
-    //                pages: res.data.Paging.TotalPages
-    //             });
-    //          } else {
-    //             Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
-    //          }
-    //       })
-    //       .catch(err => {
-    //          Toast.error("Có lỗi trong quá trình kêt nối máy chủ");
-    //       })
-    //       .finally(() => {
-    //          this.setState({
-    //             loading: false
-    //          });
-    //       });
-    // }
   }
 
   setFormData(key, value) {
@@ -186,6 +147,8 @@ export default class ComicsDashBoard extends Component {
     comic[key] = value;
     this.setState({
       comic: comic,
+    });
+    this.setState({
       alert: {}
     });
   }
@@ -219,11 +182,11 @@ export default class ComicsDashBoard extends Component {
           data.push({
             TenTruyen: comic.name,
             TenKhac: comic.anotherName,
-            // TheLoai: comic.categories,
+            TheLoai: comic.categories,
             TacGia: comic.authorsName,
-            Id_TrangThai: 7,
+            Id_TrangThai: comic.statusId,
             NamPhatHanh: comic.releasedDate,
-            Id_ChuKy: 11,
+            Id_ChuKy: comic.frequencyId,
             AnhBia: comic.coverPicture,
             AnhDaiDien: comic.avatarPicture,
             MoTa: comic.description
@@ -255,7 +218,7 @@ export default class ComicsDashBoard extends Component {
       const getFrequencyById = (Id) => {
          let data = []
          this.state.frequencies.forEach(frequency => {
-            if(frequency.value.toString() === Id.toString()){
+            if(frequency.value === Id){
                data = frequency;
             }
          });
@@ -284,11 +247,11 @@ export default class ComicsDashBoard extends Component {
     this.onShowModal();
   }
 
-  // setStateForm(key, value) {
-  //    this.setState({
-  //       [key]: value
-  //    });
-  // }
+  setStateForm(key, value) {
+     this.setState({
+        [key]: value
+     });
+  }
 
   //TODO: Update
   //TODO: Submit
@@ -390,6 +353,26 @@ export default class ComicsDashBoard extends Component {
         });
       });
   }
+
+  // getFrequencyById(Id) {
+  //   let data = [];
+  //   this.state.frequencies.forEach(frequency => {
+  //     if(frequency.value.toString() === Id.toString()) {
+  //       data = frequency;
+  //     }
+  //   });
+  //   return data;
+  // }
+
+  // getStatusById(Id) {
+  //   let data = [];
+  //   this.state.sstatus.forEach(status => {
+  //     if(frequency.value.toString() === Id.toString()) {
+  //       data = status;
+  //     }
+  //   });
+  //   return data;
+  // }
 
   render() {
     const columns = [
@@ -524,7 +507,7 @@ export default class ComicsDashBoard extends Component {
               value={this.state.isEditing ? this.state.comic.authorsName : null}
             />
             <TextInput
-              id="releasedYear"
+              id="releasedDate"
               onChanged={(key, value) => {
                 this.setFormData(key, value);
               }}
@@ -681,7 +664,7 @@ export default class ComicsDashBoard extends Component {
                 options={this.state.categories}
                 value={this.state.comic.categories} 
                 onChange={v => {
-                  this.setFormData("Categories", v);
+                  this.setFormData("categories", v);
                 }}
               />
               <div
@@ -695,17 +678,19 @@ export default class ComicsDashBoard extends Component {
             <Select
               placeholder="Chọn trạng thái truyện..."
               options={this.state.sstatus}
-              value={this.state.comic.status}
+              value={this.state.comic.statusName}
               onChange={v => {
-                this.setFormData("status", v);
+                this.setFormData("statusName", v);
+                this.setFormData("statusId", v.value);
               }}
             />
             <Select
               placeholder="Chọn chu kỳ phát hành..."
               options={this.state.frequencies}
-              value={this.state.comic.frequency}
+              value={this.state.comic.frequencyName}
               onChange={v => {
-                this.setFormData("frequency", v);
+                this.setFormData("frequencyName", v);
+                this.setFormData("frequencyId", v.value);
               }}
             />
             <TextArea
