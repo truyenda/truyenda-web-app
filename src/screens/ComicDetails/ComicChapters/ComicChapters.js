@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import styles from "./ComicChapters.scss";
+import { Link } from "react-router-dom";
+import { toChapterLink } from "../../../utils/LinkUtils";
 
 /*
 TODO: 
@@ -30,14 +32,28 @@ export default class ComicChapters extends Component {
          ? "comic-chapters-container-open"
          : "comic-chapters-container-close";
       const innerShowMore = isOpen ? "Show Less" : "Show More";
-      const chapterIndexes = [...Array(100).keys()];
-      // const chapterIndexes = [...Array(comic.comicNumberOfChapters).keys()];
+      const chapters = comic.listChuong;
 
-      const listChapters = chapterIndexes.map(index => (
-         <div className="comic-chapters-item" key={index}>
-            <p className="comic-chapters-item-left">Chapter {index}</p>
-            <p className="comic-chapters-item-right">April 23, 2019</p>
-         </div>
+      const listChapters = chapters.map(chapter => (
+         <Link
+            to={{
+               pathname: toChapterLink(
+                  comic.TenTruyen,
+                  chapter.TenChuong,
+                  chapter.IdChuong
+               ),
+               state: {
+                  comic: comic
+               }
+            }}
+         >
+            <div className="comic-chapters-item" key={chapter.IdChuong}>
+               <p className="comic-chapters-item-left">
+                  Chapter {chapter.soThuTu}
+               </p>
+               <p className="comic-chapters-item-right">{chapter.ngayTao}</p>
+            </div>
+         </Link>
       ));
 
       return (
@@ -49,7 +65,9 @@ export default class ComicChapters extends Component {
                   onClick={() => {
                      this.toggle();
                   }}
-               >{innerShowMore}</p>
+               >
+                  {innerShowMore}
+               </p>
             </div>
          </div>
       );
