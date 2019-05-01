@@ -3,7 +3,7 @@ import Button from "../../../components/commonUI/Button";
 import Modal from "react-responsive-modal";
 import TextInput from "../../../components/commonUI/TextInput";
 import FilePicker from "../../../components/commonUI/FilePicker";
-import PhotoApi from "../../../api/PhotoApi";
+import PhotoApiv2 from "../../../api/PhotoApiv2";
 import "./ComicDetailsTable.scss";
 import ChapterApi from "../../../api/ChapterApi";
 import Toast from "../../../components/commonUI/Toast";
@@ -12,8 +12,8 @@ import { Link } from "react-router-dom";
 import { toChapterLink } from "../../../utils/LinkUtils";
 import ReactTable from "react-table";
 import Progress from "../../../components/commonUI/Progress";
-import { getIdBySplitingPath } from '../../../utils/LinkUtils';
-import { convertToPath } from '../../../utils/StringUtils';
+import { getIdBySplitingPath } from "../../../utils/LinkUtils";
+import { convertToPath } from "../../../utils/StringUtils";
 export default class ComicDetailsTable extends Component {
   constructor(props) {
     super(props);
@@ -25,6 +25,8 @@ export default class ComicDetailsTable extends Component {
       links: "",
       loading: true,
       isEditing: false,
+      numUploaded: 0,
+      numError: 0,
       chapter: {
         IdStory: null,
         Id: null,
@@ -45,6 +47,8 @@ export default class ComicDetailsTable extends Component {
   onCloseModal() {
     this.setState({
       openModal: false,
+      numUploaded: 0,
+      numError: 0,
       chapter: {
         IdStory: null,
         Id: null,
@@ -291,51 +295,57 @@ export default class ComicDetailsTable extends Component {
       });
   }
 
-  async uploadSync(file) {
-    return await PhotoApi(file.data);
-  }
-  //TODO: FIX async upload to sync process
-  uploadFile(file, index, isUpdate = false) {
+  async uploadFile(file, index, isUpdate = false) {
     let files = this.state.files;
     let f = files[index];
     f.isUploading = true;
+    f.isSuccess = false;
+    f.isError = false;
+    f.link = null;
+    files[index] = f;
+    this.setState({ files: files });
+    var link = await PhotoApiv2.upload(file.data, percent => {
+      f.percent = percent;
+      files[index] = f;
+      this.setState({ files });
+    }).then(res => {
+      return res.secure_url;
+    });
+    if (link) {
+      f.isUploading = false;
+      f.isSuccess = true;
+      f.isError = false;
+      f.link = link;
+    } else {
+      f.isUploading = false;
+      f.isSuccess = false;
+      f.isError = true;
+    }
     files[index] = f;
     this.setState({ files: files }, () => {
-      this.uploadSync(file)
-        .then(res => {
-          console.log(res);
-          if (res.success) {
-            f.isSuccess = true;
-            f.link = res.data.link;
-            f.isUploading = false;
-          } else {
-            f.isSuccess = false;
-            f.isError = true;
-            f.link = null;
-            f.isUploading = false;
-          }
-        })
-        .catch(err => {
-          f.isSuccess = false;
-          f.isError = true;
-          f.link = null;
-          f.isUploading = false;
-        })
-        .finally(() => {
-          files = this.state.files;
-          files[index] = f;
-          this.setState({ files: files }, () => {
-            isUpdate ? this.filesToLinks() : "";
-          });
-        });
+      isUpdate ? this.filesToLinks() : "";
     });
+    return link ? true : false;
   }
 
-  uploadFileList() {
+  async uploadFileList() {
     let isUpdate = this.state.chapter.links.length === 0;
-    this.state.files.map((file, index) => {
-      this.uploadFile(file, index, isUpdate);
-    });
+    for (var index = 0; index < this.state.files.length; index++) {
+      var isDone = await this.uploadFile(
+        this.state.files[index],
+        index,
+        isUpdate
+      );
+      if (isDone) {
+        this.setState({
+          numUploaded: this.state.numUploaded + 1
+        });
+      } else {
+        this.setState({
+          numError: this.state.numError + 1
+        });
+      }
+    }
   }
 
   filesToLinks() {
@@ -363,7 +373,7 @@ export default class ComicDetailsTable extends Component {
           <span className="num">{index + 1}</span>
           {file.isError && <i className="fas fa-exclamation-circle" />}
           {file.isSuccess && <i className="fas fa-check-circle" />}
-          {file.data.name}
+          <span className="file-name">{file.data.name}</span>
         </div>
         <div className="link-result">
           <i className="fas fa-long-arrow-alt-right" />
@@ -377,7 +387,11 @@ export default class ComicDetailsTable extends Component {
               Thử lại
             </span>
           )}
-          {file.isUploading && <i className="fas fa-sync fa-spin" />}
+          {file.isUploading && (
+            <span>
+              <i className="fas fa-sync fa-spin" /> {file.percent}%
+            </span>
+          )}
           {file.isSuccess && (
             <span>
               <CopyButton text={file.link} />
@@ -529,7 +543,8 @@ export default class ComicDetailsTable extends Component {
                     isUploading: false,
                     isSuccess: false,
                     isError: false,
-                    link: null
+                    link: null,
+                    percent: 0
                   });
                 });
                 this.setState({ files: fileList }, () => {
@@ -564,6 +579,16 @@ export default class ComicDetailsTable extends Component {
               </div>
               {this.state.files.length !== 0 && (
                 <div className="link-upload">
+                  <div>
+                    <span>
+                      <i className="fas fa-clipboard-check clgreen" />{" "}
+                      {this.state.numUploaded + "/" + this.state.files.length}
+                    </span>
+                    <span>
+                      <i className="fas fa-exclamation-triangle clred" />{" "}
+                      {this.state.numError + "/" + this.state.files.length}
+                    </span>
+                  </div>
                   {fl}
                   <div className="actions">
                     {this.state.files.length !== 0 && (
