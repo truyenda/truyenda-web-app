@@ -17,8 +17,12 @@ export default {
     var data = { email: email };
     return Caller("forgot", "POST", data);
   },
-  updateNewPassword(tokenReset, newPassword) {
+  requestChangePassword(tokenReset, newPassword) {
     var data = { tokenReset, newPassword };
     return Caller("forgot", "PUT", data);
+  },
+  update(name, birthday, gender, cfPassword='', newPassword=''){
+    var data = {Ten: name, NgaySinh: birthday, GioiTinh: gender, Confirm_Password: cfPassword, New_Passord: newPassword};
+    return Caller('accounts/my', 'PUT', data);
   }
 };

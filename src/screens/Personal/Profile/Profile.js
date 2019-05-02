@@ -15,6 +15,7 @@ import { bindActionCreators } from "redux";
 import * as SessionAction from "../../../actions/SessionActions.js";
 import { withRouter, Redirect } from "react-router-dom";
 import StringUtils from "../../../utils/StringUtils.js";
+import AccountApi from "../../../api/AccountApi.js";
 class Profile extends Component {
   constructor(props) {
     super(props);
@@ -30,7 +31,8 @@ class Profile extends Component {
       teamName: "",
       teamDescription: "",
       teamLogo: "",
-      debug: true
+      debug: true,
+      isDisableButton: false
     };
   }
   setComponentShow(com) {
@@ -70,53 +72,57 @@ class Profile extends Component {
   ValidInput() {
     var isValid = true;
     var alert = {};
-    if (!this.state.name || this.state.name.length === 0) {
-      alert.name = "Tên hiển thị không được để trống";
-      isValid = false;
-    } else {
-      if (this.state.name.length > 32) {
-        alert.name = "Tên hiển thị tối đa 32 ký tự";
-        isValid = false;
-      }
-    }
-    if (!this.state.birthday || this.state.birthday.length === 0) {
-      alert.birthday = "Ngày sinh không được để trống";
-      isValid = false;
-    } else {
-      if (!StringUtils.validateDate(this.state.birthday)) {
-        alert.birthday = "Ngày sinh không đúng định dạng";
+    if (this.state.componentShow === 1) {
+      if (!this.state.name || this.state.name.length === 0) {
+        alert.name = "Tên hiển thị không được để trống";
         isValid = false;
       } else {
-        var age = StringUtils.getAge(this.state.birthday);
-        if (age <= 10 || age >= 100) {
-          alert.birthday = "Tuổi không được chấp nhận";
+        if (this.state.name.length > 32) {
+          alert.name = "Tên hiển thị tối đa 32 ký tự";
           isValid = false;
         }
       }
-    }
-    if (!this.state.cfPassword || this.state.cfPassword.length === 0) {
-      alert.cfPassword = "Bạn cần nhập mật khẩu để thực hiện";
-      isValid = false;
-    }
-    if (!this.state.newPassword || this.state.newPassword.length === 0) {
-      alert.newPassword = "Mật khẩu không được để trống";
-      isValid = false;
-    } else {
-      if (
-        this.state.newPassword.length < 6 ||
-        this.state.newPassword.length > 32
-      ) {
-        alert.newPassword = "Mật khẩu phải ít nhất từ 6 đến 32 ký tự";
+      if (!this.state.birthday || this.state.birthday.length === 0) {
+        alert.birthday = "Ngày sinh không được để trống";
         isValid = false;
+      } else {
+        if (!StringUtils.validateDate(this.state.birthday)) {
+          alert.birthday = "Ngày sinh không đúng định dạng";
+          isValid = false;
+        } else {
+          var age = StringUtils.getAge(this.state.birthday);
+          if (age <= 10 || age >= 100) {
+            alert.birthday = "Tuổi không được chấp nhận";
+            isValid = false;
+          }
+        }
       }
     }
-    if (!this.state.reNewPassword || this.state.reNewPassword.length === 0) {
-      alert.reNewPassword = "Bạn cần nhập xác nhận lại mật khẩu";
-      isValid = false;
-    } else {
-      if (this.state.newPassword !== this.state.reNewPassword) {
-        alert.rePassword = "Mật khẩu mới không khớp";
+    if (this.state.componentShow === 2) {
+      if (!this.state.cfPassword || this.state.cfPassword.length === 0) {
+        alert.cfPassword = "Bạn cần nhập mật khẩu để thực hiện";
         isValid = false;
+      }
+      if (!this.state.newPassword || this.state.newPassword.length === 0) {
+        alert.newPassword = "Mật khẩu không được để trống";
+        isValid = false;
+      } else {
+        if (
+          this.state.newPassword.length < 6 ||
+          this.state.newPassword.length > 32
+        ) {
+          alert.newPassword = "Mật khẩu phải ít nhất từ 6 đến 32 ký tự";
+          isValid = false;
+        }
+      }
+      if (!this.state.reNewPassword || this.state.reNewPassword.length === 0) {
+        alert.reNewPassword = "Bạn cần nhập xác nhận lại mật khẩu";
+        isValid = false;
+      } else {
+        if (this.state.newPassword !== this.state.reNewPassword) {
+          alert.rePassword = "Mật khẩu mới không khớp";
+          isValid = false;
+        }
       }
     }
     this.setState({ alert: alert });
@@ -124,12 +130,46 @@ class Profile extends Component {
   }
   UpdateAccount() {
     if (this.ValidInput()) {
-      console.log(this.state);
+      this.setState({ isDisableButton: true });
+      AccountApi.update(
+        this.state.name,
+        this.state.birthday,
+        this.state.gender.toString() === "0" ? false : true
+      )
+        .then(res => {
+          if (res.data.Code && res.data.Code === 200) {
+            Toast.success("Đã cập nhập thông tin tài khoản", "Thành công");
+          } else {
+            Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
+          }
+        })
+        .catch(err => Toast.error("Có lỗi trong quá trình kết nối"))
+        .finally(() => {
+          this.setState({ isDisableButton: false });
+        });
     }
   }
   ChangePassword() {
     if (this.ValidInput()) {
-      console.log(this.state);
+      this.setState({ isDisableButton: true });
+      AccountApi.update(
+        this.state.name,
+        this.state.birthday,
+        this.state.gender.toString() === "0" ? false : true,
+        this.state.cfPassword,
+        this.state.reNewPassword
+      )
+        .then(res => {
+          if (res.data.Code && res.data.Code === 200) {
+            Toast.success("Đã mật khẩu tài khoản", "Thành công");
+          } else {
+            Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
+          }
+        })
+        .catch(err => Toast.error("Có lỗi trong quá trình kết nối"))
+        .finally(() => {
+          this.setState({ isDisableButton: false });
+        });
     }
   }
   CreateTeam() {}
@@ -223,6 +263,7 @@ class Profile extends Component {
                       onClick={() => {
                         this.UpdateAccount();
                       }}
+                      disabled={this.state.isDisableButton}
                     />
                   </div>
                 </div>
@@ -269,6 +310,7 @@ class Profile extends Component {
                   onClick={() => {
                     this.ChangePassword();
                   }}
+                  disabled={this.state.isDisableButton}
                 />
               </div>
             </div>
@@ -276,8 +318,8 @@ class Profile extends Component {
         ) : (
           ""
         )}
-        {this.state.componentShow == 3 && (!this.state.user.Id_NhomDich||
-        this.state.debug) ? (
+        {this.state.componentShow == 3 &&
+        (!this.state.user.Id_NhomDich || this.state.debug) ? (
           <div className="profile-container password-con">
             <div className="content-space">
               <h1>Tạo nhóm dịch của bạn</h1>
