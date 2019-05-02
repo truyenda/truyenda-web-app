@@ -40,7 +40,7 @@ export default class ComicsDashBoard extends Component {
             name: "",
             anotherName: "",
             authorsName: "",
-            categories: [],
+            categories: "",
             status: "",
             releasedDate: "",
             frequency: "",
@@ -181,7 +181,7 @@ export default class ComicsDashBoard extends Component {
                data.push({
                   TenTruyen: comic.name,
                   TenKhac: comic.anotherName,
-                  TheLoai: comic.categories,
+                  TheLoai: comic.categories.map(c => c.value),
                   TacGia: comic.authorsName,
                   Id_TrangThai: comic.status,
                   NamPhatHanh: comic.releasedDate,
@@ -231,14 +231,8 @@ export default class ComicsDashBoard extends Component {
                label: comic.TenNhom
             },
             categories: transformCategory(comic.DanhSachTheLoai),
-            status: {
-               label: comic.TrangThai,
-               value: comic.Id_TrangThai
-            },
-            frequency: {
-               label: comic.TenChuKy,
-               value: comic.Id_ChuKy
-            },
+            status: comic.Id_TrangThai,
+            frequency: comic.Id_ChuKy,
             description: comic.MoTa
          },
          isEditing: true
@@ -353,27 +347,39 @@ export default class ComicsDashBoard extends Component {
          });
    }
 
+   getFrequencyById(Id){
+      let data = [];
+      this.state.frequencies.forEach(frequency => {
+         if (frequency.value === Id) {
+            data = frequency;
+         }
+      });
+      return data;
+   };
+
+   getStatusById(Id){
+      let data = [];
+      this.state.sstatus.forEach(status => {
+         if (status.value === Id) {
+            data = status;
+         }
+      });
+      return data;
+   };
+
+   getCategoriesByIdList(idList){
+      let data = [];
+      this.state.categories.forEach(frequency => {
+         if(idList.includes(frequency.value)) {
+            data.push({
+               label: frequency.TenTheLoai,
+               value: frequency.Id
+            });
+         }
+      });
+   }
+
    render() {
-      const getFrequencyById = Id => {
-         let data = [];
-         this.state.frequencies.forEach(frequency => {
-            if (frequency.value === Id) {
-               data = frequency;
-            }
-         });
-         return data;
-      };
-
-      const getStatusById = Id => {
-         let data = [];
-         this.state.sstatus.forEach(status => {
-            if (status.value === Id) {
-               data = status;
-            }
-         });
-         return data;
-      };
-
       const columns = [
          {
             Header: "ID",
@@ -680,8 +686,9 @@ export default class ComicsDashBoard extends Component {
                         isMulti
                         options={this.state.categories}
                         value={this.state.comic.categories}
-                        onChange={v => {
-                           this.setFormData("categories", v.value);
+                        onChange={v => {     
+                           this.setFormData("categories", v);
+                           console.table(this.state.comic.categories);   
                         }}
                      />
                      <div
@@ -696,7 +703,7 @@ export default class ComicsDashBoard extends Component {
                   <Select
                      placeholder="Chọn trạng thái truyện..."
                      options={this.state.sstatus}
-                     value={getStatusById(this.state.comic.status)}
+                     value={this.getStatusById(this.state.comic.status)}
                      onChange={v => {
                         this.setFormData("status", v.value);
                      }}
@@ -704,7 +711,7 @@ export default class ComicsDashBoard extends Component {
                   <Select
                      placeholder="Chọn chu kỳ phát hành..."
                      options={this.state.frequencies}
-                     value={getFrequencyById(this.state.comic.frequency)}
+                     value={this.getFrequencyById(this.state.comic.frequency)}
                      onChange={v => {
                         this.setFormData("frequency", v.value);
                      }}

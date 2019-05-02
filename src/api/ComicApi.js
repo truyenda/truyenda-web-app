@@ -10,7 +10,7 @@ export default {
       const data = {
          TenTruyen: comic.name,
          TenKhac: comic.anotherName,
-         TheLoai: comic.categories,
+         TheLoai: comic.categories.map(c => c.value),
          TacGia: comic.authorsName,
          Id_TrangThai: comic.status,
          NamPhatHanh: comic.releasedDate,
