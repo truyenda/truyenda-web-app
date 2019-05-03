@@ -14,7 +14,7 @@ export const toComicReadLink = (title, id) => {
 
 export const toCategoryDetailLink = (title, id) => {
   return converter("categories", title, id);
-}
+} 
 
 export const toComicDashboardLink = (title, id) => {
   return converter("dashboard/comics", title, id);

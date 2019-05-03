@@ -48,7 +48,6 @@ export default class CategoryDetail extends Component {
       if (isError) {
          return <Progress display="Please wait..." />;
       }
-      console.log(genre.TenLoaiTruyen);
       return (
          <div className="category-detail-container">
             <p>{genre.TenLoaiTruyen}</p>
