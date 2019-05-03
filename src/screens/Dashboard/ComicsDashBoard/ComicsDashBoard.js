@@ -247,7 +247,46 @@ export default class ComicsDashBoard extends Component {
    }
 
    //TODO: Update
-   //TODO: Submit
+
+   onUpdateComic() {
+      this.setState({
+         loading: true
+      });
+
+      let comic = this.state.comic;
+      this.onCloseModal();
+      ComicApi.update(comic)
+         .then(res => {
+            if (res.data.Code === 200) {
+               Toast.success(comic.name, "Done");
+               this.state.data.forEach(c => {
+                  if (c.Id === comic.Id) {
+                     c.TenTruyen = comic.name;
+                     c.TenKhac = comic.anotherName;
+                     c.TheLoai = comic.categories.map(c => c.value);
+                     c.TacGia = comic.authorsName;
+                     c.Id_TrangThai = comic.status;
+                     c.NamPhatHanh = comic.releasedDate;
+                     c.Id_ChuKy = comic.frequency;
+                     c.AnhBia = comic.coverPicture;
+                     c.AnhDaiDien = comic.avatarPicture;
+                     c.MoTa = comic.description;
+                  }
+               });
+            } else {
+               Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
+            }
+      })
+      .catch(err => {
+         Toast.notify("Có lỗi trong quá trình kêt nối máy chủ");
+      })
+      .finally(() => {
+         this.setState({
+            loading: false
+         });
+      });
+   }
+
    //TODO: Remove
 
    onRemoveComic(comic) {
@@ -347,7 +386,7 @@ export default class ComicsDashBoard extends Component {
          });
    }
 
-   getFrequencyById(Id){
+   getFrequencyById(Id) {
       let data = [];
       this.state.frequencies.forEach(frequency => {
          if (frequency.value === Id) {
@@ -355,9 +394,9 @@ export default class ComicsDashBoard extends Component {
          }
       });
       return data;
-   };
+   }
 
-   getStatusById(Id){
+   getStatusById(Id) {
       let data = [];
       this.state.sstatus.forEach(status => {
          if (status.value === Id) {
@@ -365,12 +404,12 @@ export default class ComicsDashBoard extends Component {
          }
       });
       return data;
-   };
+   }
 
-   getCategoriesByIdList(idList){
+   getCategoriesByIdList(idList) {
       let data = [];
       this.state.categories.forEach(frequency => {
-         if(idList.includes(frequency.value)) {
+         if (idList.includes(frequency.value)) {
             data.push({
                label: frequency.TenTheLoai,
                value: frequency.Id
@@ -686,9 +725,9 @@ export default class ComicsDashBoard extends Component {
                         isMulti
                         options={this.state.categories}
                         value={this.state.comic.categories}
-                        onChange={v => {     
+                        onChange={v => {
                            this.setFormData("categories", v);
-                           console.table(this.state.comic.categories);   
+                           console.table(this.state.comic.categories);
                         }}
                      />
                      <div
@@ -734,7 +773,9 @@ export default class ComicsDashBoard extends Component {
                         display={this.state.isEditing ? "Cập nhật" : "Tạo"}
                         type="btn-Green"
                         onClick={() => {
-                           this.onAddComic();
+                           this.state.isEditing
+                              ? this.onUpdateComic()
+                              : this.onAddComic();
                         }}
                      />
                      <Button
