@@ -93,6 +93,30 @@ export default class ComicsDashBoard extends Component {
             .setAttribute("placeholder", "Tìm truyện");
    }
 
+   clearDataState() {
+      this.setState({
+         isEditing: false,
+         comic: {
+            name: "",
+            anotherName: "",
+            authorsName: "",
+            categories: "",
+            status: "",
+            releasedDate: "",
+            frequency: "",
+            coverPicture: "",
+            avatarPicture: "",
+            groupName: "",
+            team: {
+               Id: "",
+               name: ""
+            },
+            description: ""
+         },
+         alert: {}
+      });
+   }
+
    loadPage(state, instance) {
       this.setState({
          loading: true
@@ -159,10 +183,9 @@ export default class ComicsDashBoard extends Component {
 
    onCloseModal() {
       this.setState({
-         openModal: false,
-         isEditing: false,
-         comic: {}
+         openModal: false
       });
+      this.clearDataState();
    }
 
    //TODO: Check validation
@@ -214,7 +237,6 @@ export default class ComicsDashBoard extends Component {
          });
          return data;
       };
-
       this.setState({
          comic: {
             Id: comic.Id,
@@ -276,15 +298,15 @@ export default class ComicsDashBoard extends Component {
             } else {
                Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
             }
-      })
-      .catch(err => {
-         Toast.notify("Có lỗi trong quá trình kêt nối máy chủ");
-      })
-      .finally(() => {
-         this.setState({
-            loading: false
+         })
+         .catch(err => {
+            Toast.notify("Có lỗi trong quá trình kêt nối máy chủ");
+         })
+         .finally(() => {
+            this.setState({
+               loading: false
+            });
          });
-      });
    }
 
    //TODO: Remove
@@ -408,14 +430,15 @@ export default class ComicsDashBoard extends Component {
 
    getCategoriesByIdList(idList) {
       let data = [];
-      this.state.categories.forEach(frequency => {
-         if (idList.includes(frequency.value)) {
+      this.state.categories.forEach(category => {
+         if (idList.includes(category.value)) {
             data.push({
-               label: frequency.TenTheLoai,
-               value: frequency.Id
+               label: category.label,
+               value: category.value
             });
          }
       });
+      return data;
    }
 
    render() {
@@ -727,7 +750,6 @@ export default class ComicsDashBoard extends Component {
                         value={this.state.comic.categories}
                         onChange={v => {
                            this.setFormData("categories", v);
-                           console.table(this.state.comic.categories);
                         }}
                      />
                      <div
@@ -799,6 +821,7 @@ export default class ComicsDashBoard extends Component {
                   LoadingComponent={LoadingComponent}
                   showPageSizeOptions={false}
                   filterable={true}
+                  key={this.state.data.value}
                   defaultPageSize={20}
                   manual
                   onFetchData={(state, instance) => {

@@ -1,15 +1,44 @@
 @import "../../scss/variables";
 @import "../../scss/mixins";
 
-.reading-page-container {
+.reading-page {
+   padding: 2em;
+   @include shadow;
+   border-radius: 4px;
+   background-color: rgba(0, 0, 0, 0);
+   height: auto;
+   display: flex;
+   flex-direction: column;
 
-   .reading-page {
+   p {
+      display: block;
+      margin: 0 auto 20px;
+      padding: 5px 20px;
+      color: $blue;
+      font-weight: bold;
+   }
+
+   img {
       @include shadow;
-      height: auto;
-      
+      width: 70%;
+      object-fit: cover;
+      margin: 0 auto;
+   }
+}
+
+@media only screen and (max-width: 768px) {
+   .reading-page {
       img {
-         @include shadow;
-         width: 100%;
+         width: 80%;
+         object-fit: cover;
+      }
+   }
+}
+
+@media only screen and (max-width: 500px) {
+   .reading-page {
+      img {
+         width: 90%;
          object-fit: cover;
       }
    }

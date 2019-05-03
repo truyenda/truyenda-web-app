@@ -19,6 +19,7 @@ import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
 import '../assets/react-table.css';
 import TeamProfile from './TeamProfile';
 import Account from "./Dashboard/Account/Account";
+import CategoryDetail from "./CategoryDetail/CategoryDetail";
 class App extends Component {
   render() {
     return (
@@ -33,8 +34,9 @@ class App extends Component {
             <Route path="/signup" exact={true} component={SignUp} />
             <PrivateRoute path="/personal" component={Personal} />
             <PrivateRoute path="/dashboard" per="TEST" component={Dashboard} />
-            <Route path="/comics/read" component={ReadingPage} />
+            <Route path="/chapters" component={ReadingPage} />
             <Route path="/comics" component={ComicDetails} />
+            <Route path="/categories" component={CategoryDetail} />
             <Route path="/teams" component={TeamProfile}/>
             <Route component={NotFound} />
           </Switch>
