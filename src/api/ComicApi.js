@@ -6,6 +6,7 @@ export default {
    get(idComic) {
       return Caller("commics/" + idComic, "GET");
    },
+   
    add(comic) {
       const data = {
          TenTruyen: comic.name,
@@ -21,6 +22,7 @@ export default {
       };
       return Caller(prefix, "POST", data);
    },
+   
    update(comic) {
       const data = {
          TenTruyen: comic.name,
@@ -36,13 +38,21 @@ export default {
       };
       return Caller(prefix + comic.Id, "PUT", data);
    },
+  
    delete(comic) {
       return Caller(prefix + comic.Id, "DELETE");
    },
+   
    list(index) {
       return Caller(prefix + "page/" + index, "GET");
    },
+   
    search(query, index) {
       return Caller(prefix + "search/" + query + "/page/" + index, "GET");
+   },
+
+   getByCategory(idCategory) {
+      return Caller(prefix + "categorys/" + idCategory, "GET");
    }
+
 };
