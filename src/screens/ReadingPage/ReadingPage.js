@@ -4,12 +4,14 @@ import ComicAuthors from "../ComicDetails/ComicAuthors/ComicAuthors";
 import { getIdBySplitingPath } from "../../utils/LinkUtils";
 import ComicApi from "../../api/ComicApi";
 import NotFound from "../Error/NotFound";
+import ChapterApi from "../../api/ChapterApi";
+import Progress from "../../components/commonUI/Progress";
 
 export default class ReadingPage extends Component {
    constructor(props) {
       super(props);
       this.state = {
-         comic: null,
+         chapter: null,
          isError: false,
          isError404: false
       };
@@ -18,12 +20,12 @@ export default class ReadingPage extends Component {
    componentDidMount() {
       try {
          var url = document.location.href;
-         var id = getIdBySplitingPath(url, "comics/read/");
+         var id = getIdBySplitingPath(url, "chapters/");
          if (!isNaN(id)) {
-            ComicApi.get(id)
+            ChapterApi.get(id)
                .then(res => {
                   this.setState({
-                     comic: res.data.Data
+                     chapter: res.data.Data
                   });
                   document.title = res.data.Data.TenTruyen;
                })
@@ -41,7 +43,7 @@ export default class ReadingPage extends Component {
    }
 
    render() {
-      const { comic, isError, isError404 } = this.state;
+      const { chapter, isError, isError404 } = this.state;
       if (isError404) {
          return <NotFound />;
       }
@@ -50,21 +52,17 @@ export default class ReadingPage extends Component {
       }
       return (
          <div className="reading-page-container">
-            {comic && (
+            {chapter && (
                <div className="reading-page">
-                  <img src={comic.AnhBia} alt="Page" />
-                  <img src={comic.AnhBia} alt="Page" />
-                  <img src={comic.AnhBia} alt="Page" />
-                  <img src={comic.AnhBia} alt="Page" />
-                  <img src={comic.AnhBia} alt="Page" />
-                  <img src={comic.AnhBia} alt="Page" />
+                  <p>Chapter {chapter.Id}</p>
+                  <div>
+                     {chapter.LinkAnh.split(",").map(c => (
+                        <img src={c} alt="" />
+                     ))}
+                  </div>
                </div>
             )}
-            {!comic && (
-               <div className="comic-details">
-                  Nothing to show 
-               </div>
-            )}
+            {!chapter && <div className="comic-details">Nothing to show</div>}
          </div>
       );
    }

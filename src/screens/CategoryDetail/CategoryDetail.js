@@ -2,12 +2,13 @@ import React, { Component } from "react";
 import { getIdBySplitingPath } from "../../utils/LinkUtils";
 import ComicApi from "../../api/ComicApi";
 import NotFound from "../Error/NotFound";
+import Progress from "../../components/commonUI/Progress";
 
 export default class CategoryDetail extends Component {
    constructor(props) {
       super(props);
       this.state = {
-         genre: this.state.location.state,
+         genre: this.props.location.state,
          comic: null,
          isError: false,
          isError404: false
@@ -41,22 +42,22 @@ export default class CategoryDetail extends Component {
 
    render() {
       const { genre, comic, isError, isError404 } = this.state;
-      if(isError404) {
+      if (isError404) {
          return <NotFound />;
       }
-      if(isError) {
-         return <span>Có lỗi xảy ra trong quá trình kết nối</span>;
+      if (isError) {
+         return <Progress display="Please wait..." />;
       }
+      console.log(genre.TenLoaiTruyen);
       return (
          <div className="category-detail-container">
             <p>{genre.TenLoaiTruyen}</p>
-            {comic && (
+            {comic &&
                comic.forEach(c => (
                   <div>
                      <p>{c.TenTruyen}</p>
                   </div>
-               ))
-            )}
+               ))}
          </div>
       );
    }
