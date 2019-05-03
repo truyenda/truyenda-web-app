@@ -10,11 +10,11 @@ export default {
       const data = {
          TenTruyen: comic.name,
          TenKhac: comic.anotherName,
-         TheLoai: [2, 9, 14, 19, 7],
+         TheLoai: comic.categories.map(c => c.value),
          TacGia: comic.authorsName,
-         Id_TrangThai: comic.statusId,
+         Id_TrangThai: comic.status,
          NamPhatHanh: comic.releasedDate,
-         Id_ChuKy: comic.frequencyId,
+         Id_ChuKy: comic.frequency,
          AnhBia: comic.coverPicture,
          AnhDaiDien: comic.avatarPicture,
          MoTa: comic.description
@@ -23,7 +23,16 @@ export default {
    },
    update(comic) {
       const data = {
-         //
+         TenTruyen: comic.name,
+         TenKhac: comic.anotherName,
+         TheLoai: comic.categories.map(c => c.value),
+         TacGia: comic.authorsName,
+         Id_TrangThai: comic.status,
+         NamPhatHanh: comic.releasedDate,
+         Id_ChuKy: comic.frequency,
+         AnhBia: comic.coverPicture,
+         AnhDaiDien: comic.avatarPicture,
+         MoTa: comic.description
       };
       return Caller(prefix + comic.Id, "PUT", data);
    },
