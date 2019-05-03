@@ -55,11 +55,9 @@ export default class ReadingPage extends Component {
             {chapter && (
                <div className="reading-page">
                   <p>Chapter {chapter.Id}</p>
-                  <div>
-                     {chapter.LinkAnh.split(",").map(c => (
-                        <img src={c} alt="" />
-                     ))}
-                  </div>
+                  {chapter.LinkAnh.split(",").map(c => (
+                     <img src={c} alt="" />
+                  ))}
                </div>
             )}
             {!chapter && <div className="comic-details">Nothing to show</div>}
