@@ -10,6 +10,9 @@ import StoryStatusTable from './StoryStatusTable';
 import ComicDetailsTable from "./ComicDetailsTable/ComicDetailsTable";
 import TeamTable from './TeamTable';
 import Account from "./Account/Account";
+import RoleTable from './RoleTable';
+import MyTeam from './MyTeam';
+import MyComic from './MyComic';
 class Dashboard extends Component {
   componentDidMount(){
     document.title = 'Trang quản lý'
@@ -28,6 +31,9 @@ class Dashboard extends Component {
             <Route path='/dashboard/frequencies' exact={true} component={FrequencyTable}/>
             <Route path='/dashboard/status' exact={true} component={StoryStatusTable}/>
             <Route path='/dashboard/accounts' exact={true} component={Account}/>
+            <Route path='/dashboard/role' exact={true} component={RoleTable}/>
+            <Route path='/dashboard/myteam' exact={true} component={MyTeam}/>
+            <Route path='/dashboard/mycomic' exact={true} component={MyComic}/>
             <Route component={WelcomePanel} />
           </Switch>
         </div>
@@ -56,6 +62,11 @@ const routeList = [
         name: "Tài khoản",
         path: "accounts",
         icon: "fas fa-users"
+      },
+      {
+        name: "Vai trò",
+        path: "role",
+        icon: "fas fa-user-tag"
       },
       {
         name: "Truyện",

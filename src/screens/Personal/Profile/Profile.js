@@ -7,7 +7,7 @@ import { useDropzone } from "react-dropzone";
 import Toast from "../../../components/commonUI/Toast";
 import Button from "../../../components/commonUI/Button";
 import FilePicker from "../../../components/commonUI/FilePicker/FilePicker";
-import uploadPhoto from "../../../api/PhotoApi";
+import PhotoApi from "../../../api/PhotoApi";
 import { sessionService } from "redux-react-session";
 import DefPhoto from "../../../assets/photo.png";
 import { connect } from "react-redux";
@@ -16,6 +16,9 @@ import * as SessionAction from "../../../actions/SessionActions.js";
 import { withRouter, Redirect } from "react-router-dom";
 import StringUtils from "../../../utils/StringUtils.js";
 import AccountApi from "../../../api/AccountApi.js";
+import Progress from "../../../components/commonUI/Progress";
+import Photo from "../../../components/commonUI/Photo";
+import TeamApi from "../../../api/TeamApi";
 class Profile extends Component {
   constructor(props) {
     super(props);
@@ -31,7 +34,7 @@ class Profile extends Component {
       teamName: "",
       teamDescription: "",
       teamLogo: "",
-      debug: true,
+      debug: true, //TODO: disable debug mode
       isDisableButton: false
     };
   }
@@ -139,6 +142,7 @@ class Profile extends Component {
         .then(res => {
           if (res.data.Code && res.data.Code === 200) {
             Toast.success("Đã cập nhập thông tin tài khoản", "Thành công");
+            sessionService.refreshFromLocalStorage();
           } else {
             Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
           }
@@ -172,7 +176,67 @@ class Profile extends Component {
         });
     }
   }
-  CreateTeam() {}
+
+  ValidInputTeamForm() {
+    var alert = {};
+    var isValid = true;
+    if (!this.state.teamName || this.state.teamName.length === 0) {
+      alert.teamName = "Bạn cần nhập tên nhóm";
+    } else {
+      if (this.state.teamName.length > 32) {
+        alert.teamName = "Tên nhóm không được vượt quá 32 ký tự";
+      }
+    }
+    if (
+      !this.state.teamDescription ||
+      this.state.teamDescription.length === 0
+    ) {
+      alert.teamDescription = "Bạn cần nhập mô tả cho nhóm";
+    } else {
+      if (this.state.teamDescription > 500) {
+        alert.teamDescription = "Mô tả tối đa 500 ký tự";
+      }
+    }
+    if (!this.state.teamLogo || this.state.teamLogo.length === 0) {
+      alert.teamLogo = "Bạn cần nhập đường dẫn ảnh đại diện cho nhóm";
+    } else {
+      if (!StringUtils.validateLinkPhoto(this.state.teamLogo)) {
+        alert.teamLogo = "Bạn cần nhập đường dẫn ảnh";
+      }
+    }
+    if (alert.teamName || alert.teamDescription || alert.teamLogo) {
+      isValid = false;
+      this.setState({ alert: alert });
+    }
+    return isValid;
+  }
+  CreateTeam() {
+    if (this.ValidInputTeamForm()) {
+      this.setState({ isDisableButton: true });
+      TeamApi.create({
+        name: this.state.teamName,
+        description: this.state.teamDescription,
+        Logo: this.state.teamLogo
+      })
+        .then(res => {
+          if (res.data.Code && res.data.Code === 200) {
+            Toast.success(
+              this.state.teamName,
+              "Nhóm của bạn đã tạo thành công"
+            );
+            sessionService.refreshFromLocalStorage();
+          } else {
+            Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
+          }
+        })
+        .catch(err => {
+          Toast.error("Có lỗi trong quá trình kết nối");
+        })
+        .finally(() => {
+          this.setState({ isDisableButton: false });
+        });
+    }
+  }
   render() {
     if (!this.state.user.Email) {
       return <div>Loading</div>;
@@ -319,7 +383,7 @@ class Profile extends Component {
           ""
         )}
         {this.state.componentShow == 3 &&
-        (!this.state.user.Id_NhomDich || this.state.debug) ? (
+        (this.state.user.Id_NhomDich || this.state.debug) ? (
           <div className="profile-container password-con">
             <div className="content-space">
               <h1>Tạo nhóm dịch của bạn</h1>
@@ -330,6 +394,7 @@ class Profile extends Component {
                 onChanged={(key, value) => {
                   this.setStateForm(key, value);
                 }}
+                alert={this.state.alert.teamName}
               />
               <TextArea
                 id="teamDescription"
@@ -338,18 +403,69 @@ class Profile extends Component {
                 onChanged={(key, value) => {
                   this.setStateForm(key, value);
                 }}
+                alert={this.state.alert.teamDescription}
               />
-              {/* <FilePicker
-                multiple={true}
-                mSize={2}
-                onAccept={files => {
-                  //TODO: receive file and save to component state
-                  console.log(files);
-                  files.forEach(file => {
-                    uploadPhoto(file).then(res => console.log(res.data.link));
-                  });
-                }}
-              /> */}
+              <div className="logo-team-form">
+                <div className="logo-display-container">
+                  <Photo
+                    src={
+                      this.state.teamLogo
+                        ? this.state.teamLogo
+                        : "/70fa8d92aab8c65c6b9acca88204487c.png"
+                    }
+                    className="normal-avatar"
+                  />
+                  {this.state.uploading && (
+                    <div className="loadingcmp">
+                      <Progress />
+                    </div>
+                  )}
+                </div>
+                <div className="logo-input">
+                  <FilePicker
+                    multiple={false}
+                    mSize={2}
+                    onAccept={files => {
+                      files.forEach(file => {
+                        this.setState({
+                          uploading: true
+                        });
+                        PhotoApi(file)
+                          .then(res => {
+                            this.setState({
+                              uploading: false,
+                              teamLogo: res.data.link,
+                              alert: {}
+                            });
+                          })
+                          .catch(err => Toast.error(err));
+                      });
+                    }}
+                  />
+                  <div className="group-input ">
+                    <label className="pure-material-textfield-filled">
+                      <input
+                        id="Logo"
+                        name="Logo"
+                        placeholder=" "
+                        onChange={event =>
+                          this.setStateForm("teamLogo", event.target.value)
+                        }
+                        value={this.state.teamLogo}
+                      />
+                      <span>Logo</span>
+                    </label>
+                    <div
+                      className={
+                        "field-alert " +
+                        (this.state.alert.teamLogo ? "" : "hide")
+                      }
+                    >
+                      <p>{this.state.alert.teamLogo}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div className="btn-info-container">
                 <Button
                   display="Tạo"
@@ -371,6 +487,7 @@ class Profile extends Component {
             onClick={() => {
               this.LogoutEvent();
             }}
+            disabled={this.state.isDisableButton}
           />
         </div>
       </div>

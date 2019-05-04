@@ -73,16 +73,16 @@ export default class ComicDetailsTable extends Component {
       var re = /^[-+]?[0-9]+\.[0-9]+$/;
       return re.test(v);
     }
+    var pattern = new RegExp(
+      "^(https?:\\/\\/)?" +
+        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" +
+        "((\\d{1,3}\\.){3}\\d{1,3}))" +
+        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" +
+        "(\\?[;&a-z\\d%_.~+=-]*)?" +
+        "(\\#[-a-z\\d_]*)?$",
+      "i"
+    );
     function validURL(str) {
-      var pattern = new RegExp(
-        "^(https?:\\/\\/)?" +
-          "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" +
-          "((\\d{1,3}\\.){3}\\d{1,3}))" +
-          "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" +
-          "(\\?[;&a-z\\d%_.~+=-]*)?" +
-          "(\\#[-a-z\\d_]*)?$",
-        "i"
-      );
       return !!pattern.test(str);
     }
     if (!this.state.chapter.title || this.state.chapter.title.length === 0) {
@@ -101,15 +101,18 @@ export default class ComicDetailsTable extends Component {
         alert.priority = "Thứ tự chương là số nguyên hoặc thập phân";
       }
     }
+    console.log('done check pre')
     if (!this.state.chapter.links || this.state.chapter.links.length === 0) {
       alert.links = "Link ảnh của chương không được để trống";
     } else {
       let links = this.state.chapter.links.split("\n");
+      console.log('beging check links')
       for (var i = 0; i < links.length; i++) {
         if (!validURL(links[i])) {
           alert.links = "Link ảnh ở dòng " + (i + 1) + " không hợp lệ";
           break;
         }
+        console.log('checked '+i)
       }
     }
     if (alert.title || alert.priority || alert.links) {
@@ -203,7 +206,7 @@ export default class ComicDetailsTable extends Component {
               if (c.Id === chapter.Id) {
                 c.TenChuong = chapter.title;
                 c.SoThuTu = chapter.priority;
-                c.LinkAnh = JsonStrToLinkStr(chapter.links);
+                c.LinkAnh = chapter.links;
               }
             });
           } else {

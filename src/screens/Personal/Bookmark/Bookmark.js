@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import BookmarkApi from "../../../api/BookmarkApi.js";
 import Toast from "../../../components/commonUI/Toast";
 import Alert from "../../../components/commonUI/Alert";
+import ThumbToolTip from "../../../components/ThumbToolTip";
+import ReactTooltip from "react-tooltip";
 import {
   toChapterLink,
   toComicLink,
@@ -117,21 +119,37 @@ class Bookmark extends Component {
       {
         Header: () => (
           <span>
-            <strong><i className="fab fa-amilia"></i> Tên truyện</strong>
+            <strong>
+              <i className="fab fa-amilia" /> Tên truyện
+            </strong>
           </span>
         ),
         minWidth: 200,
         accessor: "TenTruyen",
         Cell: row => {
           return (
-            <Link to={toComicLink(row.value, row.original.Id_Truyen)}>
+            <Link
+              to={toComicLink(row.value, row.original.Id_Truyen)}
+              data-for={"thumb-tip" + row.original.Id_Truyen}
+              data-tip={row.original}
+            >
               {row.value}
+              <ReactTooltip
+                multiline={true}
+                id={"thumb-tip" + row.original.Id_Truyen}
+                effect="solid"
+                getContent={v => <ThumbToolTip Id={row.original.Id_Truyen}/>}
+              />
             </Link>
           );
         }
       },
       {
-        Header: () => <strong><i className="fas fa-users-cog"></i> Nhóm dịch</strong>,
+        Header: () => (
+          <strong>
+            <i className="fas fa-users-cog" /> Nhóm dịch
+          </strong>
+        ),
         minWidth: 100,
         maxWidth: 200,
         accessor: "TenNhom",
@@ -144,7 +162,11 @@ class Bookmark extends Component {
         }
       },
       {
-        Header: ()=><strong><i className="fas fa-clipboard-check"></i> Chương đánh dấu</strong>,
+        Header: () => (
+          <strong>
+            <i className="fas fa-clipboard-check" /> Chương đánh dấu
+          </strong>
+        ),
         accessor: "TenChuongDanhDau",
         Cell: row => {
           if (row.value)
@@ -163,7 +185,13 @@ class Bookmark extends Component {
         }
       },
       {
-        Header: props => <span><strong><i className="fas fa-level-up-alt"></i> Chương mới nhất</strong></span>, 
+        Header: props => (
+          <span>
+            <strong>
+              <i className="fas fa-level-up-alt" /> Chương mới nhất
+            </strong>
+          </span>
+        ),
         accessor: "TenChuongMoiNhat",
         Cell: row => {
           if (row.value)
@@ -256,7 +284,13 @@ class Bookmark extends Component {
             defaultPageSize={20}
             onPageChange={p => console.log(p)}
             className="-striped -highlight"
-            // minRows={5}
+            getTdProps={() => ({
+              style: {
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center"
+              }
+            })}
           />
         )}
       </div>
