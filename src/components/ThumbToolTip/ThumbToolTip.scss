@@ -1,0 +1,26 @@
+.tip-wrap {
+  width: 300px;
+  white-space: normal;
+  display: flex;
+  .thumb-tip {
+    width: 80px;
+    height: 120px;
+  }
+  .meta-tip {
+    height: 120px;
+    margin-left: 0.5em;
+    span {
+      font-size: 18px;
+      font-weight: bold;
+    }
+    overflow: hidden;
+    text-overflow: ellipsis;
+    p {
+      display: inline-block;
+      height: auto;
+      width: auto;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
