@@ -54,7 +54,21 @@ export default class ComicsDashBoard extends Component {
             description: ""
          },
          alert: {
-            name: ""
+            name: "",
+            anotherName: "",
+            authorsName: "",
+            categories: "",
+            status: "",
+            releasedDate: "",
+            frequency: "",
+            coverPicture: "",
+            avatarPicture: "",
+            // groupName: "",
+            // team: {
+            //    Id: "",
+            //    name: ""
+            // },
+            description: ""
          }
       };
    }
@@ -113,7 +127,23 @@ export default class ComicsDashBoard extends Component {
             },
             description: ""
          },
-         alert: {}
+         alert: {
+            name: "",
+            anotherName: "",
+            authorsName: "",
+            categories: "",
+            status: "",
+            releasedDate: "",
+            frequency: "",
+            coverPicture: "",
+            avatarPicture: "",
+            // groupName: "",
+            // team: {
+            //    Id: "",
+            //    name: ""
+            // },
+            description: ""
+         }
       });
    }
 
@@ -190,41 +220,150 @@ export default class ComicsDashBoard extends Component {
 
    //TODO: Check validation
 
+   checkValidation() {
+      var isValid = true;
+      var alert = {};
+      function isInt(v) {
+         var re = /^-?[0-9]+$/;
+         return re.test(v);
+      }
+      if (!this.state.comic.name || this.state.comic.name.length === 0) {
+         alert.name = "Bạn phải nhập tên truyện";
+      } else {
+         if (this.state.comic.name.length > 50) {
+            alert.name = "Tên truyện tối đa 50 ký tự";
+         }
+      }
+
+      if (
+         !this.state.comic.authorsName ||
+         this.state.comic.authorsName.length === 0
+      ) {
+         alert.authorsName = "Bạn cần nhập tên tác giả";
+      } else {
+         if (this.state.comic.authorsName > 30) {
+            alert.authorsName = "Tên tác giả tối đa 30 ký tự";
+         }
+      }
+
+      if (
+         !this.state.comic.releasedDate ||
+         this.state.comic.releasedDate.length === 0
+      ) {
+         alert.releasedDate = "Bạn cần nhập năm phát hành";
+      } else {
+         if (
+            !isInt(this.state.comic.releasedDate) ||
+            this.state.comic.releasedDate <= 1999 ||
+            this.state.comic.releasedDate >= 2020
+         ) {
+            alert.releasedDate = "Năm phát hành không hợp lệ";
+         }
+      }
+
+      if (
+         !this.state.comic.avatarPicture ||
+         this.state.comic.avatarPicture.length === 0
+      ) {
+         alert.avatarPicture = "Bạn cần chọn ảnh đại diện cho truyện";
+      }
+
+      if (
+         !this.state.comic.coverPicture ||
+         this.state.comic.coverPicture.length === 0
+      ) {
+         alert.coverPicture = "Bạn cần chọn ảnh bìa cho truyện";
+      }
+
+      // if (
+      //    !this.state.comic.categories ||
+      //    this.state.comic.categories.length === 0
+      // ) {
+      //    alert.categories = "Bạn cần chọn thể loại cho truyện";
+      // }
+
+      // if (!this.state.comic.status.value || this.state.comic.status.value.length === 0) {
+      //    alert.status = "Bạn cần chọn trạng thái của truyện";
+      // }
+
+      // if (
+      //    !this.state.comic.frequency.value ||
+      //    this.state.comic.frequency.value.length === 0
+      // ) {
+      //    alert.frequency = "Bạn cần chọn chu kỳ phát hành của truyện";
+      // }
+
+      if (
+         !this.state.comic.description ||
+         this.state.comic.description.length === 0
+      ) {
+         alert.description = "Bạn cần nhập mô tả cho truyện";
+      } else {
+         if (this.state.comic.description > 500) {
+            alert.description = "Mô tả tối đa 500 ký tự";
+         }
+      }
+
+      if (
+         alert.name ||
+         alert.authorsName ||
+         alert.releasedDate ||
+         alert.avatarPicture ||
+         alert.coverPicture ||
+         alert.categories ||
+         alert.status ||
+         alert.frequency ||
+         alert.description
+      ) {
+         isValid = false;
+      }
+      this.setState({
+         alert: alert
+      });
+      return isValid;
+   }
+
    //TODO: Add
 
    onAddComic() {
-      let comic = this.state.comic;
-      this.onCloseModal();
-
-      ComicApi.add(comic)
-         .then(res => {
-            if (res.data.Code && res.data.Code === 200) {
-               Toast.success(comic.name, "Done");
-               let data = this.state.data;
-               data.push({
-                  TenTruyen: comic.name,
-                  TenKhac: comic.anotherName,
-                  TheLoai: comic.categories.map(c => c.value),
-                  TacGia: comic.authorsName,
-                  Id_TrangThai: comic.status,
-                  NamPhatHanh: comic.releasedDate,
-                  Id_ChuKy: comic.frequency,
-                  AnhBia: comic.coverPicture,
-                  AnhDaiDien: comic.avatarPicture,
-                  MoTa: comic.description
-               });
-            } else {
-               Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
-            }
-         })
-         .catch(err => {
-            Toast.error("Có lỗi trong quá trình kêt nối máy chủ");
-         })
-         .finally(() => {
-            this.setState({
-               loading: false
-            });
+      if (this.checkValidation()) {
+         this.setState({
+            loading: true
          });
+
+         let comic = this.state.comic;
+         this.onCloseModal();
+
+         ComicApi.add(comic)
+            .then(res => {
+               if (res.data.Code && res.data.Code === 200) {
+                  Toast.success(comic.name, "Done");
+                  let data = this.state.data;
+                  data.push({
+                     TenTruyen: comic.name,
+                     TenKhac: comic.anotherName,
+                     TheLoai: comic.categories.map(c => c.value),
+                     TacGia: comic.authorsName,
+                     Id_TrangThai: comic.status,
+                     NamPhatHanh: comic.releasedDate,
+                     Id_ChuKy: comic.frequency,
+                     AnhBia: comic.coverPicture,
+                     AnhDaiDien: comic.avatarPicture,
+                     MoTa: comic.description
+                  });
+               } else {
+                  Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
+               }
+            })
+            .catch(err => {
+               Toast.error("Có lỗi trong quá trình kêt nối máy chủ");
+            })
+            .finally(() => {
+               this.setState({
+                  loading: false
+               });
+            });
+      }
    }
 
    //TODO: Edit
@@ -271,42 +410,44 @@ export default class ComicsDashBoard extends Component {
    //TODO: Update
 
    onUpdateComic() {
-      this.setState({
-         loading: true
-      });
-
-      let comic = this.state.comic;
-      this.onCloseModal();
-      ComicApi.update(comic)
-         .then(res => {
-            if (res.data.Code === 200) {
-               Toast.success(comic.name, "Done");
-               this.state.data.forEach(c => {
-                  if (c.Id === comic.Id) {
-                     c.TenTruyen = comic.name;
-                     c.TenKhac = comic.anotherName;
-                     c.TheLoai = comic.categories.map(c => c.value);
-                     c.TacGia = comic.authorsName;
-                     c.Id_TrangThai = comic.status;
-                     c.NamPhatHanh = comic.releasedDate;
-                     c.Id_ChuKy = comic.frequency;
-                     c.AnhBia = comic.coverPicture;
-                     c.AnhDaiDien = comic.avatarPicture;
-                     c.MoTa = comic.description;
-                  }
-               });
-            } else {
-               Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
-            }
-         })
-         .catch(err => {
-            Toast.notify("Có lỗi trong quá trình kêt nối máy chủ");
-         })
-         .finally(() => {
-            this.setState({
-               loading: false
-            });
+      if (this.checkValidation()) {
+         this.setState({
+            loading: true
          });
+
+         let comic = this.state.comic;
+         this.onCloseModal();
+         ComicApi.update(comic)
+            .then(res => {
+               if (res.data.Code === 200) {
+                  Toast.success(comic.name, "Done");
+                  this.state.data.forEach(c => {
+                     if (c.Id === comic.Id) {
+                        c.TenTruyen = comic.name;
+                        c.TenKhac = comic.anotherName;
+                        c.TheLoai = comic.categories.map(c => c.value);
+                        c.TacGia = comic.authorsName;
+                        c.Id_TrangThai = comic.status;
+                        c.NamPhatHanh = comic.releasedDate;
+                        c.Id_ChuKy = comic.frequency;
+                        c.AnhBia = comic.coverPicture;
+                        c.AnhDaiDien = comic.avatarPicture;
+                        c.MoTa = comic.description;
+                     }
+                  });
+               } else {
+                  Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
+               }
+            })
+            .catch(err => {
+               Toast.notify("Có lỗi trong quá trình kêt nối máy chủ");
+            })
+            .finally(() => {
+               this.setState({
+                  loading: false
+               });
+            });
+      }
    }
 
    //TODO: Remove
@@ -575,7 +716,7 @@ export default class ComicsDashBoard extends Component {
                      onChanged={(key, value) => {
                         this.setFormData(key, value);
                      }}
-                     alert={this.state.alert.name}
+                     alert={this.state.alert.authorsName}
                      display="Tên tác giả"
                      value={
                         this.state.isEditing
@@ -588,7 +729,7 @@ export default class ComicsDashBoard extends Component {
                      onChanged={(key, value) => {
                         this.setFormData(key, value);
                      }}
-                     alert={this.state.alert.name}
+                     alert={this.state.alert.releasedDate}
                      display="Năm phát hành"
                      value={
                         this.state.isEditing
@@ -642,6 +783,7 @@ export default class ComicsDashBoard extends Component {
                               <input
                                  id="avatarPicture"
                                  name="avatarPicture"
+                                 alert={this.state.alert.avatarPicture}
                                  placeholder=" "
                                  onChange={event =>
                                     this.setFormData(
@@ -710,6 +852,7 @@ export default class ComicsDashBoard extends Component {
                                  id="coverPicture"
                                  name="coverPicture"
                                  placeholder=" "
+                                 alert={this.state.alert.coverPicture}
                                  onChange={event =>
                                     this.setFormData(
                                        "coverPicture",
@@ -746,6 +889,7 @@ export default class ComicsDashBoard extends Component {
                      <Select
                         placeholder="Chọn thể loại..."
                         isMulti
+                        alert={this.state.alert.categories}
                         options={this.state.categories}
                         value={this.state.comic.categories}
                         onChange={v => {
@@ -764,6 +908,7 @@ export default class ComicsDashBoard extends Component {
                   <Select
                      placeholder="Chọn trạng thái truyện..."
                      options={this.state.sstatus}
+                     alert={this.state.alert.status}
                      value={this.getStatusById(this.state.comic.status)}
                      onChange={v => {
                         this.setFormData("status", v.value);
@@ -772,6 +917,7 @@ export default class ComicsDashBoard extends Component {
                   <Select
                      placeholder="Chọn chu kỳ phát hành..."
                      options={this.state.frequencies}
+                     alert={this.state.alert.frequency}
                      value={this.getFrequencyById(this.state.comic.frequency)}
                      onChange={v => {
                         this.setFormData("frequency", v.value);
@@ -782,7 +928,7 @@ export default class ComicsDashBoard extends Component {
                      onChanged={(key, value) => {
                         this.setFormData(key, value);
                      }}
-                     alert={this.state.alert.name}
+                     alert={this.state.alert.description}
                      display="Mô tả"
                      value={
                         this.state.isEditing

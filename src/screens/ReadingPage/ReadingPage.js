@@ -60,6 +60,10 @@ export default class ReadingPage extends Component {
                   ))}
                </div>
             )}
+            <div className="control-bar">
+               <p>Previous Chapter</p>
+               <p>Next Chapter</p>
+            </div>
             {!chapter && <div className="comic-details">Nothing to show</div>}
          </div>
       );
