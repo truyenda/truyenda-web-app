@@ -2,15 +2,6 @@ import React, { Component } from "react";
 import styles from "./ComicChapters.scss";
 import { Link } from "react-router-dom";
 import { toChapterLink } from "../../../utils/LinkUtils";
-
-/*
-TODO: 
-  [OK] 1. Add attribute comicNumberOfChapters
-  [OK] 2. Render as list 
-  3. Add attribute comicGenres
-  4. Render as tag
-  5. Combine Author component into Description 
-*/
 export default class ComicChapters extends Component {
    constructor(props) {
       super(props);
@@ -44,8 +35,9 @@ export default class ComicChapters extends Component {
                ),
                state: {
                   comic: comic
-               }
+               },
             }}
+            key={chapter.IdChuong}
          >
             <div className="comic-chapters-item" key={chapter.IdChuong}>
                <p className="comic-chapters-item-left">

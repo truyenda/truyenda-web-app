@@ -1,17 +1,15 @@
 import React, { Component } from "react";
-import styles from "./ReadingPage.scss";
-import ComicAuthors from "../ComicDetails/ComicAuthors/ComicAuthors";
 import { getIdBySplitingPath } from "../../utils/LinkUtils";
 import ComicApi from "../../api/ComicApi";
 import NotFound from "../Error/NotFound";
-import ChapterApi from "../../api/ChapterApi";
 import Progress from "../../components/commonUI/Progress";
 
-export default class ReadingPage extends Component {
+export default class CategoryDetail extends Component {
    constructor(props) {
       super(props);
       this.state = {
-         chapter: null,
+         genre: this.props.location.state,
+         comic: null,
          isError: false,
          isError404: false
       };
@@ -20,12 +18,12 @@ export default class ReadingPage extends Component {
    componentDidMount() {
       try {
          var url = document.location.href;
-         var id = getIdBySplitingPath(url, "chapters/");
+         var id = getIdBySplitingPath(url, "categories/");
          if (!isNaN(id)) {
-            ChapterApi.get(id)
+            ComicApi.getByCategory(id)
                .then(res => {
                   this.setState({
-                     chapter: res.data.Data
+                     comic: res.data.Data
                   });
                   document.title = res.data.Data.TenTruyen;
                })
@@ -43,24 +41,22 @@ export default class ReadingPage extends Component {
    }
 
    render() {
-      const { chapter, isError, isError404 } = this.state;
+      const { genre, comic, isError, isError404 } = this.state;
       if (isError404) {
          return <NotFound />;
       }
       if (isError) {
-         return <span>Có lỗi xảy ra trong quá trình kết nối</span>;
+         return <Progress display="Please wait..." />;
       }
       return (
-         <div className="reading-page-container">
-            {chapter && (
-               <div className="reading-page">
-                  <p>Chapter {chapter.Id}</p>
-                  {chapter.LinkAnh.split(",").map(c => (
-                     <img src={c} alt="" />
-                  ))}
-               </div>
-            )}
-            {!chapter && <div className="comic-details">Nothing to show</div>}
+         <div className="category-detail-container">
+            <p>{genre.TenLoaiTruyen}</p>
+            {comic &&
+               comic.forEach(c => (
+                  <div>
+                     <p>{c.TenTruyen}</p>
+                  </div>
+               ))}
          </div>
       );
    }
