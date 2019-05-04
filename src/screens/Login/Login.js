@@ -9,6 +9,10 @@ import * as SessionAction from "../../actions/SessionActions.js";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import Progress from "../../components/commonUI/Progress";
+import Modal from "react-responsive-modal";
+import StringUtils from "../../utils/StringUtils";
+import AccountApi from "../../api/AccountApi";
+import Toast from '../../components/commonUI/Toast';
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -19,7 +23,12 @@ class Login extends Component {
       password: "",
       passwordMes: "",
       remember: false,
-      inProgress: false
+      inProgress: false,
+      forgot: {
+        email: null,
+        alert: null
+      },
+      openModal: false
     };
   }
   componentWillMount() {
@@ -69,6 +78,35 @@ class Login extends Component {
       login(user, this.props.history, loginCallback);
     }
   }
+  onShowModal() {
+    this.setState({ openModal: true });
+  }
+  onCloseModal() {
+    this.setState({ openModal: false, forgot: { email: null, alert: null } });
+  }
+  RequestForgot() {
+    const checkValidate = () => {
+      if (!this.state.forgot.email || this.state.forgot.email.length === 0) {
+        this.setState({ forgot: { alert: "Bạn cần nhập email" } });
+        return false;
+      }
+      if (!StringUtils.validateEmail(this.state.forgot.email)) {
+        this.setState({
+          forgot: { alert: "Email đã nhập không đúng định dạng" }
+        });
+        return false;
+      }
+      return true;
+    };
+    if (checkValidate()) {
+      let email = this.state.forgot.email;
+      this.onCloseModal();
+      AccountApi.requestForgot(email)
+        .then(res => {})
+        .catch(err => {})
+        .finally(() => {});
+    }
+  }
 
   setStateForm(key, value) {
     this.setState({
@@ -108,9 +146,12 @@ class Login extends Component {
               alert={this.state.passwordMes}
             />
             <div>
-              <Link to="forgot" className="forgot-password">
+              <span
+                className="forgot-password"
+                onClick={() => this.onShowModal()}
+              >
                 Quên mật khẩu?
-              </Link>
+              </span>
             </div>
             <CheckBox
               display="Ghi nhớ đăng nhập"
@@ -167,6 +208,25 @@ class Login extends Component {
             </div>
           </div>
         </div>
+        <Modal
+          open={this.state.openModal}
+          classNames={{ modal: "request-forgot" }}
+          onClose={() => this.onCloseModal()}
+        >
+          <h2>Yêu cầu thay đổi mật khẩu mới</h2>
+          <TextInput
+            id="email-forgot"
+            display="Email"
+            onChanged={(k, v) => {
+              this.setState({ forgot: { email: v } });
+            }}
+            value={this.state.forgot.email}
+            alert={this.state.forgot.alert}
+          />
+          <div className="action-group">
+            <Button display="Gửi" onClick={() => this.RequestForgot()} />
+          </div>
+        </Modal>
       </div>
     );
   }
