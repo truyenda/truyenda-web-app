@@ -26,7 +26,16 @@ export default {
       };
       return Caller(prefix, "POST", data);
    },
-   
+   filter(term, index = 1) {
+      const data = {
+         Status: term.rdoStatus,
+         Sort: term.sortBy,
+         Rank: term.rdoRank,
+         Category: term.selectedGenresIds
+      };
+      console.log(data);
+      return Caller(prefix + "filter/page/" + index, "POST", data);
+   },
    update(comic) {
       const data = {
          TenTruyen: comic.name,
