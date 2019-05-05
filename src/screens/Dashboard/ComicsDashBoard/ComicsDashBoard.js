@@ -47,10 +47,7 @@ export default class ComicsDashBoard extends Component {
             coverPicture: "",
             avatarPicture: "",
             groupName: "",
-            team: {
-               Id: "",
-               name: ""
-            },
+            team: null,
             description: ""
          },
          alert: {
@@ -121,10 +118,7 @@ export default class ComicsDashBoard extends Component {
             coverPicture: "",
             avatarPicture: "",
             groupName: "",
-            team: {
-               Id: "",
-               name: ""
-            },
+            team: null,
             description: ""
          },
          alert: {
@@ -330,10 +324,8 @@ export default class ComicsDashBoard extends Component {
          this.setState({
             loading: true
          });
-
          let comic = this.state.comic;
          this.onCloseModal();
-
          ComicApi.add(comic)
             .then(res => {
                if (res.data.Code && res.data.Code === 200) {
@@ -882,7 +874,7 @@ export default class ComicsDashBoard extends Component {
                      placeholder="Chọn nhóm..."
                      value={this.state.comic.team}
                      onChange={v => {
-                        this.setFormData("IdTeam", v);
+                        this.setFormData("team", v);
                      }}
                   />
                   <div>
