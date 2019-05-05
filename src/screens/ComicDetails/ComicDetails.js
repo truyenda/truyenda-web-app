@@ -10,6 +10,7 @@ import ComicApi from "../../api/ComicApi";
 import { toComicLink, getIdBySplitingPath } from "../../utils/LinkUtils";
 import { convertToPath } from "../../utils/StringUtils";
 import NotFound from "../Error/NotFound";
+import Progress from "../../components/commonUI/Progress";
 export default class ComicDetails extends Component {
    constructor(props) {
       super(props);
@@ -78,7 +79,7 @@ export default class ComicDetails extends Component {
             )}
             {!comic && (
                <div className="comic-details">
-                  Nothing to show
+                  <Progress />
                </div>
             )}
          </div>

@@ -9,13 +9,6 @@ export default class Chart extends Component {
    constructor(props) {
       super(props);
       this.state = {
-         // avatars: [
-         //    "https://mir-s3-cdn-cf.behance.net/project_modules/disp/ce54bf11889067.562541ef7cde4.png",
-         //    "http://www.sclance.com/pngs/avatar-icon-png/avatar_icon_png_70847.jpg",
-         //    "https://ya-webdesign.com/images/girl-avatar-png-19.png",
-         //    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYm-KcyvHy3PDkmh0V9KzkUk26255h0RwthshiaoanTnfH2B_IRg",
-         //    "https://mir-s3-cdn-cf.behance.net/project_modules/disp/a9475211889067.562541caf0859.png"
-         // ],
          comics: []
       };
    }
