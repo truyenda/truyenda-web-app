@@ -25,11 +25,12 @@ export default {
    filter(term, index = 1) {
       const data = {
          Status: term.rdoStatus,
-         Sort: term.sort,
+         Sort: term.sortBy,
          Rank: term.rdoRank,
-         Category: filter.selectedGenresIds
+         Category: term.selectedGenresIds
       };
-      return Caller(prefix + "filter/page" + index, "POST", data);
+      console.log(data);
+      return Caller(prefix + "filter/page/" + index, "POST", data);
    },
    update(comic) {
       const data = {

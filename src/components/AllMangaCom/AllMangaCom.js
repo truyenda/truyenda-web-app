@@ -5,12 +5,28 @@ import Button from "../commonUI/Button";
 import Caller from '../../utils/APICaller';
 import LatestFilter from "../Manga/LatestFilter";
 import ComicApi from "../../api/ComicApi";
+import Toast from "../commonUI/Toast";
+import Progress from "../commonUI/Progress";
 export default class AllMangaCom extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      mangas: []
+      mangas: [],
+      filter: [],
+      inProgress: false
     };
+  }
+
+  receive(filter){
+    this.setState({
+      filter
+    },()=>{
+      console.log(this.state.filter);
+      // console.log(filter);
+      this.setState({ inProgress: true });
+      this.onFilterManga();
+    });
+    
   }
 
   componentDidMount() {
@@ -43,7 +59,8 @@ export default class AllMangaCom extends Component {
         if (res.data.Code && res.data.Code === 200) {
           this.setState({
             mangas: res.data.Data.listTruyen,
-            pages: res.data.Data.Paging.TotalPages
+            pages: res.data.Data.Paging.TotalPages,
+            inProgress: false
           });
         } else {
           Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
@@ -75,7 +92,17 @@ export default class AllMangaCom extends Component {
 		return (
       <div>
         <h1 className="title_all_manga">All Manga</h1>
-        <LatestFilter onClick={() => {this.onFilterManga()}} />
+        <LatestFilter onSubmit ={(value)=> this.receive(value)} />
+        {this.state.inProgress ? (
+            <Progress display="Đang load truyện..." />
+          ) : (
+            ""
+          )}
+        { this.state.mangas.length < 1 ? (
+          <div className="not_manga">Không có truyện yêu cầu!</div>
+        ) : (
+          ""
+        )}
         <div className="all_manga">
           {elements_mangas}
         </div>
