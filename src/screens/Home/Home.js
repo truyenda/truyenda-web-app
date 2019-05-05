@@ -80,7 +80,8 @@ class Home extends Component {
             <div className="main-content-col">
               <Switch>
                  <Route path="/latest-update" exact={true} component={Manga} />
-                 <Route path="/" exact={true} component={Main} />
+                 {/* <Route path="/" exact={true} component={Main} /> */}
+                 <Main />
               </Switch>
               {/* <Home /> */}
             </div>

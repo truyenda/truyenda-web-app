@@ -3,10 +3,26 @@
 
 .main-wrapper {
    // width: 93%;
-   height: 1000px;
    background-color: $white;
    @include shadow;
    padding: 20px;
+   .few-hours {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 24px;
+    color: $orange-1;
+   }
+   .tilte-trending {
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 28px;
+    display: -webkit-inline-box;
+   }
+   .view-all {
+      flex-shrink: 0;
+      margin-left: 20px;
+      float: right;
+   }
 }
 
 // @media only screen and (max-width: 1025px) {
