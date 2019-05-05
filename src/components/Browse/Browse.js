@@ -45,7 +45,7 @@ export default class Browse extends Component {
                         genre.Id
                      ),
                      state: {
-                        genre
+                        genre: genre
                      }
                   }}
                >

@@ -132,7 +132,6 @@ export default class ReadingPage extends Component {
 
    render() {
       const { chapter, allChapters, isError, isError404 } = this.state;
-      console.log(allChapters);
       if (isError404) {
          return <NotFound />;
       }
@@ -143,7 +142,7 @@ export default class ReadingPage extends Component {
          <div className="reading-page-container">
             {chapter && (
                <div className="reading-page">
-                  <p>Chapter {chapter.Id}</p>
+                  <p>{chapter.TenChuong}</p>
                   {chapter.LinkAnh.map((c, i) => (
                      <Waypoint key={i} onEnter={v => this.saveLocalBookmark(i)}>
                         <img

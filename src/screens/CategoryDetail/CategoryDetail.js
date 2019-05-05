@@ -1,15 +1,17 @@
 import React, { Component } from "react";
-import { getIdBySplitingPath } from "../../utils/LinkUtils";
+import styles from "./CategoryDetail.scss";
+import { getIdBySplitingPath, toComicLink } from "../../utils/LinkUtils";
 import ComicApi from "../../api/ComicApi";
 import NotFound from "../Error/NotFound";
 import Progress from "../../components/commonUI/Progress";
+import { Link } from "react-router-dom";
 
 export default class CategoryDetail extends Component {
    constructor(props) {
       super(props);
       this.state = {
-         genre: this.props.location.state,
-         comic: null,
+         genre: this.props.location.state.genre,
+         allComics: null,
          isError: false,
          isError404: false
       };
@@ -23,9 +25,8 @@ export default class CategoryDetail extends Component {
             ComicApi.getByCategory(id)
                .then(res => {
                   this.setState({
-                     comic: res.data.Data
+                     allComics: res.data.Data
                   });
-                  document.title = genre.TenTheLoai;
                })
                .catch(err => {
                   this.setState({
@@ -41,7 +42,7 @@ export default class CategoryDetail extends Component {
    }
 
    render() {
-      const { genre, comic, isError, isError404 } = this.state;
+      const { genre, allComics, isError, isError404 } = this.state;
       if (isError404) {
          return <NotFound />;
       }
@@ -50,13 +51,34 @@ export default class CategoryDetail extends Component {
       }
       return (
          <div className="category-detail-container">
-            {/* <p>{genre.TenTheLoai}</p> */}
-            {comic &&
-               comic.forEach(c => (
-                  <div>
-                     <p>{c.TenTruyen}</p>
-                  </div>
-               ))}
+            {genre !== null && (
+               <div>
+                  <p>{genre.Id}</p>
+                  <p>{genre.TenLoaiTruyen}</p>
+                  <p>{genre.MoTa}</p>
+               </div>
+            )}
+            {allComics && (
+               <div className="category-all-comics">
+                  {allComics.map(c => (
+                     <Link
+                           to={{
+                              pathname: toComicLink(c.TenTruyen, c.Id),
+                              state: {
+                                 comic: c
+                              }
+                           }}
+                           key={c.Id}
+                        >
+                           <div className="category-comic-item">
+                              <img src={c.AnhDaiDien} alt={c.TenTruyen} />
+                              <p>{c.TenTruyen}</p>
+                              <p>{c.DanhSachTacGia.map(a => a.TenTacGia)}</p>
+                           </div>
+                        </Link>
+                  ))}
+               </div>
+            )}
          </div>
       );
    }
