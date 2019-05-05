@@ -18,6 +18,8 @@
   display: block;
   text-align: right;
   margin-top: 1em;
+  cursor: pointer;
+  color: $blue;
 }
 
 #remember {
@@ -96,5 +98,17 @@ body {
     .rep-btn{
       width: 100%;
     }
+  }
+}
+
+.request-forgot{
+  width: 500px;
+  .action-group{
+    margin-top: 0.5em;
+    justify-content: flex-end;
+  }
+  button{
+    padding-left: 3em;
+    padding-right: 3em;
   }
 }

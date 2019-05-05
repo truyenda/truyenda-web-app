@@ -15,6 +15,7 @@ import StringUtils from "../../../utils/StringUtils";
 import PhotoApi from "../../../api/PhotoApi";
 import { toTeamLink } from "../../../utils/LinkUtils";
 import Photo from '../../../components/commonUI/Photo';
+import MyTeam from '../MyTeam';
 class TeamTable extends Component {
   constructor(props) {
     super(props);
@@ -24,6 +25,7 @@ class TeamTable extends Component {
       loading: false,
       uploading: false,
       openModal: false,
+      openTeam: false,
       isEditing: false,
       team: {
         Id: "",
@@ -171,6 +173,12 @@ class TeamTable extends Component {
       openModal: false
     });
     this.clearDataState();
+  }
+  onShowTeamModal(){
+    this.setState({openTeam: true});
+  }
+  onCloseTeamModal(){
+    this.setState({openTeam: false});
   }
 
   onEditTeam(team) {
@@ -358,7 +366,8 @@ class TeamTable extends Component {
               <i
                 className="fas fa-user-cog"
                 onClick={() => {
-                  this.onEditTeammem(cell.original);
+                  this.onShowTeamModal();
+                  // this.onEditTeammem(cell.original);
                 }}
               />
               <i
@@ -389,6 +398,9 @@ class TeamTable extends Component {
               this.onShowModal();
             }}
           />
+          <Modal classNames={{modal: "modal-team"}} open={this.state.openTeam} onClose={()=>this.onCloseTeamModal()}>
+            <MyTeam />
+          </Modal>
           <Modal
             classNames={{ modal: "modal-add" }}
             open={this.state.openModal}

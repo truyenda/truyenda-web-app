@@ -64,7 +64,7 @@ class Menu extends Component {
           )}
           {this.props.user.Email ? (
             <Link to="/dashboard">
-              <Button display="Quản lí" type="btn-Green" />
+              <Button display="Quản lý" type="btn-ok" />
             </Link>
           ) : (
             ""
