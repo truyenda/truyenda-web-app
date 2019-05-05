@@ -22,6 +22,7 @@ export default class ReadingPage extends Component {
    }
 
    componentDidMount() {
+      window.scrollTo(0, 0);
       try {
          var url = document.location.href;
          var id = getIdBySplitingPath(url, "chapters/");
@@ -37,6 +38,13 @@ export default class ReadingPage extends Component {
                      () => setTimeout(() => this.getLocalBookmark(), 1000)
                   );
                   document.title = data.TenTruyen + " - " + data.TenChuong;
+                  ChapterApi.list(data.IdTruyen)
+                     .then(res => {
+                        this.setState({
+                           allChapters: res.data.Data
+                        });
+                     })
+                     .catch(err => {});
                })
                .catch(err => {
                   this.setState({
@@ -52,6 +60,7 @@ export default class ReadingPage extends Component {
    }
 
    componentWillReceiveProps() {
+      window.scrollTo(0, 0);  
       try {
          var url = document.location.href;
          var id = getIdBySplitingPath(url, "chapters/");
@@ -67,6 +76,13 @@ export default class ReadingPage extends Component {
                      () => setTimeout(() => this.getLocalBookmark(), 1000)
                   );
                   document.title = data.TenTruyen + " - " + data.TenChuong;
+                  ChapterApi.list(data.IdTruyen)
+                     .then(res => {
+                        this.setState({
+                           allChapters: res.data.Data
+                        });
+                     })
+                     .catch(err => {});
                })
                .catch(err => {
                   this.setState({
@@ -100,13 +116,27 @@ export default class ReadingPage extends Component {
       }
    }
 
+   getListAllChapters(idComic) {
+      let data = [];
+      ChapterApi.list(idComic)
+         .then(res => {
+            data = res.data.Data;
+         })
+         .catch(err => {});
+      return data;
+   }
+
+   checkNextChapter() {
+
+   }
+
    render() {
-      const { chapter, isError, isError404 } = this.state;
+      const { chapter, allChapters, isError, isError404 } = this.state;
       if (isError404) {
          return <NotFound />;
       }
       if (isError) {
-         return <span>Có lỗi xảy ra trong quá trình kết nối</span>;
+         return <Progress />;
       }
       return (
          <div className="reading-page-container">
@@ -126,31 +156,36 @@ export default class ReadingPage extends Component {
                         />
                      </Waypoint>
                   ))}
+
                   <div className="control-bar">
-                     <Link
-                        to={{
-                           pathname: toChapterLink(
-                              chapter.TenTruyen,
-                              chapter.TenChuong,
-                              chapter.Id - 1
-                           ),
-                           state: {}
-                        }}
-                     >
-                        <p>Previous Chapter</p>
-                     </Link>
-                     <Link
-                        to={{
-                           pathname: toChapterLink(
-                              chapter.TenTruyen,
-                              chapter.TenChuong,
-                              chapter.Id + 1
-                           ),
-                           state: {}
-                        }}
-                     >
-                        <p>Next Chapter</p>
-                     </Link>
+                     {allChapters && (chapter.SoThuTu !== allChapters[0].SoThuTu) && (
+                        <Link
+                           to={{
+                              pathname: toChapterLink(
+                                 chapter.TenTruyen,
+                                 chapter.TenChuong,
+                                 chapter.Id - 1
+                              ),
+                              state: {}
+                           }}
+                        >
+                           <p>Previous Chapter</p>
+                        </Link>
+                     )}
+                     {allChapters && (chapter.SoThuTu !== allChapters[allChapters.length - 1].SoThuTu) && (
+                        <Link
+                           to={{
+                              pathname: toChapterLink(
+                                 chapter.TenTruyen,
+                                 chapter.TenChuong,
+                                 chapter.Id + 1
+                              ),
+                              state: {}
+                           }}
+                        >
+                           <p>Next Chapter</p>
+                        </Link>
+                     )}
                   </div>
                </div>
             )}
