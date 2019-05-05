@@ -4,7 +4,7 @@ const prefix = "stories/";
 
 export default {
    get(idComic) {
-      return Caller("commics/" + idComic, "GET");
+      return Caller(prefix + idComic, "GET");
    },
    
    getChapters(idComic) {

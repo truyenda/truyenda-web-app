@@ -140,6 +140,9 @@ export default class ReadingPage extends Component {
       }
       return (
          <div className="reading-page-container">
+            {!chapter && (
+               <Progress />
+            )}
             {chapter && (
                <div className="reading-page">
                   <p>Chapter {chapter.Id}</p>
