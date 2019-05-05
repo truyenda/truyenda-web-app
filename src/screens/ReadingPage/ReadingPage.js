@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styles from "./ReadingPage.scss";
 import ComicAuthors from "../ComicDetails/ComicAuthors/ComicAuthors";
-import { getIdBySplitingPath } from "../../utils/LinkUtils";
+import { getIdBySplitingPath, toChapterLink } from "../../utils/LinkUtils";
 import ComicApi from "../../api/ComicApi";
 import NotFound from "../Error/NotFound";
 import ChapterApi from "../../api/ChapterApi";

@@ -34,7 +34,7 @@ export default class ComicChapters extends Component {
                   chapter.IdChuong
                ),
                state: {
-                  comic: comic
+                  comic
                },
             }}
             key={chapter.IdChuong}

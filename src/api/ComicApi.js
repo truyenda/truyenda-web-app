@@ -7,6 +7,10 @@ export default {
       return Caller("commics/" + idComic, "GET");
    },
    
+   getChapters(idComic) {
+      return Caller(prefix + idComic + "/chapters", "GET");
+   },
+
    add(comic) {
       const data = {
          TenTruyen: comic.name,
