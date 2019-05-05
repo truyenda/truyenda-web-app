@@ -22,7 +22,15 @@ export default {
       };
       return Caller(prefix, "POST", data);
    },
-   
+   filter(term, index = 1) {
+      const data = {
+         Status: term.rdoStatus,
+         Sort: term.sort,
+         Rank: term.rdoRank,
+         Category: filter.selectedGenresIds
+      };
+      return Caller(prefix + "filter/page" + index, "POST", data);
+   },
    update(comic) {
       const data = {
          TenTruyen: comic.name,

@@ -6,13 +6,21 @@ import SelectBox from '../../commonUI/SelectBox';
 import Caller from '../../../utils/APICaller';
 
 export default class LatestFilter extends Component {
+  //handle click event by parent callback
+  clicked() {
+    if(this.props.onClick)
+      this.props.onClick();
+  }
   constructor(props) {
     super(props);
     this.state = {
       shouldHide: true,
-      rdoStatus: 1,
-      rdoRank: 1,
-      genres: []
+      genres: [],
+      filter: {
+        rdoStatus: 0,
+        rdoRank: 0,
+        selectedGenresIds:[]
+      }
     };
   }
 
@@ -41,14 +49,25 @@ export default class LatestFilter extends Component {
   }
 
   onSubmitFilter(){
-    console.log(this.state);
+    console.log(this.state.filter);
   }
 
   setStateForm(key, value) {
+    let { selectedGenresIds } = this.state.filter;
+    if(value == true){
+      selectedGenresIds.push(key);
+      this.setState({
+        selectedGenresIds
+      })
+    }
+  }
+
+  setStateFormSelect(key, value) {
     this.setState({
       [key]: value
     });
   }
+  
   render() {
     var elements_genres = this.state.genres.map((genre, index) => {
       return  <div key={ genre.Id } className="_2xJWS">
@@ -72,7 +91,7 @@ export default class LatestFilter extends Component {
                   display=""
                   data={[[1, "Rank"], [2, "Name"], [3, "Date"]]}
                   style="gender-select"
-                  onChanged={(key, value) => this.setStateForm(key, value)}
+                  onChanged={(key, value) => this.setStateFormSelect(key, value)}
                 />
               </div>
             </div>
@@ -87,21 +106,21 @@ export default class LatestFilter extends Component {
             <div className="md-radio md-radio-inline">
               <input value="1" id={3} type="radio" name="rdoStatus"
                 onChange={() => this.isInputChangeStatus()}
-                checked={parseInt(this.state.rdoStatus) === 1}
+                checked={parseInt(this.state.filter.rdoStatus) === 0}
               />
               <label htmlFor={3}>All</label>
             </div>
             <div className="md-radio md-radio-inline">
               <input value="2" id={4} type="radio" name="rdoStatus" 
                 onChange={() => this.isInputChangeStatus()}
-                checked={parseInt(this.state.rdoStatus) === 2}
+                checked={parseInt(this.state.filter.rdoStatus) === 1}
               />
               <label htmlFor={4}>Completed</label>
             </div>
             <div className="md-radio md-radio-inline">
               <input value="3" id={5} type="radio" name="rdoStatus" 
                 onChange={() => this.isInputChangeStatus()}
-                checked={parseInt(this.state.rdoStatus) === 3}
+                checked={parseInt(this.state.filter.rdoStatus) === 2}
               />
               <label htmlFor={5}>Ongoing</label>
             </div>
@@ -113,28 +132,28 @@ export default class LatestFilter extends Component {
             <div className="md-radio md-radio-inline">
               <input value="1" id={6} type="radio" name="rdoRank"
                 onChange={() => this.isInputChangeStatus()}
-                checked={parseInt(this.state.rdoRank) === 1}
+                checked={parseInt(this.state.filter.rdoRank) === 0}
               />
               <label htmlFor={6}>All</label>
             </div>
             <div className="md-radio md-radio-inline">
               <input value="2" id={7} type="radio" name="rdoRank" 
                 onChange={() => this.isInputChangeStatus()}
-                checked={parseInt(this.state.rdoRank) === 2}
+                checked={parseInt(this.state.filter.rdoRank) === 1}
               />
               <label htmlFor={7}>1 - 999</label>
             </div>
             <div className="md-radio md-radio-inline">
               <input value="3" id={8} type="radio" name="rdoRank" 
                 onChange={() => this.isInputChangeStatus()}
-                checked={parseInt(this.state.rdoRank) === 3}
+                checked={parseInt(this.state.filter.rdoRank) === 2}
               />
               <label htmlFor={8}>1k - 2k</label>
             </div>
             <div className="md-radio md-radio-inline">
               <input value="4" id={9} type="radio" name="rdoRank" 
                 onChange={() => this.isInputChangeStatus()}
-                checked={parseInt(this.state.rdoRank) === 4}
+                checked={parseInt(this.state.filter.rdoRank) === 3}
               />
               <label htmlFor={9}>2k - 3k</label>
             </div>
@@ -151,7 +170,7 @@ export default class LatestFilter extends Component {
               <Button style="btn-Gray" display="Reset" />
             </span>
             <span className="_25DCE">
-              <Button style="btn-Blue" display="Apply" onClick={() => {this.onSubmitFilter()}} />
+              <Button style="btn-Blue" display="Apply" onClick={() => this.clicked()} />
             </span>
           </div>
         </div>

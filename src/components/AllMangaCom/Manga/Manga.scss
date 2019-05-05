@@ -21,9 +21,17 @@
   ._10RzI {
     margin-top: 10px;
     font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 17ch;
   }
   ._2KzkR {
     font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 19ch;
   }
   ._3UsUq {
     font-size: 14px;
