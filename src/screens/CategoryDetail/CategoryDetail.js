@@ -25,7 +25,7 @@ export default class CategoryDetail extends Component {
                   this.setState({
                      comic: res.data.Data
                   });
-                  document.title = res.data.Data.TenTruyen;
+                  document.title = genre.TenTheLoai;
                })
                .catch(err => {
                   this.setState({
@@ -50,7 +50,7 @@ export default class CategoryDetail extends Component {
       }
       return (
          <div className="category-detail-container">
-            <p>{genre.TenLoaiTruyen}</p>
+            {/* <p>{genre.TenTheLoai}</p> */}
             {comic &&
                comic.forEach(c => (
                   <div>

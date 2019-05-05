@@ -34,8 +34,8 @@ export default class Browse extends Component {
    }
 
    render() {
-      var { genres } = this.state;
-      var elements_genres = this.getRenderedItems().map((genre, index) => {
+      const { genres } = this.state;
+      const elements_genres = this.getRenderedItems().map((genre, index) => {
          return (
             <div key={genre.Id} className="_d5D78">
                <Link
