@@ -187,6 +187,9 @@ export default class ReadingPage extends Component {
                            <p>Next Chapter</p>
                         </Link>
                      )}
+                      {allChapters && (chapter.SoThuTu === allChapters[allChapters.length - 1].SoThuTu) && (
+                        <h1>You reached the end of this comic</h1>
+                      )}
                   </div>
                </div>
             )}
