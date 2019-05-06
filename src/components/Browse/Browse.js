@@ -24,6 +24,14 @@ export default class Browse extends Component {
       });
    }
 
+   // componentWillReceiveProps() {
+   //    Caller("categories").then(res => {
+   //       this.setState({
+   //          genres: res.data.Data
+   //       });
+   //    });
+   // }
+
    toggle() {
       this.setState({
          isOpen: !this.state.isOpen,

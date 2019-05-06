@@ -6,6 +6,7 @@ import NotFound from "../Error/NotFound";
 import Progress from "../../components/commonUI/Progress";
 import { Link } from "react-router-dom";
 import Browse from "../../components/Browse";
+import Photo from "../../components/commonUI/Photo";
 
 export default class CategoryDetail extends Component {
    constructor(props) {
@@ -26,6 +27,7 @@ export default class CategoryDetail extends Component {
             ComicApi.getByCategory(id)
                .then(res => {
                   this.setState({
+                     genre: this.props.location.state.genre,
                      allComics: res.data.Data
                   });
                })
@@ -50,6 +52,7 @@ export default class CategoryDetail extends Component {
             ComicApi.getByCategory(id)
                .then(res => {
                   this.setState({
+                     genre: this.props.location.state.genre,
                      allComics: res.data.Data
                   });
                })
@@ -77,13 +80,24 @@ export default class CategoryDetail extends Component {
       return (
          <div className="category-detail-container">
             <div className="category-detail-main-content">
-               {genre !== null && (
+               {genre && allComics && allComics[0].AnhBia && (
                   <div className="category-detail-main-header">
-                     <p>{genre.Id}</p>
+                     <img src={allComics[0].AnhBia} />
                      <p>{genre.TenLoaiTruyen}</p>
                      <p>{genre.MoTa}</p>
                   </div>
                )}
+               {(genre && allComics && !allComics[0].AnhBia && (
+                     <div className="category-detail-main-header">
+                        <img src="https://www.wallpapersin4k.org/wp-content/uploads/2017/04/Colorful-Geometric-Wallpaper-12.png" />
+                        <p>{genre.TenLoaiTruyen}</p>
+                        <p>{genre.MoTa}</p>
+                     </div>
+               ))}
+               {!genre || !allComics && (
+                  <Progress />
+               )}
+               {!genre && <Progress />}
                {allComics && (
                   <div className="category-detail-main-all-comics">
                      {allComics.map(c => (
@@ -99,8 +113,12 @@ export default class CategoryDetail extends Component {
                            <div className="category-comic-item">
                               <img src={c.AnhDaiDien} alt={c.TenTruyen} />
                               <div className="category-comic-item-content">
-                                 <p className="category-comic-item-content-title">{c.TenTruyen}</p>
-                                 <p className="category-comic-item-content-authors">{c.DanhSachTacGia.map(a => a.TenTacGia)}</p>
+                                 <p className="category-comic-item-content-title">
+                                    {c.TenTruyen}
+                                 </p>
+                                 <p className="category-comic-item-content-authors">
+                                    {c.DanhSachTacGia.map(a => a.TenTacGia)}
+                                 </p>
                               </div>
                            </div>
                         </Link>
@@ -109,10 +127,7 @@ export default class CategoryDetail extends Component {
                )}
             </div>
             <div className="category-detail-side-content">
-               <Browse 
-                  isOpenOutside={true}
-                  hasButtonShowMore={false}
-               />
+               <Browse isOpenOutside={true} hasButtonShowMore={false} />
             </div>
          </div>
       );
