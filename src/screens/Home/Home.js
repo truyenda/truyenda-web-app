@@ -74,13 +74,13 @@ class Home extends Component {
          ? "chart-col-open"
          : "chart-col-close";
       const innerShowMore = isOpen ? "Show Less" : "Show More";
-      console.log(`%c ${isOpen}`, 'color: orange; font-weight: bold;');
       return (
          <div className="home-wrapper">
             <div className="main-content-col">
               <Switch>
                  <Route path="/latest-update" exact={true} component={Manga} />
-                 <Route path="/" exact={true} component={Main} />
+                 {/* <Route path="/" exact={true} component={Main} /> */}
+                 <Main />
               </Switch>
               {/* <Home /> */}
             </div>

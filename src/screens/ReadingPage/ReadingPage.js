@@ -116,15 +116,15 @@ export default class ReadingPage extends Component {
       }
    }
 
-   getListAllChapters(idComic) {
-      let data = [];
-      ChapterApi.list(idComic)
-         .then(res => {
-            data = res.data.Data;
-         })
-         .catch(err => {});
-      return data;
-   }
+   // getListAllChapters(idComic) {
+   //    let data = [];
+   //    ChapterApi.list(idComic)
+   //       .then(res => {
+   //          data = res.data.Data;
+   //       })
+   //       .catch(err => {});
+   //    return data;
+   // }
 
    checkNextChapter() {
 
@@ -142,7 +142,7 @@ export default class ReadingPage extends Component {
          <div className="reading-page-container">
             {chapter && (
                <div className="reading-page">
-                  <p>Chapter {chapter.Id}</p>
+                  <p>{chapter.TenChuong}</p>
                   {chapter.LinkAnh.map((c, i) => (
                      <Waypoint key={i} onEnter={v => this.saveLocalBookmark(i)}>
                         <img
@@ -164,7 +164,7 @@ export default class ReadingPage extends Component {
                               pathname: toChapterLink(
                                  chapter.TenTruyen,
                                  chapter.TenChuong,
-                                 chapter.Id - 1
+                                 allChapters[allChapters.map(c => c.SoThuTu).indexOf(chapter.SoThuTu) - 1].Id
                               ),
                               state: {}
                            }}
@@ -178,7 +178,7 @@ export default class ReadingPage extends Component {
                               pathname: toChapterLink(
                                  chapter.TenTruyen,
                                  chapter.TenChuong,
-                                 chapter.Id + 1
+                                 allChapters[allChapters.map(c => c.SoThuTu).indexOf(chapter.SoThuTu) + 1].Id
                               ),
                               state: {}
                            }}
@@ -186,6 +186,9 @@ export default class ReadingPage extends Component {
                            <p>Next Chapter</p>
                         </Link>
                      )}
+                      {allChapters && (chapter.SoThuTu === allChapters[allChapters.length - 1].SoThuTu) && (
+                        <h1>You reached the end of this comic</h1>
+                      )}
                   </div>
                </div>
             )}

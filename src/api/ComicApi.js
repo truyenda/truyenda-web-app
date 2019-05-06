@@ -3,8 +3,12 @@ import Caller from "../utils/APICaller";
 const prefix = "stories/";
 
 export default {
+  listTrending(){
+    return Caller(prefix + "trending", "GET");
+  },
+
    get(idComic) {
-      return Caller("commics/" + idComic, "GET");
+      return Caller(prefix + idComic, "GET");
    },
    
    getChapters(idComic) {
@@ -22,7 +26,8 @@ export default {
          Id_ChuKy: comic.frequency,
          AnhBia: comic.coverPicture,
          AnhDaiDien: comic.avatarPicture,
-         MoTa: comic.description
+         MoTa: comic.description,
+         Id_NhomDich: comic.team.value
       };
       return Caller(prefix, "POST", data);
    },
@@ -47,7 +52,8 @@ export default {
          Id_ChuKy: comic.frequency,
          AnhBia: comic.coverPicture,
          AnhDaiDien: comic.avatarPicture,
-         MoTa: comic.description
+         MoTa: comic.description,
+         comic: comic.team.value
       };
       return Caller(prefix + comic.Id, "PUT", data);
    },

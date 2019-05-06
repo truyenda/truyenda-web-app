@@ -1,0 +1,14 @@
+.user-status {
+  text-align: center;
+  i {
+    padding: 0.3em 0.6em;
+    border-radius: 5px;
+    font-size: 13px;
+  }
+  .fa-user-check {
+    color: green;
+  }
+  .fa-user-times {
+    color: red;
+  }
+}

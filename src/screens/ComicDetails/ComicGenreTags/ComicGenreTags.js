@@ -14,7 +14,7 @@ export default class ComicGenreTags extends Component {
       const { comic } = this.state;
       const listGenres = comic.DanhSachTheLoai.map(genre => (
          <Link to={{
-                  pathname:toCategoryDetailLink(genre.TenTheLoai, genre.Id),state: { genre }
+                  pathname:toCategoryDetailLink(genre.TenTheLoai, genre.Id),state: { genre: genre }
                }}
                key={genre.Id}
          >
