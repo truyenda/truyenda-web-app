@@ -50,6 +50,14 @@
             padding-top: 0;
          }
 
+         .category-detail-main-header-nothing {
+            font-size: 0.8em;
+            color: $red;
+            padding: 2% 2% 5%;
+            padding-top: 0;
+            font-weight: bold;
+         }
+
          .category-detail-main-header-show-more-hide {
             display: none;
          }
@@ -203,6 +211,14 @@
                color: $dark-gray-2;
                padding: 2% 2% 5%;
                padding-top: 0;
+            }
+
+            .category-detail-main-header-nothing {
+               font-size: 0.8em;
+               color: $red;
+               padding: 2% 2% 5%;
+               padding-top: 0;
+               font-weight: bold;
             }
 
             .category-detail-main-header-show-more-hide {

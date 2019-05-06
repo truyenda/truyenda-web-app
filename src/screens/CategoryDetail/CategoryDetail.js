@@ -94,7 +94,7 @@ export default class CategoryDetail extends Component {
       return (
          <div className="category-detail-container">
             <div className="category-detail-main-content">
-               {genre && allComics && allComics[0].AnhBia && (
+               {genre && allComics && allComics[0] && allComics[0].AnhBia !== "" && (
                   <div className="category-detail-main-header">
                      <img src={allComics[0].AnhBia} />
                      <p className="category-detail-main-header-name">
@@ -111,7 +111,7 @@ export default class CategoryDetail extends Component {
                      </p>
                   </div>
                )}
-               {genre && allComics && !allComics[0].AnhBia && (
+               {genre && allComics && !allComics[0] && (
                   <div className="category-detail-main-header">
                      <img src="https://www.wallpapersin4k.org/wp-content/uploads/2017/04/Colorful-Geometric-Wallpaper-12.png" />
                      <p className="category-detail-main-header-name">
@@ -120,10 +120,10 @@ export default class CategoryDetail extends Component {
                      <p className="category-detail-main-header-description">
                         {genre.MoTa}
                      </p>
+                     <p className="category-detail-main-header-nothing">Chưa có truyện thuộc thể loại này</p>
                   </div>
                )}
-               {!genre || (!allComics && <Progress />)}
-               {!genre && <Progress />}
+               {(!genre || !allComics) && (<Progress />)}
                {allComics && (
                   <div className={showMoreClassName}>
                      {allComics.map(c => (
