@@ -15,6 +15,7 @@ import Select from "react-select";
 import SelectBox from "../../../components/commonUI/SelectBox";
 import ManagerPressions from "../../../api/ManagerPressions";
 import TeamApi from "../../../api/TeamApi";
+import './Account.scss';
 class Account extends Component {
   constructor(props) {
     super(props);
@@ -80,7 +81,7 @@ class Account extends Component {
       loading: status
     });
   }
-  
+
   clearDataState() {
     this.setState({
       profile: {
@@ -130,35 +131,34 @@ class Account extends Component {
   }
 
   onEditAccount(profile) {
-
-    const getTenQuyenById = (Id) => {
-      let data = []
+    const getTenQuyenById = Id => {
+      let data = [];
       this.state.TenQuyen.forEach(tenquyen => {
-        if(tenquyen.value.toString() === Id.toString()){
-            data = tenquyen;
+        if (tenquyen.value.toString() === Id.toString()) {
+          data = tenquyen;
         }
       });
       return data;
-    }
+    };
 
-    const getTeamById = (Id) => {
-      let data = []
+    const getTeamById = Id => {
+      let data = [];
       this.state.teams.forEach(team => {
-        if(team.value.toString() === Id.toString()){
-            data = team;
+        if (team.value.toString() === Id.toString()) {
+          data = team;
         }
       });
       return data;
-    }
-    const getStatusById = (Id) => {
-      let data = []
+    };
+    const getStatusById = Id => {
+      let data = [];
       this.state.status.forEach(status => {
-        if(status.value.toString() === Id.toString()){
-            data = status;
+        if (status.value.toString() === Id.toString()) {
+          data = status;
         }
       });
       return data;
-    }
+    };
     this.setState({
       isEditing: true,
       profile: {
@@ -257,8 +257,6 @@ class Account extends Component {
     );
   }
 
-
-
   getPressions() {
     let data = [];
     ManagerPressions.list()
@@ -290,7 +288,6 @@ class Account extends Component {
         });
       });
   }
-
 
   loadPage(state, instance) {
     this.setState({
@@ -340,24 +337,27 @@ class Account extends Component {
       {
         Header: "Email",
         accessor: "Email",
-        Cell: cell => (
-          <span data-for="des-tip" data-tip={cell.value}>
-            {cell.value}
-            <ReactTooltip multiline={true} id="des-tip" getContent={v => <p className='tip-200'>{v}</p>}/>
-          </span>
-        ),
         filterable: false
       },
       {
         Header: "Tên Nhóm",
         accessor: "TenNhom",
+        filterable: false
+      },
+      {
+        Header: "",
+        accessor: "IdTrangThai",
+        filterable: false,
         Cell: cell => (
-          <span data-for="des-tip" data-tip={cell.value}>
-            {cell.value}
-            <ReactTooltip multiline={true} id="des-tip" getContent={v => <p className='tip-200'>{v}</p>}/>
+          <span className="user-status">
+            {cell.value === 1 ? (
+              <i className="fas fa-user-check fa-xs"> </i>
+            ) : (
+              <i className="fas fa-user-times fa-xs" />
+            )}
           </span>
         ),
-        filterable: false
+        maxWidth: 50
       },
       {
         Header: "",
@@ -385,7 +385,7 @@ class Account extends Component {
       }
     ];
     return (
-      <div className="bookmark-container">
+      <div>
         <div className="tb-name-wrap">
           <span>Danh sách tài khoản</span>
         </div>
@@ -398,9 +398,7 @@ class Account extends Component {
           center
         >
           <h2>
-            {this.state.isEditing
-              ? "Chỉnh sửa account"
-              : "Tạo account mới"}
+            {this.state.isEditing ? "Chỉnh sửa account" : "Tạo account mới"}
           </h2>
           <TextInput
             id="Username"
@@ -427,7 +425,7 @@ class Account extends Component {
             value={this.state.profile.TenNhom}
             onChange={v => {
               this.setFormData("TenNhom", v);
-              this.setFormData("IdNhom", v.value)
+              this.setFormData("IdNhom", v.value);
             }}
           />
 
@@ -456,9 +454,9 @@ class Account extends Component {
               display={this.state.isEditing ? "Cập nhật" : "Tạo"}
               type="btn-Green"
               onClick={() => {
-                // if (this.state.isEditing) 
+                // if (this.state.isEditing)
                 this.onSubmitForm();
-                  // : this.onAddAccount();
+                // : this.onAddAccount();
               }}
             />
             <Button
@@ -521,8 +519,6 @@ class Account extends Component {
         )}
       </div>
     );
-
-    
   }
 }
 
