@@ -101,18 +101,15 @@ export default class ComicDetailsTable extends Component {
         alert.priority = "Thứ tự chương là số nguyên hoặc thập phân";
       }
     }
-    console.log('done check pre')
     if (!this.state.chapter.links || this.state.chapter.links.length === 0) {
       alert.links = "Link ảnh của chương không được để trống";
     } else {
       let links = this.state.chapter.links.split("\n");
-      console.log('beging check links')
       for (var i = 0; i < links.length; i++) {
         if (!validURL(links[i])) {
           alert.links = "Link ảnh ở dòng " + (i + 1) + " không hợp lệ";
           break;
         }
-        console.log('checked '+i)
       }
     }
     if (alert.title || alert.priority || alert.links) {
@@ -169,12 +166,24 @@ export default class ComicDetailsTable extends Component {
     chap.Id = chapter.Id;
     chap.title = chapter.TenChuong;
     chap.priority = chapter.SoThuTu;
-    chap.links = JsonStrToLinkStr(chapter.LinkAnh);
+    chap.links = null;
     this.setState({
       chapter: chap,
       isEditing: true
     });
     this.onOpenModal();
+    ChapterApi.get(chapter.Id)
+      .then(res => {
+        if (res.data.Code && res.data.Code === 200) {
+          chap.links = JsonStrToLinkStr(res.data.Data.LinkAnh);
+          this.setState({ chapter: chap });
+        } else {
+          Toast.notify("Lấy dữ liệu không thành công");
+        }
+      })
+      .catch(err => {
+        Toast.error("Có lỗi trong quá trình kết nối");
+      });
   }
 
   setFormData(key, value) {
@@ -557,28 +566,34 @@ export default class ComicDetailsTable extends Component {
             />
             <div className="links-edit-group">
               <div className="link-editor">
-                <div className="group-input">
-                  <label className="pure-material-textfield-filled">
-                    <textarea
-                      id="links-editor"
-                      placeholder=" "
-                      onChange={e => {
-                        this.setFormData("links", e.target.value);
-                      }}
-                      value={
-                        this.state.chapter.links ? this.state.chapter.links : ""
+                {this.state.chapter.links ? (
+                  <div className="group-input">
+                    <label className="pure-material-textfield-filled">
+                      <textarea
+                        id="links-editor"
+                        placeholder=" "
+                        onChange={e => {
+                          this.setFormData("links", e.target.value);
+                        }}
+                        value={
+                          this.state.chapter.links
+                            ? this.state.chapter.links
+                            : ""
+                        }
+                      />
+                      <span>Danh sách liên kết</span>
+                    </label>
+                    <div
+                      className={
+                        "field-alert " + (this.state.alert.links ? "" : "hide")
                       }
-                    />
-                    <span>Danh sách liên kết</span>
-                  </label>
-                  <div
-                    className={
-                      "field-alert " + (this.state.alert.links ? "" : "hide")
-                    }
-                  >
-                    <p>{this.state.alert.links}</p>
+                    >
+                      <p>{this.state.alert.links}</p>
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  <Progress display="Đang lấy dữ liệu..." />
+                )}
               </div>
               {this.state.files.length !== 0 && (
                 <div className="link-upload">
