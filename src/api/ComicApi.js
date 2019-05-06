@@ -3,6 +3,10 @@ import Caller from "../utils/APICaller";
 const prefix = "stories/";
 
 export default {
+  listTrending(){
+    return Caller(prefix + "trending", "GET");
+  },
+
    get(idComic) {
       return Caller(prefix + idComic, "GET");
    },
