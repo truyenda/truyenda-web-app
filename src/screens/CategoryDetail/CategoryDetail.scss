@@ -2,50 +2,115 @@
 @import "../../scss/variables";
 
 .category-detail-container {
-   width: 65%;
-   background-color: $white;
-   @include shadow;
-   border-radius: 4px;
+   width: 100%;
+   background-color: $gray-1;
    display: flex;
-   flex-direction: column;
-   margin: 0 auto;
-
-   .category-all-comics {
+   flex-direction: row;
+   justify-content: space-around;
+   margin-top: 0.6em;
+   
+   .category-detail-main-content {
+      flex-basis: 63%;
+      @include shadow;
+      background-color: $white;
+      border-radius: 5px; 
       display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
-      width: 100%;
+      flex-direction: column;
+      align-items: flex-start;
 
-      .category-comic-item {
-         display: flex;
-         flex-direction: column;
-         flex-basis: 30%;
-         margin: 1.3% 1%;
-         @include shadow;
-         border-radius: 5px;
-
-         img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 5px 5px 0 0;
-         }
+      .category-detail-main-header {
+         
       }
+
+      .category-detail-main-all-comics {
+         width: 100%;
+         display: flex;
+         flex-direction: row;
+         flex-wrap: wrap;
+         justify-content: space-around;
+
+
+         .category-comic-item {
+            flex-basis: 30%;
+            margin: 1%;
+            @include shadow; 
+            border-radius: 5px;
+            background-color: $white; 
+            display: flex;
+            flex-direction: column;
+
+            img {
+               width: 100%;
+               height: 180px;
+               object-fit: cover;
+               border-radius: 5px 5px 0 0;
+
+               &:hover {
+                  opacity: 0.7;
+                  transition: opacity 1s;
+               }
+            }
+
+            .category-comic-item-content {
+               display: flex;
+               flex-direction: column;
+               align-items: center;
+               justify-content: center;
+
+               p .category-comic-item-content-title {
+                  flex-basis: 60%;
+                  font-size: 1.5em;
+                  font-weight: bold;
+                  color: $blue;
+                  text-decoration: none;
+               }
+
+               p .category-comic-item-content-authors {
+                  flex-basis: 35%;
+               }
+
+            }
+
+         }
+
+      }
+
+
    }
+
+   .category-detail-side-content {
+      flex-basis: 32%;
+   }
+
 }
 
 @media only screen and (max-width: 768px) {
-   .category-detail-container {
-      width: 100%;
-   }
+  
 }
 
 @media only screen and (max-width: 500px) {
-   .category-detail-container {
-      width: 100%;
-
-      .category-all-comics {
-         flex-direction: column;
-      }
-   }
+   
 }
+
+   // .category-all-comics {
+   //    display: flex;
+   //    flex-wrap: wrap;
+   //    justify-content: space-around;
+   //    width: 100%;
+
+   //    .category-comic-item {
+   //       display: flex;
+   //       flex-direction: column;
+   //       flex-basis: 30%;
+   //       margin: 1.3% 1%;
+   //       @include shadow;
+   //       border-radius: 5px;
+
+   //       img {
+   //          width: 100%;
+   //          height: 150px;
+   //          object-fit: cover;
+   //          border-radius: 5px 5px 0 0;
+   //       }
+   //    }
+   // }

@@ -10,7 +10,9 @@ export default class Browse extends Component {
       super(props);
       this.state = {
          genres: [],
-         isOpen: false
+         isOpen: false,
+         isOpenOutside: this.props.isOpenOutside,
+         hasButtonShowMore: this.props.hasButtonShowMore
       };
    }
 
@@ -23,7 +25,10 @@ export default class Browse extends Component {
    }
 
    toggle() {
-      this.setState({ isOpen: !this.state.isOpen });
+      this.setState({
+         isOpen: !this.state.isOpen,
+         isOpenOutside: !this.state.isOpenOutside
+      });
    }
 
    getRenderedItems() {
@@ -32,44 +37,71 @@ export default class Browse extends Component {
       }
       return this.state.genres.slice(0, MAX_ITEMS);
    }
+   getRenderedAllItems() {
+      return this.state.genres;
+   }
 
    render() {
-      const { genres } = this.state;
-      const elements_genres = this.getRenderedItems().map((genre, index) => {
-         return (
-            <div key={genre.Id} className="_d5D78">
-               <Link
-                  to={{
-                     pathname: toCategoryDetailLink(
-                        genre.TenLoaiTruyen,
-                        genre.Id
-                     ),
-                     state: {
-                        genre: genre
-                     }
-                  }}
-               >
-                  {genre.TenLoaiTruyen}
-               </Link>
-            </div>
-         );
-      });
+      const { genres, isOpen, isOpenOutside, hasButtonShowMore } = this.state;
+      const elements_genres =
+         isOpenOutside || isOpen
+            ? genres &&
+              genres.map(genre => (
+                 <div key={genre.Id} className="_d5D78">
+                    <Link
+                       to={{
+                          pathname: toCategoryDetailLink(
+                             genre.TenLoaiTruyen,
+                             genre.Id
+                          ),
+                          state: {
+                             genre: genre
+                          }
+                       }}
+                    >
+                       {genre.TenLoaiTruyen}
+                    </Link>
+                 </div>
+              ))
+            : this.getRenderedItems().map(genre => (
+                 <div key={genre.Id} className="_d5D78">
+                    <Link
+                       to={{
+                          pathname: toCategoryDetailLink(
+                             genre.TenLoaiTruyen,
+                             genre.Id
+                          ),
+                          state: {
+                             genre: genre
+                          }
+                       }}
+                    >
+                       {genre.TenLoaiTruyen}
+                    </Link>
+                 </div>
+              ));
       return (
          <div className="browse-wrapper">
             <p className="title">Browse By Genres</p>
             <div className="browse">
                <div className="col">{elements_genres}</div>
             </div>
-            <div className="_1dGlB">
-               <Button
-                  display={this.state.isOpen ? "Show less" : "Show more"}
-                  type="btn-GrayShow"
-                  style="_D25df"
-                  onClick={() => {
-                     this.toggle();
-                  }}
-               />
-            </div>
+            {hasButtonShowMore && (
+               <div className="_1dGlB">
+                  <Button
+                     display={
+                        this.state.isOpen || this.state.isOpenOutside
+                           ? "Show less"
+                           : "Show more"
+                     }
+                     type="btn-GrayShow"
+                     style="_D25df"
+                     onClick={() => {
+                        this.toggle();
+                     }}
+                  />
+               </div>
+            )}
          </div>
       );
    }

@@ -66,7 +66,6 @@ export default class CategoryDetail extends Component {
       }
    }
 
-
    render() {
       const { genre, allComics, isError, isError404 } = this.state;
       if (isError404) {
@@ -99,8 +98,10 @@ export default class CategoryDetail extends Component {
                         >
                            <div className="category-comic-item">
                               <img src={c.AnhDaiDien} alt={c.TenTruyen} />
-                              <p>{c.TenTruyen}</p>
-                              <p>{c.DanhSachTacGia.map(a => a.TenTacGia)}</p>
+                              <div className="category-comic-item-content">
+                                 <p className="category-comic-item-content-title">{c.TenTruyen}</p>
+                                 <p className="category-comic-item-content-authors">{c.DanhSachTacGia.map(a => a.TenTacGia)}</p>
+                              </div>
                            </div>
                         </Link>
                      ))}
@@ -108,7 +109,10 @@ export default class CategoryDetail extends Component {
                )}
             </div>
             <div className="category-detail-side-content">
-               <Browse />
+               <Browse 
+                  isOpenOutside={true}
+                  hasButtonShowMore={false}
+               />
             </div>
          </div>
       );
