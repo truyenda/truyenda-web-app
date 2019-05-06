@@ -7,6 +7,7 @@ import Progress from "../../components/commonUI/Progress";
 import { Link } from "react-router-dom";
 import Browse from "../../components/Browse";
 import Photo from "../../components/commonUI/Photo";
+import Button from "../../components/commonUI/Button";
 
 export default class CategoryDetail extends Component {
    constructor(props) {
@@ -15,7 +16,8 @@ export default class CategoryDetail extends Component {
          genre: this.props.location.state.genre,
          allComics: null,
          isError: false,
-         isError404: false
+         isError404: false,
+         isOpen: false
       };
    }
 
@@ -69,8 +71,20 @@ export default class CategoryDetail extends Component {
       }
    }
 
+   toggle() {
+      this.setState({
+         isOpen: true
+      });
+   }
+
    render() {
-      const { genre, allComics, isError, isError404 } = this.state;
+      const { genre, allComics, isError, isError404, isOpen } = this.state;
+      const showMoreClassName = isOpen
+         ? "category-detail-main-all-comics"
+         : "category-detail-main-all-comics-hide";
+      const showMoreButtonClassName = isOpen
+         ? "category-detail-main-header-show-more-hide"
+         : "category-detail-main-header-show-more";
       if (isError404) {
          return <NotFound />;
       }
@@ -83,23 +97,35 @@ export default class CategoryDetail extends Component {
                {genre && allComics && allComics[0].AnhBia && (
                   <div className="category-detail-main-header">
                      <img src={allComics[0].AnhBia} />
-                     <p>{genre.TenLoaiTruyen}</p>
-                     <p>{genre.MoTa}</p>
+                     <p className="category-detail-main-header-name">
+                        {genre.TenLoaiTruyen}
+                     </p>
+                     <p className="category-detail-main-header-description">
+                        {genre.MoTa}
+                     </p>
+                     <p
+                        onClick={() => this.toggle()}
+                        className={showMoreButtonClassName}
+                     >
+                        Danh sách truyện
+                     </p>
                   </div>
                )}
-               {(genre && allComics && !allComics[0].AnhBia && (
-                     <div className="category-detail-main-header">
-                        <img src="https://www.wallpapersin4k.org/wp-content/uploads/2017/04/Colorful-Geometric-Wallpaper-12.png" />
-                        <p>{genre.TenLoaiTruyen}</p>
-                        <p>{genre.MoTa}</p>
-                     </div>
-               ))}
-               {!genre || !allComics && (
-                  <Progress />
+               {genre && allComics && !allComics[0].AnhBia && (
+                  <div className="category-detail-main-header">
+                     <img src="https://www.wallpapersin4k.org/wp-content/uploads/2017/04/Colorful-Geometric-Wallpaper-12.png" />
+                     <p className="category-detail-main-header-name">
+                        {genre.TenLoaiTruyen}
+                     </p>
+                     <p className="category-detail-main-header-description">
+                        {genre.MoTa}
+                     </p>
+                  </div>
                )}
+               {!genre || (!allComics && <Progress />)}
                {!genre && <Progress />}
                {allComics && (
-                  <div className="category-detail-main-all-comics">
+                  <div className={showMoreClassName}>
                      {allComics.map(c => (
                         <Link
                            to={{

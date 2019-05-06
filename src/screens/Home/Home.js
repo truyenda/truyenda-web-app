@@ -74,7 +74,6 @@ class Home extends Component {
          ? "chart-col-open"
          : "chart-col-close";
       const innerShowMore = isOpen ? "Show Less" : "Show More";
-      console.log(`%c ${isOpen}`, 'color: orange; font-weight: bold;');
       return (
          <div className="home-wrapper">
             <div className="main-content-col">
