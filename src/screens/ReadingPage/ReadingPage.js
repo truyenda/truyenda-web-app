@@ -169,7 +169,12 @@ export default class ReadingPage extends Component {
                         )}
                      {allChapters && chapter && (
                         <div>
-                           <SearchPage totalPage={allChapters.length} outputPage={allChapters.map(c => c.Id).indexOf((chapter.Id)) + 1}/>
+                           <SearchPage
+                               totalPage={allChapters.length} 
+                               outputPage={allChapters.map(c => c.Id).indexOf((chapter.Id)) + 1}
+                               allChapters={allChapters}
+                               comicName={chapter.TenTruyen}
+                           />
                         </div>
                      )}
                      {allChapters &&
