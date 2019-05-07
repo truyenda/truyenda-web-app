@@ -272,15 +272,17 @@ class FrequencyTable extends Component {
         </div>
 
         <div className="btn-add-wrapper">
-          <Button
-            display=" Tạo mới"
-            type="btn-Green"
-            icon="fa fa-plus-square"
-            style="btn-add-cate"
-            onClick={() => {
-              this.onShowModal();
-            }}
-          />
+          {this.state.data && (
+            <Button
+              display=" Tạo mới"
+              type="btn-Green"
+              icon="fa fa-plus-square"
+              style="btn-add-cate"
+              onClick={() => {
+                this.onShowModal();
+              }}
+            />
+          )}
           <Modal
             classNames={{ modal: "modal-add" }}
             open={this.state.openModal}

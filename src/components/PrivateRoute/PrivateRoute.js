@@ -13,8 +13,6 @@ const PrivateRoute = ({
   <Route
     {...rest}
     render={props => {
-      console.log(auth);
-      
       if (auth) {
         if (checkPermission(user, per)) return <Component {...props} />;
         else return <AccessDenied />;
@@ -25,14 +23,21 @@ const PrivateRoute = ({
 
 const checkPermission = (user, per) => {
   if (per) {
-    //TODO: check user and permission
-    return true;
+    if (per === "DASHBOARD" && user.Permissions.length !== 0) {
+      return true;
+    }
+    if (user.Permissions.length !== 0) {
+      for (let i = 0; i < user.Permissions.length; i++) {
+        if (per.indexOf(user.Permissions[i].TenQuyen) !== -1) {
+          return true;
+        }
+      }
+      return false;
+    }
   } else {
     return true;
   }
 };
-
-
 
 const mapState = state => ({
   user: state.session.user,
