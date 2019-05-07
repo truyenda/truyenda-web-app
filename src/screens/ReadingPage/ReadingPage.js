@@ -9,6 +9,7 @@ import Progress from "../../components/commonUI/Progress";
 import { Waypoint } from "react-waypoint";
 import LocalBookmarkApi from "../../api/LocalBookmarkApi";
 import { Link } from "react-router-dom";
+import SearchPage from "../../components/SearchPage/SearchPage";
 export default class ReadingPage extends Component {
    constructor(props) {
       super(props);
@@ -60,7 +61,7 @@ export default class ReadingPage extends Component {
    }
 
    componentWillReceiveProps() {
-      window.scrollTo(0, 0);  
+      window.scrollTo(0, 0);
       try {
          var url = document.location.href;
          var id = getIdBySplitingPath(url, "chapters/");
@@ -139,43 +140,63 @@ export default class ReadingPage extends Component {
                               " trang + " +
                               (i + 1)
                            }
-                           onError={(e) => (e.target.src = '../../assets/404.png')}
+                           onError={e =>
+                              (e.target.src = "../../assets/404.png")
+                           }
                         />
                      </Waypoint>
                   ))}
 
                   <div className="control-bar">
-                     {allChapters && (chapter.SoThuTu !== allChapters[0].SoThuTu) && (
-                        <Link
-                           to={{
-                              pathname: toChapterLink(
-                                 chapter.TenTruyen,
-                                 chapter.TenChuong,
-                                 allChapters[allChapters.map(c => c.SoThuTu).indexOf(chapter.SoThuTu) - 1].Id
-                              ),
-                              state: {}
-                           }}
-                        >
-                           <p>Previous Chapter</p>
-                        </Link>
+                     {allChapters &&
+                        chapter.SoThuTu !== allChapters[0].SoThuTu && (
+                           <Link
+                              to={{
+                                 pathname: toChapterLink(
+                                    chapter.TenTruyen,
+                                    chapter.TenChuong,
+                                    allChapters[
+                                       allChapters
+                                          .map(c => c.SoThuTu)
+                                          .indexOf(chapter.SoThuTu) - 1
+                                    ].Id
+                                 ),
+                                 state: {}
+                              }}
+                           >
+                               <p>Previous</p>
+                           </Link>
+                        )}
+                     {allChapters && chapter && (
+                        <div>
+                           <SearchPage totalPage={allChapters.length} outputPage={allChapters.map(c => c.Id).indexOf((chapter.Id)) + 1}/>
+                        </div>
                      )}
-                     {allChapters && (chapter.SoThuTu !== allChapters[allChapters.length - 1].SoThuTu) && (
-                        <Link
-                           to={{
-                              pathname: toChapterLink(
-                                 chapter.TenTruyen,
-                                 chapter.TenChuong,
-                                 allChapters[allChapters.map(c => c.SoThuTu).indexOf(chapter.SoThuTu) + 1].Id
-                              ),
-                              state: {}
-                           }}
-                        >
-                           <p>Next Chapter</p>
-                        </Link>
-                     )}
-                      {allChapters && (chapter.SoThuTu === allChapters[allChapters.length - 1].SoThuTu) && (
-                        <h1>You reached the end of this comic</h1>
-                      )}
+                     {allChapters &&
+                        chapter.SoThuTu !==
+                           allChapters[allChapters.length - 1].SoThuTu && (
+                           <Link
+                              to={{
+                                 pathname: toChapterLink(
+                                    chapter.TenTruyen,
+                                    chapter.TenChuong,
+                                    allChapters[
+                                       allChapters
+                                          .map(c => c.SoThuTu)
+                                          .indexOf(chapter.SoThuTu) + 1
+                                    ].Id
+                                 ),
+                                 state: {}
+                              }}
+                           >
+                              <p>Next</p>
+                           </Link>
+                        )}
+                     {allChapters &&
+                        chapter.SoThuTu ===
+                           allChapters[allChapters.length - 1].SoThuTu && (
+                           <h1>You reached the end of this comic</h1>
+                        )}
                   </div>
                </div>
             )}

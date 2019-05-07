@@ -21,7 +21,17 @@
       margin-top: 10px;
       display: flex;
       flex-direction: row;
-      justify-content: space-around;
+      justify-content: space-between;
+      opacity: 0.3;
+      width: 90%;
+      position: fixed;
+      bottom: 85px;
+
+      &:hover {
+         opacity: 1;
+         transition: opacity 0.5s;
+      }
+
 
       p {
          padding: 10px 20px;
