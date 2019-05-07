@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as SessionAction from "../../../actions/SessionActions.js";
-import { withRouter } from 'react-router-dom'
-import DefPhoto from '../../../assets/photo.png';
+import { withRouter } from "react-router-dom";
+import DefPhoto from "../../../assets/photo.png";
 class Menu extends Component {
   constructor(props) {
     super(props);
@@ -29,7 +29,13 @@ class Menu extends Component {
           <Link to="/">Trang chủ</Link>
           <Link to="/all-manga">Danh sách</Link>
           <Link to="/latest-update">Mới nhất</Link>
-          {this.props.authenticated?<Link className='nav-mycomic' to="/personal/comics">Truyện của tôi</Link>:''}
+          {this.props.authenticated ? (
+            <Link className="nav-mycomic" to="/personal/comics">
+              Truyện của tôi
+            </Link>
+          ) : (
+            ""
+          )}
           {this.props.authenticated ? (
             <div className="user-profile-icon">
               <Link to="/personal/profile">
@@ -62,7 +68,9 @@ class Menu extends Component {
               </span>
             </Link>
           )}
-          {this.props.user.Email ? (
+          {this.props.authenticated &&
+          this.props.user.Permissions &&
+          this.props.user.Permissions.length !== 0 ? (
             <Link to="/dashboard">
               <Button display="Quản lý" type="btn-ok" />
             </Link>
@@ -86,7 +94,9 @@ const mapDispatch = dispatch => {
   };
 };
 
-export default withRouter(connect(
-  mapState,
-  mapDispatch
-)(Menu));
+export default withRouter(
+  connect(
+    mapState,
+    mapDispatch
+  )(Menu)
+);

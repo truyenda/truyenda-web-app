@@ -19,6 +19,7 @@ export const login = (user, history, callback) => {
           sessionService.saveSession(token);
           var user = res.Data.Profile;
           sessionService.saveUser(user);
+          sessionService.refreshFromLocalStorage();
         } else {
           if (res.Code < 300)
             Toast.error("Tài khoản đăng nhập không đúng", "Error " + res.Code);

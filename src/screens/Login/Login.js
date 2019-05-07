@@ -12,7 +12,7 @@ import Progress from "../../components/commonUI/Progress";
 import Modal from "react-responsive-modal";
 import StringUtils from "../../utils/StringUtils";
 import AccountApi from "../../api/AccountApi";
-import Toast from '../../components/commonUI/Toast';
+import Toast from "../../components/commonUI/Toast";
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -99,12 +99,28 @@ class Login extends Component {
       return true;
     };
     if (checkValidate()) {
+      this.setState({ isDisableButton: true });
       let email = this.state.forgot.email;
       this.onCloseModal();
       AccountApi.requestForgot(email)
-        .then(res => {})
-        .catch(err => {})
-        .finally(() => {});
+        .then(res => {
+          if (res.data.Code && res.data.Code === 200) {
+            Toast.success(
+              "Mời bạn kiểm tra email, có thể mất vài phút để email đến ",
+              "Yêu cầu đổi được chấp nhận",
+              { autoClose: 150000 }
+            );
+            this.props.history.push("/");
+          } else {
+            Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
+          }
+        })
+        .catch(err => {
+          Toast.error("Cõ lỗi trong quá trình kết nối");
+        })
+        .finally(() => {
+          this.setState({ isDisableButton: false });
+        });
     }
   }
 
@@ -222,9 +238,14 @@ class Login extends Component {
             }}
             value={this.state.forgot.email}
             alert={this.state.forgot.alert}
+            style='email-forgot'
           />
           <div className="action-group">
-            <Button display="Gửi" onClick={() => this.RequestForgot()} />
+            <Button
+              display="Gửi"
+              onClick={() => this.RequestForgot()}
+              disabled={this.state.isDisableButton}
+            />
           </div>
         </Modal>
       </div>
