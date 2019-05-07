@@ -12,8 +12,8 @@ import Modal from "react-responsive-modal";
 import Select from "react-select";
 import ManagerPressions from "../../../api/ManagerPressions";
 import TeamApi from "../../../api/TeamApi";
-import './Account.scss';
-import UserAccessFilter from '../../../actions/UserAccessFilter';
+import "./Account.scss";
+import UserAccessFilter from "../../../actions/UserAccessFilter";
 class Account extends Component {
   constructor(props) {
     super(props);
@@ -99,7 +99,6 @@ class Account extends Component {
 
   setFormData(key, value) {
     var profile = this.state.profile;
-    // console.log(key+","+value);
     profile[key] = value;
     this.setState({
       profile: profile
@@ -178,7 +177,6 @@ class Account extends Component {
     this.setState({
       loading: true
     });
-    // console.log(profile);
     this.onCloseModal();
     AccountListApi.update(profile)
       .then(res => {
@@ -217,9 +215,51 @@ class Account extends Component {
     this.onUpdateAccount(profile);
   }
 
+  onBanAccount(profile) {
+    Alert.warn(
+      profile.IdTrangThai === 1
+        ? "Bạn có muốn khóa tài khoản này không?"
+        : "Bạn có muốn mở khóa tài khoản này không?",
+      profile.Username,
+      () => {
+        this.setState({
+          loading: true
+        });
+        if (profile.IdTrangThai === 1) {
+          profile.IdTrangThai = 2;
+        } else {
+          profile.IdTrangThai = 1;
+        }
+        AccountListApi.update(profile)
+          .then(res => {
+            if (res.data.Code && res.data.Code === 200) {
+              this.state.data.forEach(c => {
+                if (c.Id === profile.Id) {
+                  c.Username = profile.Username;
+                  c.Email = profile.Email;
+                  c.TenNhom = profile.TenNhom;
+                  c.IdNhom = profile.IdNhom;
+                  c.IdQuyen = profile.IdQuyen;
+                  c.IdTrangThai = profile.IdTrangThai;
+                }
+              });
+              Toast.success(profile.Username, "Cập nhật tài khoản thành công");
+            }
+          })
+          .catch(err => {
+            Toast.error("Có lỗi trong quá trình kêt nối máy chủ");
+          })
+          .finally(() => {
+            this.setState({ loading: false });
+          });
+      },
+      () => {}
+    );
+  }
+
   onRemoveAccount(account) {
     Alert.warn(
-      "Bạn có muốn xóa nhóm này không?",
+      "Bạn có muốn tài khoản này không?",
       account.Username,
       () => {
         this.setState({
@@ -359,30 +399,47 @@ class Account extends Component {
       },
       {
         Header: "",
-        accessor: 'IdTrangThai',
+        accessor: "IdTrangThai",
         sortable: false,
         filterable: false,
         Cell: cell => {
           return (
             <div className="action-group">
-              {UserAccessFilter('ACCOUNT_UPD')&&<i
-                className="far fa-edit"
-                onClick={() => {
-                  this.onEditAccount(cell.original);
-                }}
-              />}
-              {UserAccessFilter('ACCOUNT_UPD')?cell.value===1?<i
-                className="far fa-edit"
-                onClick={() => {
-                  this.onBanAccount(cell.original);
-                }}
-              />:<i class="fas fa-recycle"></i>:''}
-              {UserAccessFilter('ACCOUNT_DEL')&&<i
-                className="fas fa-times fa-lg"
-                onClick={() => {
-                  this.onRemoveAccount(cell.original);
-                }}
-              />}
+              {UserAccessFilter("ACCOUNT_UPD") && (
+                <i
+                  className="far fa-edit"
+                  onClick={() => {
+                    this.onEditAccount(cell.original);
+                  }}
+                />
+              )}
+              {UserAccessFilter("ACCOUNT_UPD") ? (
+                cell.value === 1 ? (
+                  <i
+                    className="fas fa-user-slash"
+                    onClick={() => {
+                      this.onBanAccount(cell.original);
+                    }}
+                  />
+                ) : (
+                  <i
+                    className="fas fa-recycle"
+                    onClick={() => {
+                      this.onBanAccount(cell.original);
+                    }}
+                  />
+                )
+              ) : (
+                ""
+              )}
+              {UserAccessFilter("ACCOUNT_DEL") && (
+                <i
+                  className="fas fa-times fa-lg"
+                  onClick={() => {
+                    this.onRemoveAccount(cell.original);
+                  }}
+                />
+              )}
             </div>
           );
         },
@@ -390,8 +447,8 @@ class Account extends Component {
       }
     ];
 
-    if(!UserAccessFilter('ACCOUNT_LIS')){
-      return <div>Bạn không đủ quyền để lấy dữ liệu</div>
+    if (!UserAccessFilter("ACCOUNT_LIS")) {
+      return <div>Bạn không đủ quyền để lấy dữ liệu</div>;
     }
 
     return (
@@ -438,7 +495,7 @@ class Account extends Component {
               this.setFormData("IdNhom", v.value);
             }}
           />
-
+          {/* 
           <Select
             placeholder="Trạng thái..."
             options={this.state.status}
@@ -447,7 +504,7 @@ class Account extends Component {
               this.setFormData("TenTrangThai", v);
               this.setFormData("IdTrangThai", v.value);
             }}
-          />
+          /> */}
 
           <Select
             placeholder="Chọn quyền..."
