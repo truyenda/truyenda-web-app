@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styles from './LatestList.scss';
+import TimeAgo from 'react-timeago'
 import demo from "../../../assets/demo.jpg";
 
 export default class LatestList extends Component {
@@ -21,7 +22,7 @@ export default class LatestList extends Component {
               <a className="Mq7mR" href="#" >{ this.props.new_chapter }</a>
             </div>
 
-            <div className="_2t82X"> {this.props.date_update} </div>
+            <div className="_2t82X"><TimeAgo date={this.props.date_update} /></div>
         </div>
       </div>
     )
