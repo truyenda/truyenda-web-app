@@ -8,14 +8,12 @@ import Toast from "../../../components/commonUI/Toast";
 import Alert from "../../../components/commonUI/Alert";
 import Button from "../../../components/commonUI/Button";
 import TextInput from "../../../components/commonUI/TextInput";
-import TextArea from "../../../components/commonUI/TextArea";
 import Modal from "react-responsive-modal";
-import ReactTooltip from "react-tooltip";
 import Select from "react-select";
-import SelectBox from "../../../components/commonUI/SelectBox";
 import ManagerPressions from "../../../api/ManagerPressions";
 import TeamApi from "../../../api/TeamApi";
 import './Account.scss';
+import UserAccessFilter from '../../../actions/UserAccessFilter';
 class Account extends Component {
   constructor(props) {
     super(props);
@@ -361,29 +359,41 @@ class Account extends Component {
       },
       {
         Header: "",
+        accessor: 'IdTrangThai',
         sortable: false,
         filterable: false,
         Cell: cell => {
           return (
             <div className="action-group">
-              <i
+              {UserAccessFilter('ACCOUNT_UPD')&&<i
                 className="far fa-edit"
                 onClick={() => {
                   this.onEditAccount(cell.original);
                 }}
-              />
-              <i
+              />}
+              {UserAccessFilter('ACCOUNT_UPD')?cell.value===1?<i
+                className="far fa-edit"
+                onClick={() => {
+                  this.onBanAccount(cell.original);
+                }}
+              />:<i class="fas fa-recycle"></i>:''}
+              {UserAccessFilter('ACCOUNT_DEL')&&<i
                 className="fas fa-times fa-lg"
                 onClick={() => {
                   this.onRemoveAccount(cell.original);
                 }}
-              />
+              />}
             </div>
           );
         },
         maxWidth: 100
       }
     ];
+
+    if(!UserAccessFilter('ACCOUNT_LIS')){
+      return <div>Bạn không đủ quyền để lấy dữ liệu</div>
+    }
+
     return (
       <div>
         <div className="tb-name-wrap">

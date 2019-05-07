@@ -58,3 +58,29 @@
  .css-1pcexqc-container{
    margin-top: 0.5em;
  }
+.status-label{
+  background-color: $green;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  line-height: 20px;
+  font-size: 10px;
+  width: fit-content;
+  text-transform: uppercase; 
+  font-weight: bold;
+  text-align: center;
+  border-radius: 3px;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.drop{
+  background-color: $red;
+}
+
+.complete{
+  background-color: $blue;
+}
+
+.delay{
+  background-color: $orange-1;
+}

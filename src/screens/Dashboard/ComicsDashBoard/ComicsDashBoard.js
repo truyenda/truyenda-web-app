@@ -604,7 +604,23 @@ export default class ComicsDashBoard extends Component {
       {
         Header: "Trạng thái truyện",
         accessor: "TrangThai",
-        Cell: cell => <span className="Id-center">{cell.value}</span>,
+        Cell: cell => {
+          let style = "";
+          switch (cell.original.Id_TrangThai) {
+            case 3:
+              style = "drop";
+              break;
+            case 4:
+              style = "complete";
+              break;
+            case 7:
+              style = "delay";
+              break;
+            default:
+              break;
+          }
+          return <span className={"status-label " + style}>{cell.value}</span>;
+        },
         filterable: false,
         maxWidth: 150
       },
