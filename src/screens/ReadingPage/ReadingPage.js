@@ -116,20 +116,6 @@ export default class ReadingPage extends Component {
       }
    }
 
-   // getListAllChapters(idComic) {
-   //    let data = [];
-   //    ChapterApi.list(idComic)
-   //       .then(res => {
-   //          data = res.data.Data;
-   //       })
-   //       .catch(err => {});
-   //    return data;
-   // }
-
-   checkNextChapter() {
-
-   }
-
    render() {
       const { chapter, allChapters, isError, isError404 } = this.state;
       if (isError404) {
@@ -153,6 +139,7 @@ export default class ReadingPage extends Component {
                               " trang + " +
                               (i + 1)
                            }
+                           onError={(e) => (e.target.src = '../../assets/404.png')}
                         />
                      </Waypoint>
                   ))}

@@ -1,30 +1,69 @@
 import React, { Component } from "react";
 import styles from "./Chart.scss";
-import demo from "../../assets/demo.jpg";
 import { Link } from "react-router-dom";
-import { convertToFriendlyPath } from "../../utils/StringUtils";
-import Caller from "../../utils/APICaller";
 import { toComicLink } from "../../utils/LinkUtils";
+import ChartApi from "../../api/ChartApi";
 export default class Chart extends Component {
    constructor(props) {
       super(props);
       this.state = {
-         comics: []
+         type: this.props.type,
+         dailyComics: [],
+         weeklyComics: [],
+         monthlyComics: []
       };
-   }
+   }  
 
    componentDidMount() {
-      Caller("stories/all")
+      this.getDailyList();
+      this.getWeeklyList();
+      this.getMonthlyList();
+      this.setState({
+         type: this.props.type
+      })
+   }
+
+   componentWillReceiveProps() {
+      this.getDailyList();
+      this.getWeeklyList();
+      this.getMonthlyList();
+      this.setState({
+         type: this.props.type
+      })
+   }
+
+   getDailyList() {
+      //TODO: Change after
+      ChartApi.listAll()
          .then(res => {
             this.setState({
-               comics: res.data.Data
-            });
+               dailyComics: res.data.Data
+            })
          })
-         .catch(err => {});
+   }
+
+   getWeeklyList() {
+      ChartApi.listRecommended()
+         .then(res => {
+            this.setState({
+               weeklyComics: res.data.Data
+            })
+         })
+   }
+
+   getMonthlyList() {
+      ChartApi.listMonth()
+         .then(res => {
+            this.setState({
+               monthlyComics: res.data.Data
+            })
+         })
    }
 
    render() {
-      const { comics } = this.state;
+      const { type, dailyComics, weeklyComics, comics } = this.state;
+      console.log(type);
+      console.log(comics);
       const listComics = comics.map(comic => (
          <Link
             to={{
