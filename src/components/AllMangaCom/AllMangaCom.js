@@ -76,7 +76,6 @@ export default class AllMangaCom extends Component {
       });
   }
 
-
 	render() {
     var elements_mangas = this.state.mangas.map((manga, index) => {
       return  <div key={ index }>
