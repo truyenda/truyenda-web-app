@@ -89,16 +89,19 @@ class Home extends Component {
                   <div className="chart-container">
                      {type && type === "daily" && (
                         <div className="title-type-chart">
+                           <p>Daily Chart</p>
                            <DailyChart/>
                         </div>
                      )}
                      {type && type === "weekly" && (
                         <div className="title-type-chart">
+                           <p>Weekly Chart</p>
                            <WeeklyChart/>
                         </div>
                      )}
                      {type && type === "monthly" && (
                         <div className="title-type-chart">
+                           <p>Monthly Chart</p>
                            <MonthlyChart />
                         </div>
                      )}
