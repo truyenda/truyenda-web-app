@@ -46,7 +46,7 @@ class AuthorTable extends Component {
         }
       })
       .catch(err => {
-        Toast.error('Có lỗi trong quá trình kết nối');
+        Toast.error("Có lỗi trong quá trình kết nối");
       });
   }
 
@@ -281,15 +281,17 @@ class AuthorTable extends Component {
           <span>Tác giả</span>
         </div>
         <div className="btn-add-wrapper">
-          <Button
-            display=" Tạo mới"
-            type="btn-Green"
-            icon="fa fa-plus-square"
-            style="btn-add-cate"
-            onClick={() => {
-              this.onShowModal();
-            }}
-          />
+          {this.state.data && (
+            <Button
+              display=" Tạo mới"
+              type="btn-Green"
+              icon="fa fa-plus-square"
+              style="btn-add-cate"
+              onClick={() => {
+                this.onShowModal();
+              }}
+            />
+          )}
           <Modal
             classNames={{ modal: "modal-add" }}
             open={this.state.openModal}
