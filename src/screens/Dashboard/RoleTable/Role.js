@@ -24,7 +24,7 @@ class Role extends Component {
       permissions: [],
       role: {
         name: "",
-        permissions: []
+        permissions: null
       },
       alert: {
         name: "",
@@ -80,7 +80,7 @@ class Role extends Component {
 
   clearDataState() {
     this.setState({
-      role: { name: "", permissions: [] },
+      role: { name: null, permissions: null },
       alert: {},
       isEditing: false
     });
@@ -97,66 +97,55 @@ class Role extends Component {
     });
   }
 
-//   checkValidation() {
-//     var isValid = true;
-//     var alert = {};
-//     if (!this.state.role.name || this.state.role.name.length === 0) {
-//       alert.name = "Bạn cần nhập tên thể loại";
-//     } else {
-//       if (this.state.role.name.length > 24) {
-//         alert.name = "Tên thể loại tối đa 24 ký tự";
-//       }
-//     }
-//     if (
-//       !this.state.role.description ||
-//       this.state.role.description.length === 0
-//     ) {
-//       alert.description = "Bạn cần nhập mô tả cho thể loại";
-//     } else {
-//       if (this.state.role.description > 256) {
-//         alert.description = "Mô tả thể loại tối đa 256 ký tự";
-//       }
-//     }
-//     if (alert.name || alert.description) {
-//       isValid = false;
-//     }
-//     this.setState({
-//       alert: alert
-//     });
-//     return isValid;
-//   }
+  checkValidation() {
+    var isValid = true;
+    var alert = {};
+    if (!this.state.role.name || this.state.role.name.length === 0) {
+      alert.name = "Bạn cần nhập tên vai trò";
+    } else {
+      if (this.state.role.name.length > 24) {
+        alert.name = "Tên vai trò tối đa 24 ký tự";
+      }
+    }
+    if (alert.name) {
+      isValid = false;
+    }
+    this.setState({
+      alert: alert
+    });
+    return isValid;
+  }
 
-//   onAddCategory() {
-//     if (this.checkValidation()) {
-//       this.setState({
-//         loading: true
-//       });
-//       let category = this.state.category;
-//       this.onCloseModal();
-//       CategoryApi.add(category)
-//         .then(res => {
-//           if (res.data.Code === 200) {
-//             Toast.success(category.name, "Đã tạo thành công");
-//             let data = this.state.data;
-//             data.push({
-//               Id: res.data.ThongTinBoSung1,
-//               TenLoaiTruyen: category.name,
-//               MoTa: category.description
-//             });
-//           } else {
-//             Toast.notify(res.data.MsgError);
-//           }
-//         })
-//         .catch(err => {
-//           Toast.error("Có lỗi trong quá trình kêt nối máy chủ");
-//         })
-//         .finally(() => {
-//           this.setState({
-//             loading: false
-//           });
-//         });
-//     }
-//   }
+  onAddRole() {
+    if (this.checkValidation()) {
+      this.setState({
+        loading: true
+      });
+      let role = this.state.role;
+      this.onCloseModal();
+      RoleApi.create(role)
+        .then(res => {
+          if (res.data.Code === 200) {
+            Toast.success(role.name, "Đã tạo thành công");
+            let data = this.state.data;
+            data.push({
+              Id: res.data.ThongTinBoSung1,
+              TenVaiTro: role.name
+            });
+          } else {
+            Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
+          }
+        })
+        .catch(err => {
+          Toast.error("Có lỗi trong quá trình kêt nối máy chủ");
+        })
+        .finally(() => {
+          this.setState({
+            loading: false
+          });
+        });
+    }
+  }
   onShowModal() {
     this.setState({
       openModal: true
@@ -170,85 +159,110 @@ class Role extends Component {
   }
 
   onEditRole(role) {
-    this.setState({
-      isEditing: true,
-      role: {
-        Id: role.Id,
-        name: role.TenQuyen
-      }
-    });
+    this.setState(
+      {
+        isEditing: true,
+        role: {
+          Id: role.Id,
+          name: role.TenVaiTro
+        }
+      },
+      () => this.getRolePermissions()
+    );
     this.onShowModal();
   }
 
-//   onUpdateCategory() {
-//     if (this.checkValidation()) {
-//       this.setState({
-//         loading: true
-//       });
-//       let category = this.state.category;
-//       this.onCloseModal();
-//       CategoryApi.update(category)
-//         .then(res => {
-//           if (res.data.Code === 200) {
-//             Toast.success(category.name, "Cập nhật thể loại thành công");
-//             this.state.data.forEach(c => {
-//               if (c.Id === category.Id) {
-//                 c.TenLoaiTruyen = category.name;
-//                 c.MoTa = category.description;
-//               }
-//             });
-//           } else {
-//             Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
-//           }
-//         })
-//         .catch(err => {
-//           Toast.error("Có lỗi trong quá trình kêt nối máy chủ");
-//         })
-//         .finally(() => {
-//           this.setState({
-//             loading: false
-//           });
-//         });
-//     }
-//   }
+  onUpdateRole() {
+    if (this.checkValidation()) {
+      this.setState({
+        loading: true
+      });
+      let role = this.state.role;
+      this.onCloseModal();
+      RoleApi.update(role)
+        .then(res => {
+          if (res.data.Code === 200) {
+            Toast.success(role.name, "Cập nhật vai trò thành công");
+            this.state.data.forEach(c => {
+              if (c.Id === role.Id) {
+                c.TenVaiTro = role.name;
+              }
+            });
+          } else {
+            Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+          Toast.error("Có lỗi trong quá trình kêt nối máy chủ");
+        })
+        .finally(() => {
+          this.setState({
+            loading: false
+          });
+        });
+    }
+  }
 
-//   onRemoveCategory(category) {
-//     Alert.warn(
-//       "Bạn có muốn xóa thể loại này không?",
-//       category.TenLoaiTruyen + ": " + category.MoTa,
-//       () => {
-//         this.setState({
-//           loading: true
-//         });
-//         CategoryApi.delete(category)
-//           .then(res => {
-//             if (res.data.Code && res.data.Code === 200) {
-//               Toast.success(category.TenLoaiTruyen, "Đã xóa loại truyện");
-//               var newData = [];
-//               this.state.data.forEach(c => {
-//                 if (c.Id !== category.Id) {
-//                   newData.push(c);
-//                 }
-//               });
-//               this.setState({
-//                 data: newData
-//               });
-//             } else {
-//               Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
-//             }
-//           })
-//           .catch(err => {
-//             Toast.error("Có lỗi trong quá trình kêt nối máy chủ");
-//           })
-//           .finally(() => {
-//             this.setState({
-//               loading: false
-//             });
-//           });
-//       },
-//       () => {}
-//     );
-//   }
+    onRemoveRole(role) {
+      Alert.warn(
+        "Bạn có muốn xóa vai trò này không?",
+        role.TenVaiTro,
+        () => {
+          this.setState({
+            loading: true
+          });
+          RoleApi.delete(role)
+            .then(res => {
+              if (res.data.Code && res.data.Code === 200) {
+                Toast.success(role.TenVaiTro, "Đã xóa vai trò");
+                var newData = [];
+                this.state.data.forEach(c => {
+                  if (c.Id !== role.Id) {
+                    newData.push(c);
+                  }
+                });
+                this.setState({
+                  data: newData
+                });
+              } else {
+                Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
+              }
+            })
+            .catch(err => {
+              Toast.error("Có lỗi trong quá trình kêt nối máy chủ");
+            })
+            .finally(() => {
+              this.setState({
+                loading: false
+              });
+            });
+        },
+        () => {}
+      );
+    }
+
+  getRolePermissions() {
+    this.setState({ loading: true });
+    RoleApi.get(this.state.role.Id)
+      .then(res => {
+        if (res.data.Code && res.data.Code === 200) {
+          let permissions = [];
+          res.data.Data.Permissions.forEach(per => {
+            permissions.push({ label: per.TenQuyen, value: per.Id_Quyen });
+          });
+          let role = this.state.role;
+          role.permissions = permissions;
+          this.setState({ role });
+        }
+      })
+      .catch(err => {
+        this.setState({ isError: true });
+      })
+      .finally(() => {
+        this.setState({ loading: false });
+      });
+  }
 
   render() {
     const columns = [
@@ -339,26 +353,26 @@ class Role extends Component {
               }}
               alert={this.state.alert.name}
               display="Tên vai trò"
-              value={this.state.isEditing ? this.state.role.name : null}
+              value={this.state.role.name}
             />
-            <Select
-              placeholder="Chọn quyền..."
-              isMulti
-              options={this.state.permissions}
-              value={this.state.role.permissions}
-              onChange={v => {
-                   this.setFormData("permissions", v);
-              }}
-            />
+            {this.state.loading && <Progress />}
+            {(!this.state.isEditing || this.state.role.permissions) && (
+              <Select
+                placeholder="Chọn quyền..."
+                isMulti
+                options={this.state.permissions}
+                value={this.state.role.permissions}
+                onChange={v => {
+                  this.setFormData("permissions", v);
+                }}
+              />
+            )}
             <div className="action-group">
               <Button
                 display={this.state.isEditing ? "Cập nhật" : "Tạo"}
                 type="btn-Green"
                 onClick={() => {
-                  this.state.isEditing
-                    ? this.onUpdateRole()
-                    : this.onAddRole();
-                console.log(this.state)
+                  this.state.isEditing ? this.onUpdateRole() : this.onAddRole();
                 }}
               />
               <Button
