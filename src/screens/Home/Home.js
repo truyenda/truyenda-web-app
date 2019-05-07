@@ -6,16 +6,14 @@ import { Link, Switch, BrowserRouter, Route } from "react-router-dom";
 import styles from "./Home.scss";
 import LatestUpdate from "../LatestUpdate";
 import Manga from "../../components/Manga/Manga";
+import DailyChart from "../../components/Chart/DailyChart/DailyChart";
+import WeeklyChart from "../../components/Chart/WeeklyChart/WeeklyChart";
+import MonthlyChart from "../../components/Chart/MonthlyChart/MonthlyChart";
 class Home extends Component {
    constructor(props) {
       super(props);
       this.state = {
-         chartList: (
-            <div className="title-type-chart">
-               <p>Daily Chart</p>
-               <Chart />
-            </div>
-         ),
+         type: "",
          isOpen: false
       };
 
@@ -23,40 +21,25 @@ class Home extends Component {
    }
    componentDidMount() {
       document.title = "Trang chủ";
+      this.setState({
+         type: "monthly"
+      })
    }
 
    handleClick(event) {
       const type = event.target.id;
       if (type === "daily") {
-         let dailyList = (
-            <div className="title-type-chart">
-               <p>Daily Chart</p>
-               <Chart />
-            </div>
-         );
          this.setState({
-            chartList: dailyList
+            type: "daily"
          });
       } else {
          if (type === "weekly") {
-            let weeklyChart = (
-               <div className="title-type-chart">
-                  <p>Weekly Chart</p>
-                  <Chart />
-               </div>
-            );
             this.setState({
-               chartList: weeklyChart
+               type: "weekly"
             });
          } else {
-            let monthlyChart = (
-               <div className="title-type-chart">
-                  <p>Monthly Chart</p>
-                  <Chart />
-               </div>
-            );
             this.setState({
-               chartList: monthlyChart
+               type: "monthly"
             });
          }
       }
@@ -69,20 +52,16 @@ class Home extends Component {
    }
 
    render() {
-      const { chartList, isOpen } = this.state;
-      const showMoreClassName = isOpen
-         ? "chart-col-open"
-         : "chart-col-close";
+      const { type, isOpen } = this.state;
+         const showMoreClassName = isOpen ? "chart-col-open" : "chart-col-close";
       const innerShowMore = isOpen ? "Show Less" : "Show More";
       return (
          <div className="home-wrapper">
             <div className="main-content-col">
-              <Switch>
-                 <Route path="/latest-update" exact={true} component={Manga} />
-                 {/* <Route path="/" exact={true} component={Main} /> */}
-                 <Main />
-              </Switch>
-              {/* <Home /> */}
+               <Switch>
+                  <Route path="/latest-update" exact={true} component={Manga} />
+                  <Main />
+               </Switch>
             </div>
             <div className="side-content-col">
                <Browse />
@@ -108,17 +87,34 @@ class Home extends Component {
                      </ul>
                   </div>
                   <div className="chart-container">
-                     {this.state.chartList}
+                     {type && type === "daily" && (
+                        <div className="title-type-chart">
+                           <p>Daily Chart</p>
+                           <DailyChart/>
+                        </div>
+                     )}
+                     {type && type === "weekly" && (
+                        <div className="title-type-chart">
+                           <p>Weekly Chart</p>
+                           <WeeklyChart/>
+                        </div>
+                     )}
+                     {type && type === "monthly" && (
+                        <div className="title-type-chart">
+                           <p>Monthly Chart</p>
+                           <MonthlyChart />
+                        </div>
+                     )}
                   </div>
                   <div className="chart-show-more">
-                        <p
-                           onClick={() => {
-                              this.toggle();
-                           }}
-                        >
-                           {innerShowMore}
-                        </p>
-                     </div>
+                     <p
+                        onClick={() => {
+                           this.toggle();
+                        }}
+                     >
+                        {innerShowMore}
+                     </p>
+                  </div>
                </div>
             </div>
          </div>
