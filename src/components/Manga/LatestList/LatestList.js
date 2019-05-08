@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import styles from './LatestList.scss';
-import TimeAgo from 'react-timeago'
-import demo from "../../../assets/demo.jpg";
+import TimeAgo from 'react-timeago';
+import { Link } from "react-router-dom";
+import { toComicLink, toChapterLink } from '../../../utils/LinkUtils';
 
 export default class LatestList extends Component {
   render() {
@@ -9,17 +10,33 @@ export default class LatestList extends Component {
       <div className="manga-wrapper"> 
         <div className="manga-item">
             <div className="left">
-              <div className="img_div">
-                <img className="img" src={demo} />
-              </div>
-              <div className="name_title">
-                  <a>{ this.props.title }</a>
-                  <div>{ this.props.cout_new_chapter }</div>
-              </div>
+              <Link
+                to={ toComicLink(this.props.title, this.props.id_truyen)}
+              >
+                <div className="img_div">
+                  <img className="img" src={ this.props.image_manga } />
+                </div>
+              </Link>
+              <Link
+                to={ toComicLink(this.props.title, this.props.id_truyen)}
+              >
+                <div className="name_title">
+                    <div>{ this.props.title }</div>
+                    <div>{ this.props.cout_new_chapter }</div>
+                </div>
+              </Link>
             </div>
             <div className="e6dEC">
               <div className="_1nNC1"></div>
-              <a className="Mq7mR" href="#" >{ this.props.new_chapter }</a>
+              <Link
+                to={toChapterLink(
+                  this.props.title,
+                  this.props.new_chapter,
+                  this.props.id_chuong
+                )}
+              >
+                <div className="Mq7mR" href="#" >{ this.props.new_chapter }</div>
+              </Link>
             </div>
 
             <div className="_2t82X"><TimeAgo date={this.props.date_update} /></div>

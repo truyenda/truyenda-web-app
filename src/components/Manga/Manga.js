@@ -35,6 +35,9 @@ export default class Manga extends Component {
     var elements_mangas = this.state.mangas.map((manga, index) => {
       return  <div key={ manga.Id } className="alternative_cls">
                 <LatestList
+                  id_chuong = "10"
+                  id_truyen = {manga.Id}
+                  image_manga = {manga.AnhDaiDien}
                   title={ manga.TenTruyen }
                   // count_new_chapter={ manga.TenChuong }
                   new_chapter={ manga.TenChuong }
