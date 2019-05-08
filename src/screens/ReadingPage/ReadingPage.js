@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styles from "./ReadingPage.scss";
 import ComicAuthors from "../ComicDetails/ComicAuthors/ComicAuthors";
-import { getIdBySplitingPath, toChapterLink } from "../../utils/LinkUtils";
+import { getIdBySplitingPath, toChapterLink, toComicLink } from "../../utils/LinkUtils";
 import ComicApi from "../../api/ComicApi";
 import NotFound from "../Error/NotFound";
 import ChapterApi from "../../api/ChapterApi";
@@ -119,7 +119,7 @@ export default class ReadingPage extends Component {
 
    render() {
       const { chapter, allChapters, isError, isError404 } = this.state;
-      if (isError404) {    
+      if (isError404) {
          return <NotFound />;
       }
       if (isError) {
@@ -129,7 +129,16 @@ export default class ReadingPage extends Component {
          <div className="reading-page-container">
             {chapter && (
                <div className="reading-page">
-                  <p>{chapter.TenChuong}</p>
+                  <div className="reading-page-header-bar">
+                     <span>{chapter.TenChuong}</span>
+                     <Link 
+                        to={{
+                           pathname: toComicLink(chapter.TenTruyen, chapter.IdTruyen)
+                        }}
+                     >
+                        <p>Trở về trang chi tiết truyện</p>
+                     </Link>
+                  </div>
                   {chapter.LinkAnh.map((c, i) => (
                      <Waypoint key={i} onEnter={v => this.saveLocalBookmark(i)}>
                         <img
@@ -149,8 +158,7 @@ export default class ReadingPage extends Component {
 
                   <div className="control-bar">
                      {allChapters &&
-                        chapter.SoThuTu ===
-                           allChapters[0].SoThuTu && (
+                        chapter.SoThuTu === allChapters[0].SoThuTu && (
                            <h1>START</h1>
                         )}
                      {allChapters &&

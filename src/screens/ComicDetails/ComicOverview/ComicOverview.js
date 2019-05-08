@@ -11,7 +11,6 @@ export default class ComicOverview extends Component {
       super(props);
       this.state = {
          comic: this.props.details,
-         //TODO: Wait API for getting status --> componentDidMount()
          isSubscribe: null
       };
    }
@@ -116,7 +115,7 @@ export default class ComicOverview extends Component {
                      className="comic-overview-bar-item comic-overview-bar-main-item-subscribed"
                      onClick={() => this.unsubscribe()}
                   >
-                     Đã Theo dõi
+                     Đang Theo dõi
                   </p>
                )}
             </div>
