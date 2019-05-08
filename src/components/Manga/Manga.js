@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import styles from './Manga.scss';
 import LatestList from './LatestList';
-import LatestFilter from './LatestFilter';
 import Button from '../commonUI/Button';
 import ChapterApi from '../../api/ChapterApi';
 import Toast from '../commonUI/Toast';
@@ -49,7 +48,6 @@ export default class Manga extends Component {
     return (
       <div className="main-wrappers">
         <h1 className="_3kDZW">Latest Update</h1>
-        <LatestFilter />
         <div className="_3_XVY"><h4>521 manga</h4></div>
         <div className="_3X8sC">
           <div className="qjYVyl">Manga</div>
