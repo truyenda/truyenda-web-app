@@ -15,6 +15,9 @@ export default {
   list(IdStory) {
     return Caller("stories/" + IdStory + "/chapters", "GET");
   },
+  list_latest() {
+    return Caller(prefix + "latest-update");
+  },
   get(IdChapter) {
     return Caller(prefix + IdChapter, "GET");
   },

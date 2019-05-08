@@ -11,7 +11,7 @@ export default class AllMangaCom extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      mangas: [],
+      mangas: null,
       filter: [],
       inProgress: false
     };
@@ -76,32 +76,32 @@ export default class AllMangaCom extends Component {
       });
   }
 
-
 	render() {
-    var elements_mangas = this.state.mangas.map((manga, index) => {
-      return  <div key={ index }>
-                <Manga
-                  ten={manga.TenTruyen}
-                  anhbia={manga.AnhDaiDien}
-                  trangthai={manga.TrangThai}
-                  tacgia={[...manga.DanhSachTacGia].map(e => e.TenTacGia).join(",")}
-                />
-              </div>
-
-    });
+    if(this.state.mangas) {
+      var elements_mangas = this.state.mangas.map((manga, index) => {
+        return  <div key={ index }>
+                  <Manga
+                    id_truyen = {manga.Id}
+                    ten={manga.TenTruyen}
+                    anhbia={manga.AnhDaiDien}
+                    trangthai={manga.TrangThai}
+                    tacgia={[...manga.DanhSachTacGia].map(e => e.TenTacGia).join(",")}
+                  />
+                </div>
+  
+      });
+    }
 		return (
       <div>
         <h1 className="title_all_manga">All Manga</h1>
         <LatestFilter onSubmit ={(value)=> this.receive(value)} />
-        {this.state.inProgress ? (
+        {this.state.inProgress || !this.state.mangas ? (
             <Progress display="Đang load truyện..." />
           ) : (
             ""
           )}
-        { this.state.mangas.length < 1 ? (
+        { this.state.mangas && this.state.mangas.length < 1 && (
           <div className="not_manga">Không có truyện yêu cầu!</div>
-        ) : (
-          ""
         )}
         <div className="all_manga">
           {elements_mangas}

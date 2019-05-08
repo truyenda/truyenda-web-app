@@ -15,6 +15,10 @@ export default {
     return Caller(prefix + idBookmark, "PUT", data);
   },
   delete(idBookmark) {
-    return Caller(prefix + idBookmark, "DELETE");
+    return Caller(prefix + "strory/" + idBookmark, "DELETE");
+  },
+  getByComicId(idTruyen) {
+    return Caller(prefix + "strory/" + idTruyen, "GET");
   }
+
 };

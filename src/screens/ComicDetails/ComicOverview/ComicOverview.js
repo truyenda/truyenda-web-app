@@ -12,8 +12,40 @@ export default class ComicOverview extends Component {
       this.state = {
          comic: this.props.details,
          //TODO: Wait API for getting status --> componentDidMount()
-         isSubscribe: false
+         isSubscribe: null
       };
+   }
+
+   componentDidMount() {
+      BookmarkApi.getByComicId(this.state.comic.Id)
+         .then(res => {
+            if(res.data.Data) {
+               this.setState({
+                  isSubscribe: true
+               });
+            } else {
+               this.setState({
+                  isSubscribe: false
+               });
+            }
+         })
+         .catch(err => {});
+   }
+
+   componentWillReceiveProps() {
+      BookmarkApi.getByComicId(this.state.comic.Id)
+         .then(res => {
+            if(res.data.Data) {
+               this.setState({
+                  isSubscribe: true
+               });
+            } else {
+               this.setState({
+                  isSubscribe: false
+               });
+            }
+         })
+         .catch(err => {});
    }
 
    subcribe() {
@@ -21,12 +53,17 @@ export default class ComicOverview extends Component {
          this.setState({
             isSubscribe: !this.state.isSubscribe
          });
-         Toast.success(`Đã đánh dấu truyện ${this.state.comic.TenTruyen}`);
+         Toast.success(`Đang theo dõi truyện ${this.state.comic.TenTruyen}`);
       });
    }
 
    unsubscribe() {
-      
+      BookmarkApi.delete(this.state.comic.Id).then(res => {
+         this.setState({
+            isSubscribe: !this.state.isSubscribe
+         });
+         Toast.success(`Đã bỏ theo dõi truyện ${this.state.comic.TenTruyen}`);
+      }) 
    }
 
    render() {
@@ -77,7 +114,7 @@ export default class ComicOverview extends Component {
                {isSubscribe && (
                   <p
                      className="comic-overview-bar-item comic-overview-bar-main-item-subscribed"
-                     onClick={this.unsubcribe()}
+                     onClick={() => this.unsubscribe()}
                   >
                      Đã Theo dõi
                   </p>
