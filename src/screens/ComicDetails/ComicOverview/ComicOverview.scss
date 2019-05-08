@@ -33,7 +33,7 @@
       .comic-overview-title {
          margin: 10px 10px;
          max-height: 1em;
-         overflow: hidden; 
+         overflow: hidden;
          color: $blue;
          font-weight: bold;
          font-size: 1.3em;
@@ -83,13 +83,34 @@
       }
 
       .comic-overview-bar-main-item {
-         padding: 5px 10px;
+         padding: 7px 10px;
          background-color: $orange-1;
          border: 1px solid $orange-1;
          color: $white;
          border-radius: 4px;
          font-weight: bold;
          margin-right: 10px;
+      }
+
+      .comic-overview-bar-main-item-subscribe {
+         padding: 7px 10px;
+         background-color: $blue;
+         border: 1px solid $orange-1;
+         color: $white;
+         border-radius: 4px;
+         font-weight: bold;
+         margin-left: 10px;
+         cursor: pointer;
+      }
+      .comic-overview-bar-main-item-subscribed {
+         padding: 7px 10px;
+         background-color: $dark-green;
+         border: 1px solid $orange-1;
+         color: $white;
+         border-radius: 4px;
+         font-weight: bold;
+         margin-left: 10px;
+         cursor: pointer;
       }
    }
 }
@@ -119,6 +140,11 @@
          }
          .comic-overview-bar-main-item {
             display: block;
+            margin-right: 2px;
+         }
+         .comic-overview-bar-main-item-subscribe {
+            display: block;
+            margin-left: 0;
          }
       }
    }
