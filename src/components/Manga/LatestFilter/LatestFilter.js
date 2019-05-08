@@ -104,7 +104,9 @@ export default class LatestFilter extends Component {
                   display=""
                   data={[["0", "Date"], ["1", "Name"], ["2", "Rank"]]}
                   style="gender-select"
-                  onChanged={(key, value) => this.setStateFormSelect(key, value)}
+                  onChanged={(key, value) => {this.setStateFormSelect(key, value);
+                    this.onSubmitFilter();
+                  }}
                 />
               </div>
             </div>

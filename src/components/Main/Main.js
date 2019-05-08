@@ -54,7 +54,7 @@ export default class Main extends Component {
         <div>
           <div className="tilte-trending">Trending Updates</div>
           <div className="view-all">
-            <Link to="/latest-update">View all</Link>
+            <Link to="/all-manga">View all</Link>
           </div>
         </div>
         <div className="all_manga">

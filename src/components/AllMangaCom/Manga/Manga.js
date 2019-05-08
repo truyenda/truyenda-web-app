@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styles from "./Manga.scss";
 import { Link } from "react-router-dom";
 import { toComicLink } from "../../../utils/LinkUtils";
+import Photo from "../../commonUI/Photo";
 export default class Manga extends Component {
 	render() {
 		return (
@@ -9,7 +10,7 @@ export default class Manga extends Component {
         <Link
           to={ toComicLink(this.props.ten, this.props.id_truyen)}
         >
-          <img src={this.props.anhbia} className="_1iAGN"></img>
+          <Photo src={this.props.anhbia} className="_1iAGN"></Photo>
           <div className="_10RzI">
             <div className="vlQGQ">{this.props.ten}</div>
           </div>
