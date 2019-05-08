@@ -1,47 +1,46 @@
 import React, { Component } from 'react';
 import styles from './Manga.scss';
 import LatestList from './LatestList';
-import LatestFilter from './LatestFilter';
 import Button from '../commonUI/Button';
+import ChapterApi from '../../api/ChapterApi';
+import Toast from '../commonUI/Toast';
 
 
 export default class Manga extends Component {
   constructor(props) {
     super(props);
     this.state = {
-       mangas: [
-        {
-          id : 1,
-          title: "Truyen trinh tham",
-          count_new_chapter: "2 new chapter",
-          new_chapter: "Chapter 4",
-          date_update: "2 hour ago"
-        },
-        {
-          id : 2,
-          title: "Truyen tham tu",
-          count_new_chapter: "3 new chapter",
-          new_chapter: "Chapter 2",
-          date_update: "4 hour ago"
-        },
-        {
-          id : 3,
-          title: "Truyen ngon tham",
-          count_new_chapter: "5 new chapter",
-          new_chapter: "Chapter 3",
-          date_update: "3 hour ago"
-        }
-      ]
+       mangas: []
     };
   }
+
+  componentDidMount() {
+    ChapterApi.list_latest()
+      .then(res => {
+        if (res.data.Code && res.data.Code === 200) {
+          this.setState({
+            mangas: res.data.Data
+          });
+        } else {
+          Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
+        }
+      })
+      .catch(err => {
+        Toast.error("Có lỗi trong quá trình kêt nối máy chủ");
+      });
+  }
+
   render() {
     var elements_mangas = this.state.mangas.map((manga, index) => {
-      return  <div key={ manga.id } className="alternative_cls">
+      return  <div key={ manga.Id } className="alternative_cls">
                 <LatestList
-                  title={ manga.title }
-                  count_new_chapter={ manga.count_new_chapter }
-                  new_chapter={ manga.new_chapter }
-                  date_update={ manga.date_update }
+                  id_chuong = "10"
+                  id_truyen = {manga.Id}
+                  image_manga = {manga.AnhDaiDien}
+                  title={ manga.TenTruyen }
+                  // count_new_chapter={ manga.TenChuong }
+                  new_chapter={ manga.TenChuong }
+                  date_update= { manga.NgayTao }
                 />
               </div>
 
@@ -49,7 +48,6 @@ export default class Manga extends Component {
     return (
       <div className="main-wrappers">
         <h1 className="_3kDZW">Latest Update</h1>
-        <LatestFilter />
         <div className="_3_XVY"><h4>521 manga</h4></div>
         <div className="_3X8sC">
           <div className="qjYVyl">Manga</div>
