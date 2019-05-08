@@ -119,7 +119,7 @@ export default class ReadingPage extends Component {
 
    render() {
       const { chapter, allChapters, isError, isError404 } = this.state;
-      if (isError404) {
+      if (isError404) {    
          return <NotFound />;
       }
       if (isError) {
