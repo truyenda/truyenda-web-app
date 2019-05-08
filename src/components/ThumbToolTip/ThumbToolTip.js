@@ -28,11 +28,13 @@ class ThumbToolTip extends Component {
       return <div>Lỗi không thể lấy dữ liệu</div>;
     }
     return (
-      <div className='tip-wrap'>
-        <Photo className="thumb-tip" src={this.state.data.AnhDaiDien} />
-        <div className='meta-tip'>
-            <span>{this.state.data.TenTruyen}</span>
-            <p>{this.state.data.MoTa}</p>
+      <div className="tip-wrap">
+        {this.props.showImg && (
+          <Photo className="thumb-tip" src={this.state.data.AnhDaiDien} />
+        )}
+        <div className="meta-tip">
+          <span>{this.state.data.TenTruyen}</span>
+          <p>{this.state.data.MoTa}</p>
         </div>
       </div>
     );
