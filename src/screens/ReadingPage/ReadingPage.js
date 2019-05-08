@@ -130,7 +130,7 @@ export default class ReadingPage extends Component {
             {chapter && (
                <div className="reading-page">
                   <div className="reading-page-header-bar">
-                     <span>{chapter.TenChuong}</span>
+                     <span>Truyện {chapter.TenTruyen} - {chapter.TenChuong}</span>
                      <Link 
                         to={{
                            pathname: toComicLink(chapter.TenTruyen, chapter.IdTruyen)
