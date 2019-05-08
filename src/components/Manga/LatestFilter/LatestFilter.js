@@ -94,7 +94,7 @@ export default class LatestFilter extends Component {
     return (
       <div className="_NkL3">
         <div className="_3XT4L">
-          <Button style="btn-Brown" display="Filter" onClick={() => {this.onSetState()}} />
+          <Button style="btn-Gray" display="Filter" onClick={() => {this.onSetState()}} />
           <div className="vLjsF">
             <div className="_fds58">
               <label className="_2CJN8">Sort by</label>
