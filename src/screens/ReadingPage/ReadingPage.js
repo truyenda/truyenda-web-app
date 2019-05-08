@@ -119,7 +119,7 @@ export default class ReadingPage extends Component {
 
    render() {
       const { chapter, allChapters, isError, isError404 } = this.state;
-      if (isError404) {
+      if (isError404) {    
          return <NotFound />;
       }
       if (isError) {
@@ -149,6 +149,11 @@ export default class ReadingPage extends Component {
 
                   <div className="control-bar">
                      {allChapters &&
+                        chapter.SoThuTu ===
+                           allChapters[0].SoThuTu && (
+                           <h1>START</h1>
+                        )}
+                     {allChapters &&
                         chapter.SoThuTu !== allChapters[0].SoThuTu && (
                            <Link
                               to={{
@@ -164,16 +169,20 @@ export default class ReadingPage extends Component {
                                  state: {}
                               }}
                            >
-                               <p>Previous</p>
+                              <p>Previous</p>
                            </Link>
                         )}
                      {allChapters && chapter && (
                         <div>
                            <SearchPage
-                               totalPage={allChapters.length} 
-                               outputPage={allChapters.map(c => c.Id).indexOf((chapter.Id)) + 1}
-                               allChapters={allChapters}
-                               comicName={chapter.TenTruyen}
+                              totalPage={allChapters.length}
+                              outputPage={
+                                 allChapters
+                                    .map(c => c.Id)
+                                    .indexOf(chapter.Id) + 1
+                              }
+                              allChapters={allChapters}
+                              comicName={chapter.TenTruyen}
                            />
                         </div>
                      )}
@@ -200,7 +209,7 @@ export default class ReadingPage extends Component {
                      {allChapters &&
                         chapter.SoThuTu ===
                            allChapters[allChapters.length - 1].SoThuTu && (
-                           <h1>You reached the end of this comic</h1>
+                           <h1>END</h1>
                         )}
                   </div>
                </div>

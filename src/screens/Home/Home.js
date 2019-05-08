@@ -64,7 +64,10 @@ class Home extends Component {
                </Switch>
             </div>
             <div className="side-content-col">
-               <Browse />
+               <Browse 
+                  isOpenOutside={false}
+                  hasButtonShowMore={true}
+               />
                <div className={showMoreClassName}>
                   <div className="chart-header">
                      <p className="chart-title">MOST POPULAR</p>
