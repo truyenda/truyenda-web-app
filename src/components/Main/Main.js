@@ -39,6 +39,7 @@ export default class Main extends Component {
     var elements_mangas = this.state.mangas.map((manga, index) => {
       return  <div key={ index }>
                 <Manga
+                  id_truyen = {manga.Id}
                   ten={manga.TenTruyen}
                   anhbia={manga.AnhDaiDien}
                   trangthai={manga.TrangThai}
