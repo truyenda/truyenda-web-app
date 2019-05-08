@@ -224,7 +224,7 @@ class Profile extends Component {
               this.state.teamName,
               "Nhóm của bạn đã tạo thành công"
             );
-            sessionService.refreshFromLocalStorage();
+            location.reload();
           } else {
             Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
           }
@@ -239,7 +239,7 @@ class Profile extends Component {
   }
   render() {
     if (!this.state.user.Email) {
-      return <div>Loading</div>;
+      return <Progress />;
     }
     return (
       <div>
@@ -261,7 +261,7 @@ class Profile extends Component {
             >
               <i className="fas fa-key" /> Mật khẩu
             </span>
-            {!this.state.user.Id_NhomDich || this.state.debug ? (
+            {this.state.user.Id_NhomDich === 1 ? (
               <span
                 onClick={e => {
                   this.setComponentShow(3);
@@ -277,7 +277,6 @@ class Profile extends Component {
         </div>
         {this.state.componentShow == 1 ? (
           <div>
-            {/*TODO: pass function to upload and receive avatar link*/}
             <ProfileAvatar />
             <div className="profile-container">
               <div className="content-space">
@@ -382,15 +381,14 @@ class Profile extends Component {
         ) : (
           ""
         )}
-        {this.state.componentShow == 3 &&
-        (this.state.user.Id_NhomDich || this.state.debug) ? (
+        {this.state.componentShow == 3 ? (
           <div className="profile-container password-con">
             <div className="content-space">
               <h1>Tạo nhóm dịch của bạn</h1>
               <TextInput
                 id="teamName"
                 display="Tên nhóm dịch"
-                value={this.state.user.TenNhom}
+                value={this.state.teamName}
                 onChanged={(key, value) => {
                   this.setStateForm(key, value);
                 }}

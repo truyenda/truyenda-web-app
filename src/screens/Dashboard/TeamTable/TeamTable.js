@@ -14,8 +14,9 @@ import "./TeamTable.scss";
 import StringUtils from "../../../utils/StringUtils";
 import PhotoApi from "../../../api/PhotoApi";
 import { toTeamLink } from "../../../utils/LinkUtils";
-import Photo from '../../../components/commonUI/Photo';
-import MyTeam from '../MyTeam';
+import Photo from "../../../components/commonUI/Photo";
+import MyTeam from "../MyTeam";
+import UserAccessFilter from "../../../actions/UserAccessFilter";
 class TeamTable extends Component {
   constructor(props) {
     super(props);
@@ -38,7 +39,8 @@ class TeamTable extends Component {
         name: "",
         description: "",
         Logo: ""
-      }
+      },
+      teamSelected: null
     };
   }
 
@@ -174,11 +176,11 @@ class TeamTable extends Component {
     });
     this.clearDataState();
   }
-  onShowTeamModal(){
-    this.setState({openTeam: true});
+  onShowTeamModal(team = null) {
+    this.setState({ openTeam: true, teamSelected: team });
   }
-  onCloseTeamModal(){
-    this.setState({openTeam: false});
+  onCloseTeamModal() {
+    this.setState({ openTeam: false, teamSelected: null });
   }
 
   onEditTeam(team) {
@@ -329,7 +331,14 @@ class TeamTable extends Component {
         accessor: "Logo",
         Cell: cell => (
           <Link to={toTeamLink(cell.original.TenNhomDich, cell.original.Id)}>
-            <Photo className="team-logo" src={cell.value ? cell.value :'/70fa8d92aab8c65c6b9acca88204487c.png'} />
+            <Photo
+              className="team-logo"
+              src={
+                cell.value
+                  ? cell.value
+                  : "/70fa8d92aab8c65c6b9acca88204487c.png"
+              }
+            />
           </Link>
         ),
         maxWidth: 90,
@@ -357,25 +366,30 @@ class TeamTable extends Component {
         Cell: cell => {
           return (
             <div className="action-group">
-              <i
-                className="far fa-edit"
-                onClick={() => {
-                  this.onEditTeam(cell.original);
-                }}
-              />
-              <i
-                className="fas fa-user-cog"
-                onClick={() => {
-                  this.onShowTeamModal();
-                  // this.onEditTeammem(cell.original);
-                }}
-              />
-              <i
-                className="fas fa-times fa-lg"
-                onClick={() => {
-                  this.onRemoveTeam(cell.original);
-                }}
-              />
+              {UserAccessFilter("TEAM_UPD") && (
+                <i
+                  className="far fa-edit"
+                  onClick={() => {
+                    this.onEditTeam(cell.original);
+                  }}
+                />
+              )}
+              {UserAccessFilter("TEAM_MAN") && (
+                <i
+                  className="fas fa-user-cog"
+                  onClick={() => {
+                    this.onShowTeamModal(cell.original);
+                  }}
+                />
+              )}
+              {UserAccessFilter("TEAM_DEL") && (
+                <i
+                  className="fas fa-times fa-lg"
+                  onClick={() => {
+                    this.onRemoveTeam(cell.original);
+                  }}
+                />
+              )}
             </div>
           );
         },
@@ -389,17 +403,27 @@ class TeamTable extends Component {
         </div>
 
         <div className="btn-add-wrapper">
-          <Button
-            display=" Tạo mới"
-            type="btn-Green"
-            icon="fa fa-plus-square"
-            style="btn-add-cate"
-            onClick={() => {
-              this.onShowModal();
-            }}
-          />
-          <Modal classNames={{modal: "modal-team"}} open={this.state.openTeam} onClose={()=>this.onCloseTeamModal()}>
-            <MyTeam />
+          {UserAccessFilter("TEAM_MAN") && (
+            <Button
+              display=" Tạo mới"
+              type="btn-Green"
+              icon="fa fa-plus-square"
+              style="btn-add-cate"
+              onClick={() => {
+                this.onShowModal();
+              }}
+            />
+          )}
+          <Modal
+            classNames={{ modal: "modal-team" }}
+            open={this.state.openTeam}
+            onClose={() => this.onCloseTeamModal()}
+          >
+            <MyTeam
+              IdTeam={
+                this.state.teamSelected ? this.state.teamSelected.Id : null
+              }
+            />
           </Modal>
           <Modal
             classNames={{ modal: "modal-add" }}
@@ -434,7 +458,14 @@ class TeamTable extends Component {
             />
             <div className="logo-team-form">
               <div className="logo-display-container">
-                <img src={this.state.team.Logo?this.state.team.Logo:'/70fa8d92aab8c65c6b9acca88204487c.png'} className="normal-avatar" />
+                <img
+                  src={
+                    this.state.team.Logo
+                      ? this.state.team.Logo
+                      : "/70fa8d92aab8c65c6b9acca88204487c.png"
+                  }
+                  className="normal-avatar"
+                />
                 {this.state.uploading && (
                   <div className="loadingcmp">
                     <Progress />

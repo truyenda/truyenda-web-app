@@ -1,0 +1,48 @@
+@import "../../scss/mixins";
+@import "../../scss/variables";
+
+.search-page-container {
+   display: flex;
+   flex-direction: row;
+   height: 37px;
+   width: 150px;
+   @include shadow;
+   background-color: $white;
+   border-radius: 5px;
+
+   .search-page-input {
+      flex-basis: 40%;
+      background-color: $white;
+      @include shadow;
+      border-radius: 5px;
+      input {
+         border: 0;
+         @include shadow;
+         height: 34px;
+         background-color: $white;
+         width: 58px;
+         border-radius: 5px 0 0 5px;
+         font-weight: bold;
+         color: $blue;
+         font-size: 1em;
+         text-align: center;
+
+         &::placeholder {
+            color: $blue;
+         }
+      }
+   }
+
+   .search-page-total-page {
+      flex-basis: 60%;
+      border-left: 2px solid $gray-1;
+      width: 100%;
+      margin: 0 auto;
+
+      p {
+         font-weight: bold;
+         color: $blue;
+      }
+   }
+
+}

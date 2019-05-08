@@ -170,6 +170,11 @@ class MyTeam extends Component {
         </div>
         <div className="btn-add-wrapper">
           <Button
+            display=" Thông tin nhóm"
+            icon="fas fa-info"
+            style="btn-team-info"
+          />
+          <Button
             display=" Thêm thành viên"
             type="btn-Green"
             icon="fas fa-user-plus"

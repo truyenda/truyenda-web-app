@@ -566,7 +566,7 @@ export default class ComicDetailsTable extends Component {
             />
             <div className="links-edit-group">
               <div className="link-editor">
-                {this.state.chapter.links ? (
+                {!this.state.isEditing || this.state.chapter.links ? (
                   <div className="group-input">
                     <label className="pure-material-textfield-filled">
                       <textarea
