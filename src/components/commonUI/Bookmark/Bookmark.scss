@@ -1,10 +1,2 @@
 @import "../../../scss/variables";
 @import "../../../scss/mixin";
-
-.bookmark-icon {
-   img {
-      width: 40px;
-      height: auto;
-      @include shadow;
-   }
-}
