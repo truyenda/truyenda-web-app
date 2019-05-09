@@ -83,7 +83,7 @@ export default class ComicChapters extends Component {
                            key={chapter.Id}
                         >
                            <p className="comic-chapters-item-left">
-                              Chapter {chapter.SoThuTu}
+                              {chapter.TenChuong}
                            </p>
                            <p className="comic-chapters-item-right">
                               {chapter.NgayTao} | {chapter.LuotXem} Lượt xem
