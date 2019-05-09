@@ -8,13 +8,15 @@ import CategoryDetail from '../../screens/CategoryDetail/CategoryDetail';
 import Progress from '../commonUI/Progress';
 import LatestList from '../Manga/LatestList';
 import ChapterApi from '../../api/ChapterApi';
+import ChartApi from '../../api/ChartApi';
 
 export default class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
       mangas: null,
-      manga_latest: null
+      manga_latest: null,
+      manga_recommend: null
     };
   }
 
@@ -51,10 +53,23 @@ export default class Main extends Component {
       .catch(err => {
         Toast.error("Có lỗi trong quá trình kêt nối máy chủ");
       });
+    ChartApi.listRecommended()
+      .then(res => {
+        if (res.data.Code && res.data.Code === 200) {
+          this.setState({
+            manga_recommend: res.data.Data
+          });
+        } else {
+          Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
+        }
+      })
+      .catch(err => {
+        Toast.error("Có lỗi trong quá trình kêt nối máy chủ");
+      });
   }
 
   render() {
-    if(this.state.mangas && this.state.manga_latest){
+    if(this.state.mangas && this.state.manga_latest && this.state.manga_recommend){
       var elements_mangas = this.state.mangas.map((manga, index) => {
         return  <div key={ index }>
                   <Manga
@@ -63,6 +78,18 @@ export default class Main extends Component {
                     anhbia={manga.AnhDaiDien}
                     trangthai={manga.TrangThai}
                     tacgia={[...manga.DanhSachTacGia].map(e => e.TenTacGia).join(",")}
+                  />
+                </div>
+  
+      });
+      var elements_mangas_recommend = this.state.manga_recommend.map((manga, index) => {
+        return  <div key={ index }>
+                  <Manga
+                    id_truyen = {manga.Id}
+                    ten={manga.TenTruyen}
+                    anhbia={manga.AnhDaiDien}
+                    trangthai={manga.TrangThai}
+                    // tacgia={[...manga.DanhSachTacGia].map(e => e.TenTacGia).join(",")}
                   />
                 </div>
   
@@ -99,6 +126,23 @@ export default class Main extends Component {
           </div>
           <div className="all_manga">
             {elements_mangas}
+          </div>
+        </div>
+        <div className="main-wrapper wrapper-recommend">
+          { !this.state.mangas ? (
+            <Progress display="Đang load truyện..." />
+          ) : (
+            ""
+          )}
+          <div className="few-hours">In the last few hours</div>
+          <div>
+            <div className="tilte-trending">Recommed Stories</div>
+            <div className="view-all">
+              <Link to="/all-manga">View all</Link>
+            </div>
+          </div>
+          <div className="all_manga">
+            {elements_mangas_recommend}
           </div>
         </div>
         <div className="main-wrapper wrapper-latest">
