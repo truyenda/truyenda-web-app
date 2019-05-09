@@ -27,7 +27,9 @@ export default {
   search(query, index) {
     return Caller(prefix + "search/" + query + "/page/" + index, "GET");
   },
-
+  searchMy(query, index) {
+    return Caller(prefix + "my/search/" + query + "/page/" + index, "GET");
+  },
   getByCategory(idCategory) {
     return Caller(prefix + "categorys/" + idCategory, "GET");
   },
@@ -51,7 +53,7 @@ export default {
     return Caller(prefix + "filter/page/" + index, "POST", data);
   },
   getMyComic(index = 1) {
-    return Caller(prefix + "teams/page/" + index, "GET");
+    return Caller(prefix + "my/page/" + index, "GET");
   },
   //UPDATE
   update(comic) {
