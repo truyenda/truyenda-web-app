@@ -13,6 +13,7 @@ export default class AllMangaCom extends Component {
     this.state = {
       mangas: null,
       filter: [],
+      total_mangas: 0,
       inProgress: false
     };
   }
@@ -35,7 +36,8 @@ export default class AllMangaCom extends Component {
         if (res.data.Code && res.data.Code === 200) {
           this.setState({
             mangas: res.data.Data.listTruyen,
-            pages: res.data.Data.Paging.TotalPages
+            pages: res.data.Data.Paging.CurrentPage,
+            total_mangas: res.data.Data.Paging.TotalRecord
           });
         } else {
           Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
@@ -95,6 +97,7 @@ export default class AllMangaCom extends Component {
       <div>
         <h1 className="title_all_manga">All Manga</h1>
         <LatestFilter onSubmit ={(value)=> this.receive(value)} />
+        <div className="_3T_XVY"><h4>{this.state.total_mangas} mangas</h4></div>
         {this.state.inProgress || !this.state.mangas ? (
             <Progress display="Đang load truyện..." />
           ) : (
