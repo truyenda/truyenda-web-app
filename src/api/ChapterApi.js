@@ -19,7 +19,7 @@ export default {
     return Caller(prefix + "latest-update/" + index);
   },
   get(IdChapter) {
-    return Caller(prefix + IdChapter, "GET");
+    return Caller(prefix + IdChapter + "/read", "GET");
   },
   update(chapter) {
     var data = {

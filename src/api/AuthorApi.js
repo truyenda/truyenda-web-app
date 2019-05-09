@@ -14,7 +14,7 @@ export default {
     return Caller(prefix + "search/" + query + "/page/" + index, "GET");
   },
   get(idAuthor) {
-    return Caller();
+    return Caller(prefix + idAuthor, "GET");
   },
   update(author) {
     var data = { TenTacGia: author.name };
