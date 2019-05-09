@@ -36,29 +36,6 @@ export default class ComicChapters extends Component {
          : "comic-chapters-container-close";
       const innerShowMore = isOpen ? "Show Less" : "Show More";
 
-      // const listChapters = allChapters.map(chapter => (
-      //    <Link
-      //       to={{
-      //          pathname: toChapterLink(
-      //             comic.TenTruyen,
-      //             chapter.TenChuong,
-      //             chapter.IdChuong
-      //          ),
-      //          state: {
-      //             comic
-      //          }
-      //       }}
-      //       key={chapter.IdChuong}
-      //    >
-      //       <div className="comic-chapters-item" key={chapter.IdChuong}>
-      //          <p className="comic-chapters-item-left">
-      //             Chapter {chapter.soThuTu}
-      //          </p>
-      //          <p className="comic-chapters-item-right">{chapter.ngayTao}</p>
-      //       </div>
-      //    </Link>
-      // ));
-
       return (
          <div className={showMoreClassName}>
             <h2>Chapters</h2>
