@@ -58,21 +58,25 @@ class Account extends Component {
     };
   }
   componentDidMount() {
-    AccountListApi.list().then(res => {
-      if (res.data.Code === 200) {
-        this.setState({
-          data: res.data.Data.listTaiKhoan,
-          pages: res.data.Data.Paging.TotalPages
-        });
-      } else {
-        this.setState({
-          error: true
-        });
-        Toast.notify(res.data.MsgError, "Mã lỗi: " + res.data.Code);
-      }
-    });
-    this.getPressions();
-    this.getTeams();
+    if (UserAccessFilter("ACCOUNT_LIS")) {
+      AccountListApi.list().then(res => {
+        if (res.data.Code === 200) {
+          this.setState({
+            data: res.data.Data.listTaiKhoan,
+            pages: res.data.Data.Paging.TotalPages
+          });
+        } else {
+          this.setState({
+            error: true
+          });
+          Toast.notify(res.data.MsgError, "Mã lỗi: " + res.data.Code);
+        }
+      });
+      this.getPressions();
+      this.getTeams();
+    }else{
+      this.setState({error: true})
+    }
   }
   toggleLoading(status) {
     this.setState({

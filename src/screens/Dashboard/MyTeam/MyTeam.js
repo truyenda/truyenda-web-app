@@ -16,6 +16,7 @@ import Progress from "../../../components/commonUI/Progress";
 import PhotoApi from "../../../api/PhotoApi";
 import StringUtils from "../../../utils/StringUtils";
 import RoleApi from "../../../api/RoleApi";
+import UserAccessFilter from "../../../actions/UserAccessFilter";
 class MyTeam extends Component {
   constructor(props) {
     super(props);
@@ -379,30 +380,35 @@ class MyTeam extends Component {
         Cell: cell => <span className="Id-center">{cell.value}</span>,
         filterable: false
       },
-      { Header: "Tên thành viên", accessor: "Username" },
+      { Header: "Tên thành viên", accessor: "Username", filterable: false },
       {
         Header: "Vai trò",
         accessor: "Id_Role",
         maxWidth: 150,
-        Cell: cell => this.getRoleNameById(cell.value)
+        Cell: cell => this.getRoleNameById(cell.value),
+        filterable: false
       },
       {
         Header: "",
         maxWidth: 100,
         Cell: cell => (
           <div className="action-group">
-            <i
-              className="fas fa-user-tag"
-              onClick={() => {
-                this.onShowPerMember(cell.original);
-              }}
-            />
-            <i
-              className="fas fa-times fa-lg"
-              onClick={() => {
-                this.onRemoveMember(cell.original);
-              }}
-            />
+            {UserAccessFilter("TEAMMEM_PER") && (
+              <i
+                className="fas fa-user-tag"
+                onClick={() => {
+                  this.onShowPerMember(cell.original);
+                }}
+              />
+            )}
+            {UserAccessFilter("TEAMMEM_DEL") && (
+              <i
+                className="fas fa-times fa-lg"
+                onClick={() => {
+                  this.onRemoveMember(cell.original);
+                }}
+              />
+            )}
           </div>
         ),
         filterable: false
@@ -574,23 +580,36 @@ class MyTeam extends Component {
         </div>
         {!this.state.loading ? (
           <div className="btn-add-wrapper">
-            <Button
-              display=" Thông tin nhóm"
-              icon="fas fa-info"
-              style="btn-team-info"
-              onClick={() => {
-                this.onShowModalInfo();
-              }}
-            />
-            <Button
-              display=" Thêm thành viên"
-              type="btn-Green"
-              icon="fas fa-user-plus"
-              style="btn-add-cate"
-              onClick={() => {
-                this.onShowAddMember();
-              }}
-            />
+            {UserAccessFilter("TEAM_DEL") && (
+              <Button
+                display=" Xóa nhóm"
+                type="btn-del"
+                icon="fas fa-ban"
+                style="btn-team-info"
+                onClick={() => {}}
+              />
+            )}
+            {UserAccessFilter("TEAM_UPD") && (
+              <Button
+                display=" Thông tin nhóm"
+                icon="fas fa-info"
+                style="btn-team-info"
+                onClick={() => {
+                  this.onShowModalInfo();
+                }}
+              />
+            )}
+            {UserAccessFilter("TEAMMEM_ADD") && (
+              <Button
+                display=" Thêm thành viên"
+                type="btn-Green"
+                icon="fas fa-user-plus"
+                style="btn-add-cate"
+                onClick={() => {
+                  this.onShowAddMember();
+                }}
+              />
+            )}
           </div>
         ) : (
           <Progress />
