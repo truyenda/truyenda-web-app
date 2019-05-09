@@ -24,18 +24,6 @@
       flex-direction: column-reverse;
       flex-wrap: wrap;
 
-      a {
-         &:visited {
-            .comic-chapters-wrapper {
-               .comic-chapters-item {
-                  .comic-chapters-item-left {
-                     font-weight: bold;
-                  }
-               }
-            }
-         }
-      }
-
       .comic-chapters-item {
          border: 1px solid $white;
          padding: 17px;
