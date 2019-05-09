@@ -24,6 +24,18 @@
       flex-direction: column-reverse;
       flex-wrap: wrap;
 
+      a {
+         &:visited {
+            .comic-chapters-wrapper {
+               .comic-chapters-item {
+                  .comic-chapters-item-left {
+                     font-weight: bold;
+                  }
+               }
+            }
+         }
+      }
+
       .comic-chapters-item {
          border: 1px solid $white;
          padding: 17px;
@@ -100,7 +112,7 @@
       display: flex;
       flex-direction: column-reverse;
       flex-wrap: wrap;
-      margin-bottom: 50px; 
+      margin-bottom: 50px;
 
       .comic-chapters-item {
          border: 1px solid $white;
@@ -147,7 +159,7 @@
          color: $blue;
          font-weight: bold;
          cursor: pointer;
-         
+
          // TODO: 1. Check onclick method to show more
          // TODO: 2. Check length (if small -> no need)
          // TODO: 3. Add attribute comicGenres

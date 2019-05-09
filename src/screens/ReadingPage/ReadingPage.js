@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import styles from "./ReadingPage.scss";
 import ComicAuthors from "../ComicDetails/ComicAuthors/ComicAuthors";
-import { getIdBySplitingPath, toChapterLink } from "../../utils/LinkUtils";
+import {
+   getIdBySplitingPath,
+   toChapterLink,
+   toComicLink
+} from "../../utils/LinkUtils";
 import ComicApi from "../../api/ComicApi";
 import NotFound from "../Error/NotFound";
 import ChapterApi from "../../api/ChapterApi";
@@ -10,6 +14,10 @@ import { Waypoint } from "react-waypoint";
 import LocalBookmarkApi from "../../api/LocalBookmarkApi";
 import { Link } from "react-router-dom";
 import SearchPage from "../../components/SearchPage/SearchPage";
+import Bookmark from "../../components/commonUI/Bookmark";
+import Photo from "../../components/commonUI/Photo";
+import BookmarkApi from "../../api/BookmarkApi";
+import Toast from "../../components/commonUI/Toast";
 export default class ReadingPage extends Component {
    constructor(props) {
       super(props);
@@ -18,7 +26,9 @@ export default class ReadingPage extends Component {
          allChapters: null,
          isError: false,
          isError404: false,
-         isGetDone: false
+         isGetDone: false,
+         isSubscribed: false,
+         isBookmarked: <false></false>
       };
    }
 
@@ -38,6 +48,8 @@ export default class ReadingPage extends Component {
                      },
                      () => setTimeout(() => this.getLocalBookmark(), 1000)
                   );
+                  this.checkSubscribed();
+                  this.checkBookmarked();
                   document.title = data.TenTruyen + " - " + data.TenChuong;
                   ChapterApi.list(data.IdTruyen)
                      .then(res => {
@@ -70,6 +82,8 @@ export default class ReadingPage extends Component {
                .then(res => {
                   let data = res.data.Data;
                   data.LinkAnh = JSON.parse(data.LinkAnh);
+                  this.checkSubscribed();
+                  this.checkBookmarked();
                   this.setState(
                      {
                         chapter: data
@@ -117,9 +131,101 @@ export default class ReadingPage extends Component {
       }
    }
 
+   addBookmark() {
+      if (!this.state.isSubscribed) {
+         BookmarkApi.create(this.state.chapter.IdTruyen)
+            .then(res => {
+               this.setState({
+                  isSubscribed: !this.state.isSubscribed
+               });
+               BookmarkApi.updateByChapterId(
+                  this.state.chapter.Id,
+                  this.state.chapter.IdTruyen
+               )
+                  .then(res => {
+                     this.setState({
+                        isBookmarked: true
+                     });
+                  })
+                  .catch(err => {})
+                  .finally(() => {
+                     Toast.success(
+                        `Đã đánh dấu chương ${this.stateate.chapter.TenChuong}`
+                     );
+                  });
+            })
+            .catch(err => {});
+      } else {
+         BookmarkApi.updateByChapterId(
+            this.state.chapter.Id,
+            this.state.chapter.IdTruyen
+         )
+            .then(res => {
+               this.setState({
+                  isBookmarked: true
+               });
+            })
+            .catch(err => {})
+            .finally(() => {
+               Toast.success(
+                  `Đã đánh dấu chương ${this.stateate.chapter.TenChuong}`
+               );
+            });;
+      }
+   }
+
+   checkBookmarked() {
+      BookmarkApi.getByComicId(this.state.chapter.IdTruyen)
+         .then(res => {
+            if (this.state.chapter.Id === res.data.Data.Id_ChuongDanhDau) {
+               this.setState({
+                  isBookmarked: true
+               });
+            } else {
+               this.setState({
+                  isBookmarked: false
+               })
+            }
+         })
+         .catch(() => {
+            this.setState({
+               isBookmarked: false
+            });
+         });
+   }
+
+   checkSubscribed() {
+      BookmarkApi.getByComicId(this.state.chapter.IdTruyen)
+         .then(res => {
+            if (res.data.Data) {
+               this.setState({
+                  isSubscribed: true
+               });
+            } else {
+               isSubscribed: false;
+            }
+         })
+         .catch(err => {});
+   }
+
+   unbookmark() {
+      BookmarkApi.delete(this.state.chapter.IdTruyen).then(res => {
+         this.setState({
+            isBookmarked: false
+         });
+         Toast.success(`Đã bỏ theo dõi chương ${this.state.chapter.TenChuong}`);
+      });
+   }
+
    render() {
-      const { chapter, allChapters, isError, isError404 } = this.state;
-      if (isError404) {    
+      const {
+         chapter,
+         allChapters,
+         isError,
+         isError404,
+         isBookmarked
+      } = this.state;
+      if (isError404) {
          return <NotFound />;
       }
       if (isError) {
@@ -127,9 +233,45 @@ export default class ReadingPage extends Component {
       }
       return (
          <div className="reading-page-container">
+            {isBookmarked && (
+               <div className="bookmark-icon-container">
+                  <img
+                     src="https://freeiconshop.com/wp-content/uploads/edd/bookmark-flat.png"
+                     alt="Bookmark"
+                     onClick={() => this.unbookmark()}
+                  />
+                  <p className="bookmark-icon-title">
+                     Chương đang được đánh dấu
+                  </p>
+               </div>
+            )}
+            {!isBookmarked && (
+               <div className="bookmark-icon-container">
+                  <img
+                     src="https://cdn1.iconfinder.com/data/icons/hawcons/32/698367-icon-19-bookmark-add-512.png"
+                     alt="Bookmark"
+                     onClick={() => this.addBookmark()}
+                  />
+                  <p className="bookmark-icon-title">Đánh dấu</p>
+               </div>
+            )}
             {chapter && (
                <div className="reading-page">
-                  <p>{chapter.TenChuong}</p>
+                  <div className="reading-page-header-bar">
+                     <span>
+                        Truyện {chapter.TenTruyen} - {chapter.TenChuong}
+                     </span>
+                     <Link
+                        to={{
+                           pathname: toComicLink(
+                              chapter.TenTruyen,
+                              chapter.IdTruyen
+                           )
+                        }}
+                     >
+                        <p>Trở về trang chi tiết truyện</p>
+                     </Link>
+                  </div>
                   {chapter.LinkAnh.map((c, i) => (
                      <Waypoint key={i} onEnter={v => this.saveLocalBookmark(i)}>
                         <img
@@ -149,8 +291,7 @@ export default class ReadingPage extends Component {
 
                   <div className="control-bar">
                      {allChapters &&
-                        chapter.SoThuTu ===
-                           allChapters[0].SoThuTu && (
+                        chapter.SoThuTu === allChapters[0].SoThuTu && (
                            <h1>START</h1>
                         )}
                      {allChapters &&
@@ -214,7 +355,11 @@ export default class ReadingPage extends Component {
                   </div>
                </div>
             )}
-            {!chapter && <div className="comic-details">Nothing to show</div>}
+            {!chapter && (
+               <div className="comic-details">
+                  <Progress />
+               </div>
+            )}
          </div>
       );
    }

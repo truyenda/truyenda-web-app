@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styles from "./ComicOverview.scss";
 import { Link } from "react-router-dom";
 import { convertToFriendlyPath } from "../../../utils/StringUtils";
-import { toComicReadLink } from "../../../utils/LinkUtils";
+import { toComicReadLink, toChapterLink } from "../../../utils/LinkUtils";
 import BookmarkApi from "../../../api/BookmarkApi";
 import Toast from "../../../components/commonUI/Toast";
 
@@ -11,21 +11,33 @@ export default class ComicOverview extends Component {
       super(props);
       this.state = {
          comic: this.props.details,
-         //TODO: Wait API for getting status --> componentDidMount()
-         isSubscribe: null
+         isSubscribe: null,
+         currentChapterId: null,
+         currentChapterTitle: null
       };
    }
 
    componentDidMount() {
       BookmarkApi.getByComicId(this.state.comic.Id)
          .then(res => {
-            if(res.data.Data) {
+            if (res.data.Data) {
                this.setState({
                   isSubscribe: true
                });
             } else {
                this.setState({
                   isSubscribe: false
+               });
+            }
+            if (res.data.Data.Id_ChuongDanhDau) {
+               this.setState({
+                  currentChapterId: res.data.Data.Id_ChuongDanhDau,
+                  currentChapterTitle: res.data.Data.TenChuongDanhDau
+               });
+            } else {
+               this.setState({
+                  currentChapterId: res.data.Data.Id_ChuongMoiNhat,
+                  currentChapterTitle: res.data.Data.TenChuongMoiNhat
                });
             }
          })
@@ -35,7 +47,7 @@ export default class ComicOverview extends Component {
    componentWillReceiveProps() {
       BookmarkApi.getByComicId(this.state.comic.Id)
          .then(res => {
-            if(res.data.Data) {
+            if (res.data.Data) {
                this.setState({
                   isSubscribe: true
                });
@@ -44,42 +56,70 @@ export default class ComicOverview extends Component {
                   isSubscribe: false
                });
             }
+            if (res.data.Data.Id_ChuongDanhDau) {
+               this.setState({
+                  currentChapterId: res.data.Data.Id_ChuongDanhDau,
+                  currentChapterTitle: res.data.Data.TenChuongDanhDau
+               });
+            } else {
+               this.setState({
+                  currentChapterId: res.data.Data.Id_ChuongMoiNhat,
+                  currentChapterTitle: res.data.Data.TenChuongMoiNhat
+               });
+            }
          })
          .catch(err => {});
    }
 
    subcribe() {
       BookmarkApi.create(this.state.comic.Id).then(res => {
-         this.setState({
-            isSubscribe: !this.state.isSubscribe
-         });
          Toast.success(`Đang theo dõi truyện ${this.state.comic.TenTruyen}`);
+         this.setState({
+            isSubscribe: true
+         });
       });
+      window.scrollTo(0, 1000);
    }
 
    unsubscribe() {
       BookmarkApi.delete(this.state.comic.Id).then(res => {
-         this.setState({
-            isSubscribe: !this.state.isSubscribe
-         });
          Toast.success(`Đã bỏ theo dõi truyện ${this.state.comic.TenTruyen}`);
-      }) 
+         this.setState({
+            isSubscribe: false
+         });
+      });
    }
 
    render() {
-      const { comic, isSubscribe } = this.state;
-      const linkResult = (
+      const {
+         comic,
+         isSubscribe,
+         currentChapterId,
+         currentChapterTitle
+      } = this.state;
+      const linkResult = currentChapterId && currentChapterTitle && (
          <Link
             to={{
-               pathname: toComicReadLink(comic.TenTruyen, comic.Id),
+               pathname: toChapterLink(
+                  comic.TenTruyen,
+                  currentChapterTitle,
+                  currentChapterId
+               ),
                state: {
                   comic
                }
             }}
          >
-            <p className="comic-overview-bar-item comic-overview-bar-main-item">
-               READ
-            </p>
+            {!isSubscribe && (
+               <p className="comic-overview-bar-item comic-overview-bar-main-item">
+                  READ
+               </p>
+            )}
+            {isSubscribe && (
+               <p className="comic-overview-bar-item comic-overview-bar-main-item">
+                  CONTINUE READING
+               </p>
+            )}
          </Link>
       );
       return (
@@ -116,7 +156,7 @@ export default class ComicOverview extends Component {
                      className="comic-overview-bar-item comic-overview-bar-main-item-subscribed"
                      onClick={() => this.unsubscribe()}
                   >
-                     Đã Theo dõi
+                     Đang Theo dõi
                   </p>
                )}
             </div>
