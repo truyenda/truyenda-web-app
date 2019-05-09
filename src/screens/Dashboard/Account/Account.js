@@ -14,6 +14,7 @@ import ManagerPressions from "../../../api/ManagerPressions";
 import TeamApi from "../../../api/TeamApi";
 import "./Account.scss";
 import UserAccessFilter from "../../../actions/UserAccessFilter";
+import StringUtils from "../../../utils/StringUtils";
 class Account extends Component {
   constructor(props) {
     super(props);
@@ -206,13 +207,42 @@ class Account extends Component {
       });
   }
 
+  checkValidation() {
+    var isValid = true;
+    var alert = {};
+    if (!this.state.profile.Email || this.state.profile.Email.length === 0) {
+      alert.Email = "Bạn cần nhập email";
+    } else {
+      if (!StringUtils.validateEmail(this.state.profile.Email)){
+        alert.Email = "Email không đúng định dạng";
+      }
+    }
+    if (!this.state.profile.Username || this.state.profile.Username.length === 0) {
+      alert.Username = "Bạn cần nhập username";
+    }else{
+      if (!StringUtils.validUsername(this.state.profile.Username)) {
+        alert.Username =
+          "Tên đăng nhập từ 8 đến 24 ký tự, không có ký tự đặc biệt hoặc khoảng trắng";
+      }
+    }
+    if (alert.Email || alert.Username) {
+      isValid = false;
+      this.setState({
+        alert: alert
+      });
+    }
+    return isValid;
+  }
+
   onSubmitForm() {
-    this.setState({
-      loading: true
-    });
-    let profile = this.state.profile;
-    this.onCloseModal();
-    this.onUpdateAccount(profile);
+    if(this.checkValidation()) {
+      this.setState({
+        loading: true
+      });
+      let profile = this.state.profile;
+      this.onCloseModal();
+      this.onUpdateAccount(profile);
+    }
   }
 
   onBanAccount(profile) {
