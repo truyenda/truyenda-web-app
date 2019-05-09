@@ -380,7 +380,14 @@ class Account extends Component {
       {
         Header: "Tên Nhóm",
         accessor: "TenNhom",
-        filterable: false
+        filterable: false,
+        maxWidth: 200
+      },
+      {
+        Header: "Vai trò",
+        accessor: "TenQuyen",
+        filterable: false,
+        maxWidth: 150
       },
       {
         Header: "",
