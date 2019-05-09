@@ -18,7 +18,7 @@ export default class ComicOverview extends Component {
    componentDidMount() {
       BookmarkApi.getByComicId(this.state.comic.Id)
          .then(res => {
-            if(res.data.Data) {
+            if (res.data.Data) {
                this.setState({
                   isSubscribe: true
                });
@@ -34,7 +34,7 @@ export default class ComicOverview extends Component {
    componentWillReceiveProps() {
       BookmarkApi.getByComicId(this.state.comic.Id)
          .then(res => {
-            if(res.data.Data) {
+            if (res.data.Data) {
                this.setState({
                   isSubscribe: true
                });
@@ -62,7 +62,7 @@ export default class ComicOverview extends Component {
             isSubscribe: !this.state.isSubscribe
          });
          Toast.success(`Đã bỏ theo dõi truyện ${this.state.comic.TenTruyen}`);
-      }) 
+      });
    }
 
    render() {
@@ -76,9 +76,18 @@ export default class ComicOverview extends Component {
                }
             }}
          >
-            <p className="comic-overview-bar-item comic-overview-bar-main-item">
-               READ
-            </p>
+            {!isSubscribe && (
+               <p className="comic-overview-bar-item comic-overview-bar-main-item">
+                  READ
+               </p>
+            )}
+            {isSubscribe && (
+               <Link>
+                  <p className="comic-overview-bar-item comic-overview-bar-main-item">
+                     CONTINUE READING
+                  </p>
+               </Link>
+            )}
          </Link>
       );
       return (
