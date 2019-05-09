@@ -75,6 +75,8 @@
           text-overflow: ellipsis;
           display: inline-block;
           width: 100%;
+          max-width: 19ch;
+          text-overflow: ellipsis;
        }
     }
     ._2t82X {
