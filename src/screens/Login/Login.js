@@ -150,14 +150,15 @@ class Login extends Component {
             <TextInput
               display="Tên đăng nhập"
               id="username"
-              value="admin"
+              value=""
               onChanged={(key, value) => this.setStateForm(key, value)}
               alert={this.state.usernameMes}
             />
             <TextInput
               display="Mật khẩu"
               id="password"
-              value="admin"
+              value=""
+              type='password'
               onChanged={(key, value) => this.setStateForm(key, value)}
               alert={this.state.passwordMes}
             />
