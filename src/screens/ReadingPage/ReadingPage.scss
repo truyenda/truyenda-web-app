@@ -5,8 +5,8 @@
    position: fixed;
    left: 50px;
    top: 90px;
-   width: 105px;
-   height: auto;
+   width: 200px;
+   height: 45px;
    border: 0;
 
    &:hover {
@@ -15,12 +15,12 @@
          transition: opacity 0.4s;
          margin-top: 10px;
       }
-   }
+   } 
 
    img {
       @include shadow;
       width: 45px;
-      height: auto;
+      height: 45px;
       background-color: $white;
       border-radius: 100px;
       cursor: pointer;
