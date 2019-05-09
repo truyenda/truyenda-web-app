@@ -1,6 +1,44 @@
 @import "../../scss/variables";
 @import "../../scss/mixins";
 
+.bookmark-icon-container {
+   position: fixed;
+   left: 50px;
+   top: 90px;
+   width: 105px;
+   height: auto;
+   border: 0;
+
+   &:hover {
+      .bookmark-icon-title {
+         opacity: 0.9;
+         transition: opacity 0.4s;
+         margin-top: 10px;
+      }
+   }
+
+   img {
+      @include shadow;
+      width: 45px;
+      height: auto;
+      background-color: $white;
+      border-radius: 100px;
+      cursor: pointer;
+   }
+
+   .bookmark-icon-title {
+      font-size: 0.7em;
+      opacity: 0;
+      background-color: $white;
+      @include shadow;
+      border-radius: 5px;
+      padding: 4px 10px;
+      width: fit-content;
+      font-weight: bold;
+      color: $blue; 
+   }
+}
+
 .reading-page {
    padding: 2em;
    @include shadow;
@@ -17,6 +55,12 @@
    display: flex;
    flex-direction: column;
 
+   .reading-page-header-bar {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+   }
+
    .control-bar {
       margin-top: 10px;
       display: flex;
@@ -25,13 +69,12 @@
       opacity: 0.4;
       width: 90%;
       position: fixed;
-      bottom: 85px; 
+      bottom: 85px;
 
       &:hover {
          opacity: 1;
          transition: opacity 0.3s;
       }
-
 
       p {
          padding: 10px 20px;
@@ -46,7 +89,6 @@
    p {
       display: block;
       margin: 0 auto 20px;
-      padding: 5px 20px;
       color: $blue;
       font-weight: bold;
    }
@@ -65,7 +107,27 @@
    }
 }
 
+@media only screen and (max-width: 1024px) {
+   .bookmark-icon-container {
+      top: 160px;
+
+      img {
+         width: 35px;
+         height: auto;
+      }
+   }
+}
+
 @media only screen and (max-width: 768px) {
+   .bookmark-icon-container {
+      top: 360px;
+
+      img {
+         width: 30px;
+         height: auto;
+      }
+   }
+
    .reading-page {
       img {
          width: 80%;
@@ -76,6 +138,14 @@
          width: 85%;
       }
 
+      .reading-page-header-bar {
+         flex-direction: column;
+         align-items: center;
+
+         span {
+            margin-bottom: 5px;
+         }
+      }
    }
 }
 
@@ -91,5 +161,13 @@
          size: 50%;
       }
 
+      .reading-page-header-bar {
+         flex-direction: column;
+         align-items: center;
+
+         span {
+            margin-bottom: 5px;
+         }
+      }
    }
 }

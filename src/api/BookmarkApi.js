@@ -14,6 +14,13 @@ export default {
     var data = { IdChuongTheoDoi: idChuong };
     return Caller(prefix + idBookmark, "PUT", data);
   },
+  updateByChapterId(idChuong, idTruyen) {
+    var data = {
+        IdChuongTheoDoi: idChuong,
+        IdTruyen: idTruyen
+    };
+    return Caller(prefix, "PUT", data);
+  },
   delete(idBookmark) {
     return Caller(prefix + "strory/" + idBookmark, "DELETE");
   },
