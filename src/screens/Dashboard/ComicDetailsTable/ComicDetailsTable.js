@@ -14,6 +14,7 @@ import ReactTable from "react-table";
 import Progress from "../../../components/commonUI/Progress";
 import { getIdBySplitingPath } from "../../../utils/LinkUtils";
 import { convertToPath } from "../../../utils/StringUtils";
+import UserAccessFilter from "../../../actions/UserAccessFilter";
 export default class ComicDetailsTable extends Component {
   constructor(props) {
     super(props);
@@ -483,18 +484,22 @@ export default class ComicDetailsTable extends Component {
         Cell: cell => {
           return (
             <div className="action-group">
-              <i
-                className="far fa-edit"
-                onClick={() => {
-                  this.onEditChapter(cell.original);
-                }}
-              />
-              <i
-                className="fas fa-times fa-lg"
-                onClick={() => {
-                  this.onRemoveChapter(cell.original);
-                }}
-              />
+              {UserAccessFilter("CHAPTER_UDP") && (
+                <i
+                  className="far fa-edit"
+                  onClick={() => {
+                    this.onEditChapter(cell.original);
+                  }}
+                />
+              )}
+              {UserAccessFilter("CHAPTER_DEL") && (
+                <i
+                  className="fas fa-times fa-lg"
+                  onClick={() => {
+                    this.onRemoveChapter(cell.original);
+                  }}
+                />
+              )}
             </div>
           );
         },
@@ -505,14 +510,16 @@ export default class ComicDetailsTable extends Component {
       <div className="dashboard-table">
         <h3>{comic.TenTruyen}</h3>
         <div className="button-add">
-          <Button
-            display=" Thêm chương"
-            type="btn-Green"
-            icon="fa fa-plus-square"
-            onClick={() => {
-              this.onOpenModal();
-            }}
-          />
+          {UserAccessFilter("CHAPTER_CRE") && (
+            <Button
+              display=" Thêm chương"
+              type="btn-Green"
+              icon="fa fa-plus-square"
+              onClick={() => {
+                this.onOpenModal();
+              }}
+            />
+          )}
         </div>
         <Modal
           classNames={{ modal: "modal-add-chapter" }}

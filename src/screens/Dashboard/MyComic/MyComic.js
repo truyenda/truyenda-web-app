@@ -18,6 +18,7 @@ import StoryStatusApi from "../../../api/StoryStatusApi";
 import Photo from "../../../components/commonUI/Photo";
 import FrequencyApi from "../../../api/FrequencyApi";
 import { toComicLink, toComicDashboardLink } from "../../../utils/LinkUtils";
+import UserAccessFilter from "../../../actions/UserAccessFilter";
 export default class MyComic extends Component {
   constructor(props) {
     super(props);
@@ -589,18 +590,22 @@ export default class MyComic extends Component {
         Cell: cell => {
           return (
             <div className="action-group">
-              <i
-                className="far fa-edit"
-                onClick={() => {
-                  this.onEditComic(cell.original);
-                }}
-              />
-              <i
-                className="fas fa-times fa-lg"
-                onClick={() => {
-                  this.onRemoveComic(cell.original);
-                }}
-              />
+              {UserAccessFilter("STORY_UPD") && (
+                <i
+                  className="far fa-edit"
+                  onClick={() => {
+                    this.onEditComic(cell.original);
+                  }}
+                />
+              )}
+              {UserAccessFilter("STORY_DEL") && (
+                <i
+                  className="fas fa-times fa-lg"
+                  onClick={() => {
+                    this.onRemoveComic(cell.original);
+                  }}
+                />
+              )}
             </div>
           );
         },
@@ -616,7 +621,7 @@ export default class MyComic extends Component {
           <span>Danh sách Truyện</span>
         </div>
         <div className="btn-add-wrapper">
-          {this.state.data && (
+          {this.state.data && UserAccessFilter("STORY_CRE") && (
             <Button
               display=" Tạo mới"
               type="btn-Green"

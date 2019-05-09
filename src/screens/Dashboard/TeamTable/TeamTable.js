@@ -403,7 +403,7 @@ class TeamTable extends Component {
         </div>
 
         <div className="btn-add-wrapper">
-          {UserAccessFilter("TEAM_MAN") && (
+          {UserAccessFilter("TEAM_ALL") && (
             <Button
               display=" Tạo mới"
               type="btn-Green"

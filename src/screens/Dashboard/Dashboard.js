@@ -1,6 +1,6 @@
 import "./Dashboard.scss";
 import React, { Component } from "react";
-import { Link, Switch, Route } from "react-router-dom";
+import { Link, Switch, Route, Redirect } from "react-router-dom";
 import Logo from "../../assets/b725a56c-207a-4c5c-af91-beb98632d3d8.png";
 import ComicsDashBoard from "./ComicsDashBoard";
 import CategoryTable from "./CategoryTable";
@@ -28,19 +28,19 @@ class Dashboard extends Component {
           <Switch>
             <PrivateRoute
               path="/dashboard/comics"
-              per="STORY_MAN"
+              per="STORY_MAN STORY_ALL"
               exact={true}
               component={ComicsDashBoard}
             />
             <PrivateRoute
               path="/dashboard/comics/:id"
               exact={true}
-              per="CHAPTER_MAN CHAPTER_CRE_ CHAPTER_UPD CHAPTER_DEL"
+              per="CHAPTER_MAN"
               component={ComicDetailsTable}
             />
             <PrivateRoute
               path="/dashboard/teams"
-              per="TEAM_MAN"
+              per="TEAM_MAN TEAM_ALL"
               exact={true}
               component={TeamTable}
             />
@@ -82,13 +82,13 @@ class Dashboard extends Component {
             />
             <PrivateRoute
               path="/dashboard/myteam"
-              per="TEAM_MAN TEAM_UPD TEAM_DEL"
+              per="TEAM_MAN"
               exact={true}
               component={MyTeam}
             />
             <PrivateRoute
               path="/dashboard/mycomic"
-              per="STORY_CRE STORY_UPD STORY_DEL"
+              per="STORY_MAN"
               exact={true}
               component={MyComic}
             />
@@ -123,8 +123,6 @@ const WelcomePanel = () => {
 const routeList = [
   {
     group: "Hệ thống",
-    per:
-      "ACCOUNT_MAN STORY_MAN TEAM_MAN AUTHOR_MAN CATEGORY_MAN FREQUENCY_MAN SSTATUS_MAN",
     route: [
       {
         name: "Tài khoản",
@@ -142,13 +140,13 @@ const routeList = [
         name: "Truyện",
         path: "comics",
         icon: "fas fa-swatchbook",
-        per: "STORY_MAN"
+        per: "STORY_MAN STORY_ALL"
       },
       {
         name: "Nhóm dịch",
         path: "teams",
         icon: "fas fa-users-cog",
-        per: "TEAM_MAN"
+        per: "TEAM_MAN TEAM_ALL"
       },
       {
         name: "Tác giả",
@@ -183,13 +181,13 @@ const routeList = [
         name: "Nhóm của tôi",
         path: "myteam",
         icon: "fas fa-users-cog",
-        per: "TEAMMEM_MAN"
+        per: "TEAM_MAN"
       },
       {
         name: "Truyện của tôi",
         path: "mycomic",
         icon: "fas fa-swatchbook",
-        per: "STORY_CRE STORY_UPD STORY_DEL"
+        per: "STORY_MAN"
       }
     ]
   }
@@ -197,15 +195,22 @@ const routeList = [
 
 const accessFilter = (routeList, user) => {
   var acceptGroups = [];
+  var userPermissions = user.Permissions.map(p => p.TenQuyen);
   for (var i = 0; i < routeList.length; i++) {
+    if (user.Id_NhomDich === 1 && i === 1) continue;
     let routeGroup = routeList[i];
     let acceptRoutes = [];
     routeGroup.route.forEach(route => {
-      for (var ii = 0; ii < user.Permissions.length; ii++) {
-        if (route.per.indexOf(user.Permissions[ii].TenQuyen) != -1) {
-          acceptRoutes.push(route);
+      let routePers = route.per.split(" ");
+      let isAccept = true;
+      for (let j = 0; j < routePers.length; j++) {
+        if (!userPermissions.includes(routePers[j])) {
+          isAccept = false;
           break;
         }
+      }
+      if (isAccept) {
+        acceptRoutes.push(route);
       }
     });
     if (acceptRoutes.length !== 0)
@@ -218,7 +223,9 @@ const SideBar = props => {
   const GroupTags = props.groups.map((g, i) => {
     return <GroupTag group={g} key={i} />;
   });
-  return <div className="side-bar">{GroupTags}</div>;
+  if (GroupTags.length !== 0)
+    return <div className="side-bar">{GroupTags}</div>;
+  else return <Redirect to="/" />;
 };
 
 const GroupTag = props => {

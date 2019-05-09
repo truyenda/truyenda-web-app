@@ -68,7 +68,7 @@ export default {
       AnhBia: comic.coverPicture,
       AnhDaiDien: comic.avatarPicture,
       MoTa: comic.description,
-      comic: comic.team.value
+      Id_NhomDich: comic.team.value
     };
     return Caller(prefix + comic.Id, "PUT", data);
   },

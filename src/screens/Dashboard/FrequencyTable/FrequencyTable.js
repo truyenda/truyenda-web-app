@@ -5,12 +5,10 @@ import Toast from "../../../components/commonUI/Toast";
 import Progress from "../../../components/commonUI/Progress";
 import Button from "../../../components/commonUI/Button";
 import TextInput from "../../../components/commonUI/TextInput";
-import TextArea from "../../../components/commonUI/TextArea";
 import Modal from "react-responsive-modal";
 import Alert from "../../../components/commonUI/Alert";
 import { Link } from "react-router-dom";
-import ReactTooltip from "react-tooltip";
-
+import UserAccessFilter from "../../../actions/UserAccessFilter";
 class FrequencyTable extends Component {
   constructor(props) {
     super(props);
@@ -244,18 +242,22 @@ class FrequencyTable extends Component {
         Cell: cell => {
           return (
             <div className="action-group">
-              <i
-                className="far fa-edit"
-                onClick={() => {
-                  this.onEditFrequency(cell.original);
-                }}
-              />
-              <i
-                className="fas fa-times fa-lg"
-                onClick={() => {
-                  this.onRemoveFrequency(cell.original);
-                }}
-              />
+              {UserAccessFilter("FREQUENCY_UPD") && (
+                <i
+                  className="far fa-edit"
+                  onClick={() => {
+                    this.onEditFrequency(cell.original);
+                  }}
+                />
+              )}
+              {UserAccessFilter("FREQUENCY_DEL") && (
+                <i
+                  className="fas fa-times fa-lg"
+                  onClick={() => {
+                    this.onRemoveFrequency(cell.original);
+                  }}
+                />
+              )}
             </div>
           );
         },
@@ -272,7 +274,7 @@ class FrequencyTable extends Component {
         </div>
 
         <div className="btn-add-wrapper">
-          {this.state.data && (
+          {this.state.data && UserAccessFilter("FREQUENCY_CRE") && (
             <Button
               display=" Tạo mới"
               type="btn-Green"

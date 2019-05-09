@@ -27,11 +27,17 @@ const checkPermission = (user, per) => {
       return true;
     }
     if (user.Permissions.length !== 0) {
-      for (let i = 0; i < user.Permissions.length; i++) {
-        if (per.indexOf(user.Permissions[i].TenQuyen) !== -1) {
-          return true;
+      let userPermissions = user.Permissions.map(p => p.TenQuyen);
+      let routePers = per.split(" ");
+      let isAccept = true;
+      for (let j = 0; j < routePers.length; j++) {
+        if (!userPermissions.includes(routePers[j])) {
+          isAccept = false;
+          break;
         }
       }
+      return isAccept;
+    } else {
       return false;
     }
   } else {

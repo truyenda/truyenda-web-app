@@ -9,6 +9,7 @@ import TextArea from "../../../components/commonUI/TextArea";
 import Modal from "react-responsive-modal";
 import Alert from "../../../components/commonUI/Alert";
 import Toast from "../../../components/commonUI/Toast";
+import UserAccessFilter from "../../../actions/UserAccessFilter";
 class AuthorTable extends Component {
   constructor(props) {
     super(props);
@@ -256,18 +257,22 @@ class AuthorTable extends Component {
         Cell: cell => {
           return (
             <div className="action-group">
-              <i
-                className="far fa-edit"
-                onClick={() => {
-                  this.onEditAuthor(cell.original);
-                }}
-              />
-              <i
-                className="fas fa-times fa-lg"
-                onClick={() => {
-                  this.onRemoveAuthor(cell.original);
-                }}
-              />
+              {UserAccessFilter("AUTHOR_UPD") && (
+                <i
+                  className="far fa-edit"
+                  onClick={() => {
+                    this.onEditAuthor(cell.original);
+                  }}
+                />
+              )}
+              {UserAccessFilter("AUTHOR_DEL") && (
+                <i
+                  className="fas fa-times fa-lg"
+                  onClick={() => {
+                    this.onRemoveAuthor(cell.original);
+                  }}
+                />
+              )}
             </div>
           );
         },
@@ -281,7 +286,7 @@ class AuthorTable extends Component {
           <span>Tác giả</span>
         </div>
         <div className="btn-add-wrapper">
-          {this.state.data && (
+          {this.state.data && UserAccessFilter("AUTHOR_CRE") && (
             <Button
               display=" Tạo mới"
               type="btn-Green"
