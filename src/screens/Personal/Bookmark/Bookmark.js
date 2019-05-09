@@ -138,7 +138,7 @@ class Bookmark extends Component {
                 multiline={true}
                 id={"thumb-tip" + row.original.Id_Truyen}
                 effect="solid"
-                getContent={v => <ThumbToolTip Id={row.original.Id_Truyen}/>}
+                getContent={v => <ThumbToolTip showImg Id={row.original.Id_Truyen}/>}
               />
             </Link>
           );
