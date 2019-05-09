@@ -17,6 +17,7 @@ import PhotoApi from "../../../api/PhotoApi";
 import StringUtils from "../../../utils/StringUtils";
 import RoleApi from "../../../api/RoleApi";
 import UserAccessFilter from "../../../actions/UserAccessFilter";
+import { withRouter } from "react-router-dom";
 class MyTeam extends Component {
   constructor(props) {
     super(props);
@@ -355,6 +356,32 @@ class MyTeam extends Component {
         .finally(() => this.setState({ loading: false }));
     }
   }
+  onDeleteTeam() {
+    Alert.warn(
+      "Bạn có chắc chắn muốn xóa nhóm không?",
+      "Hãy cẩn trọng với hành động này! Hành động này sẽ xóa tất cả các truyện của nhóm và loại bỏ tất cả thành viên",
+      () => {
+        TeamApi.delete({ Id: this.state.team.Id })
+          .then(res => {
+            if (res.data.Code && res.data.Code === 200) {
+              Toast.success(
+                "Bạn sẽ được chuyển hưởng về trang chủ",
+                "Xóa nhóm thành công",
+                {
+                  onClose: () => {
+                    this.props.history.push("/");
+                  }
+                }
+              );
+            } else {
+              Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
+            }
+          })
+          .catch(err => Toast.error("Có lỗi trong quá trình kết nối"));
+      },
+      () => {}
+    );
+  }
   isSystemRole(IdUser) {
     if (this.state.data)
       for (var i = 0; i < this.state.data.length; i++) {
@@ -586,7 +613,9 @@ class MyTeam extends Component {
                 type="btn-del"
                 icon="fas fa-ban"
                 style="btn-team-info"
-                onClick={() => {}}
+                onClick={() => {
+                  this.onDeleteTeam();
+                }}
               />
             )}
             {UserAccessFilter("TEAM_UPD") && (
@@ -667,10 +696,12 @@ const mapState = state => ({
   auth: state.session.authenticated
 });
 
-export default connect(
-  mapState,
-  null
-)(MyTeam);
+export default withRouter(
+  connect(
+    mapState,
+    null
+  )(MyTeam)
+);
 
 const LoadingCmp = props => {
   return props.loading ? (
