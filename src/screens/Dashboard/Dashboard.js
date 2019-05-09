@@ -1,6 +1,6 @@
 import "./Dashboard.scss";
 import React, { Component } from "react";
-import { Link, Switch, Route } from "react-router-dom";
+import { Link, Switch, Route, Redirect } from "react-router-dom";
 import Logo from "../../assets/b725a56c-207a-4c5c-af91-beb98632d3d8.png";
 import ComicsDashBoard from "./ComicsDashBoard";
 import CategoryTable from "./CategoryTable";
@@ -223,7 +223,9 @@ const SideBar = props => {
   const GroupTags = props.groups.map((g, i) => {
     return <GroupTag group={g} key={i} />;
   });
-  return <div className="side-bar">{GroupTags}</div>;
+  if (GroupTags.length !== 0)
+    return <div className="side-bar">{GroupTags}</div>;
+  else return <Redirect to="/" />;
 };
 
 const GroupTag = props => {
