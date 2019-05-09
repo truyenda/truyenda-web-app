@@ -3,6 +3,7 @@ import styles from './LatestList.scss';
 import TimeAgo from 'react-timeago';
 import { Link } from "react-router-dom";
 import { toComicLink, toChapterLink } from '../../../utils/LinkUtils';
+import Photo from '../../commonUI/Photo';
 
 export default class LatestList extends Component {
   render() {
@@ -14,7 +15,7 @@ export default class LatestList extends Component {
                 to={ toComicLink(this.props.title, this.props.id_truyen)}
               >
                 <div className="img_div">
-                  <img className="img" src={ this.props.image_manga } />
+                  <Photo className="img" src={ this.props.image_manga } />
                 </div>
               </Link>
               <Link

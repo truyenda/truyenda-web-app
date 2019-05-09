@@ -36,7 +36,7 @@ export default class AllMangaCom extends Component {
         if (res.data.Code && res.data.Code === 200) {
           this.setState({
             mangas: res.data.Data.listTruyen,
-            pages: res.data.Data.Paging.TotalPages,
+            pages: res.data.Data.Paging.CurrentPage,
             total_mangas: res.data.Data.Paging.TotalRecord
           });
         } else {

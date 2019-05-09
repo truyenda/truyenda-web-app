@@ -12,17 +12,21 @@ export default class Manga extends Component {
     super(props);
     this.state = {
        mangas: null,
-       total_mangas: 0
+       total_mangas: 0,
+       pages: 1
     };
   }
 
   componentDidMount() {
-    ChapterApi.list_latest()
+    console.log("com");
+    ChapterApi.list_latest(this.state.pages)
       .then(res => {
         if (res.data.Code && res.data.Code === 200) {
           this.setState({
+            // mangas: this.state.mangas.concat([res.data.Data.listNewChuong]),
             mangas: res.data.Data.listNewChuong,
-            total_mangas: res.data.Data.Paging.TotalRecord
+            total_mangas: res.data.Data.Paging.TotalRecord,
+            pages: res.data.Data.Paging.CurrentPage
           });
         } else {
           Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
@@ -33,7 +37,14 @@ export default class Manga extends Component {
       });
   }
 
+  toggle() {
+    this.setState({
+      pages: this.state.pages+1
+    });
+  }
+
   render() {
+    console.log(this.state.pages);
     if(this.state.mangas){
       var elements_mangas = this.state.mangas.map((manga, index) => {
         return  <div key={ manga.Id_Truyen } className="alternative_cls">
@@ -65,6 +76,19 @@ export default class Manga extends Component {
             ""
           )}
         { elements_mangas }
+        {
+          !this.state.mangas /*&& this.state.mangas.length == this.state.total_mangas*/ ? ("") :
+          (<div className="_1dGlB">
+            <Button
+                display={"Show more"}
+                type="btn-GrayShow"
+                style="_D25df"
+                onClick={() => {
+                  this.toggle();
+                }}
+            />
+          </div>)
+        }
       </div>
     )
   }
