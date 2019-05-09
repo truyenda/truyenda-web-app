@@ -4,19 +4,15 @@ import ReactTable from "react-table";
 import Progress from "../../../components/commonUI/Progress";
 import Modal from "react-responsive-modal";
 import Alert from "../../../components/commonUI/Alert";
-import CheckBox from "../../../components/commonUI/CheckBox";
 import { Link } from "react-router-dom";
 import TextInput from "../../../components/commonUI/TextInput";
 import TextArea from "../../../components/commonUI/TextArea";
-// import ReactTooltip from "react-tooltip";
 import Toast from "../../../components/commonUI/Toast";
 import ComicApi from "../../../api/ComicApi";
 import { convertToFriendlyPath } from "../../../utils/StringUtils";
 import FilePicker from "../../../components/commonUI/FilePicker";
 import PhotoApi from "../../../api/PhotoApi";
 import Select from "react-select";
-import AsyncSelect from "react-select/lib/Async";
-import TeamApi from "../../../api/TeamApi";
 import CategoryApi from "../../../api/CategoryApi";
 import StoryStatusApi from "../../../api/StoryStatusApi";
 import Photo from "../../../components/commonUI/Photo";
@@ -59,11 +55,6 @@ export default class MyComic extends Component {
         frequency: "",
         coverPicture: "",
         avatarPicture: "",
-        // groupName: "",
-        // team: {
-        //    Id: "",
-        //    name: ""
-        // },
         description: ""
       }
     };
@@ -93,12 +84,13 @@ export default class MyComic extends Component {
     this.getCategory();
     this.getStoryStatus();
     this.getFrequency();
+    this.getTeam();
   }
 
   componentWillUpdate() {
-    if (document.getElementsByClassName("rt-th")[8])
+    if (document.getElementsByClassName("rt-th")[7])
       document
-        .getElementsByClassName("rt-th")[8]
+        .getElementsByClassName("rt-th")[7]
         .getElementsByTagName("input")[0]
         .setAttribute("placeholder", "Tìm truyện");
   }
@@ -130,11 +122,6 @@ export default class MyComic extends Component {
         frequency: "",
         coverPicture: "",
         avatarPicture: "",
-        // groupName: "",
-        // team: {
-        //    Id: "",
-        //    name: ""
-        // },
         description: ""
       }
     });
@@ -145,11 +132,11 @@ export default class MyComic extends Component {
       loading: true
     });
     if (state.filtered[0] && state.filtered[0].value.trim().length !== 0) {
-      ComicApi.search(state.filtered[0].value, state.page + 1)
+      ComicApi.searchMy(state.filtered[0].value, state.page + 1)
         .then(res => {
           if (res.data.Code && res.data.Code === 200) {
             this.setState({
-              data: res.data.Data.listComic,
+              data: res.data.Data.listTruyen,
               pages: res.data.Data.Paging.TotalPages
             });
           } else {
@@ -267,25 +254,6 @@ export default class MyComic extends Component {
     ) {
       alert.coverPicture = "Bạn cần chọn ảnh bìa cho truyện";
     }
-
-    // if (
-    //    !this.state.comic.categories ||
-    //    this.state.comic.categories.length === 0
-    // ) {
-    //    alert.categories = "Bạn cần chọn thể loại cho truyện";
-    // }
-
-    // if (!this.state.comic.status.value || this.state.comic.status.value.length === 0) {
-    //    alert.status = "Bạn cần chọn trạng thái của truyện";
-    // }
-
-    // if (
-    //    !this.state.comic.frequency.value ||
-    //    this.state.comic.frequency.value.length === 0
-    // ) {
-    //    alert.frequency = "Bạn cần chọn chu kỳ phát hành của truyện";
-    // }
-
     if (
       !this.state.comic.description ||
       this.state.comic.description.length === 0
@@ -467,14 +435,13 @@ export default class MyComic extends Component {
     );
   }
 
-  getTeam(key, callback) {
-    if (key.length === 0) return null;
-    TeamApi.search(key, 1).then(res => {
-      let data = [];
-      res.data.Data.listNhomDich.forEach(team => {
-        data.push({ label: team.TenNhomDich, value: team.Id });
-      });
-      callback(data);
+  getTeam() {
+    var userData = JSON.parse(
+      localStorage.getItem("redux-react-session/USER_DATA")
+    );
+    this.setFormData("team", {
+      label: "-Nhóm của bạn-",
+      value: userData.Id_NhomDich
     });
   }
 
@@ -593,14 +560,6 @@ export default class MyComic extends Component {
         )
       },
       {
-        Header: "Tên nhóm dịch",
-        accessor: "TenNhom",
-        Cell: cell => <span className="Id-center">{cell.value}</span>,
-        sortable: false,
-        maxWidth: 150,
-        filterable: false
-      },
-      {
         Header: "Trạng thái truyện",
         accessor: "TrangThai",
         Cell: cell => {
@@ -649,7 +608,7 @@ export default class MyComic extends Component {
       }
     ];
     if (this.state.isError) {
-      return <Link to="/dashboard/comics">Thử lại</Link>;
+      return <Link to="/dashboard/mycomic">Thử lại</Link>;
     }
     return (
       <div className="comics-dashboard-container">
@@ -848,13 +807,10 @@ export default class MyComic extends Component {
                 </div>
               </div>
             </div>
-            <AsyncSelect
-              cacheOptions
-              loadOptions={(v, c) => {
-                this.getTeam(v, c);
-              }}
+            <Select
               placeholder="Chọn nhóm..."
               value={this.state.comic.team}
+              isDisabled
               onChange={v => {
                 this.setFormData("team", v);
               }}
