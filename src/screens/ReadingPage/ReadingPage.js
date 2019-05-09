@@ -27,8 +27,8 @@ export default class ReadingPage extends Component {
          isError: false,
          isError404: false,
          isGetDone: false,
-         isSubscribed: null,
-         isBookmarked: null
+         isSubscribed: false,
+         isBookmarked: <false></false>
       };
    }
 
@@ -181,6 +181,10 @@ export default class ReadingPage extends Component {
                this.setState({
                   isBookmarked: true
                });
+            } else {
+               this.setState({
+                  isBookmarked: false
+               })
             }
          })
          .catch(() => {
@@ -198,7 +202,7 @@ export default class ReadingPage extends Component {
                   isSubscribed: true
                });
             } else {
-               isSubscribe: false;
+               isSubscribed: false;
             }
          })
          .catch(err => {});
