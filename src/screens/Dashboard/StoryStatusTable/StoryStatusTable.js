@@ -8,7 +8,7 @@ import TextInput from "../../../components/commonUI/TextInput";
 import Modal from "react-responsive-modal";
 import Alert from "../../../components/commonUI/Alert";
 import { Link } from "react-router-dom";
-
+import UserAccessFilter from "../../../actions/UserAccessFilter";
 class StoryStatusTable extends Component {
   constructor(props) {
     super(props);
@@ -242,18 +242,22 @@ class StoryStatusTable extends Component {
         Cell: cell => {
           return (
             <div className="action-group">
-              <i
-                className="far fa-edit"
-                onClick={() => {
-                  this.onEditStoryStatus(cell.original);
-                }}
-              />
-              <i
-                className="fas fa-times fa-lg"
-                onClick={() => {
-                  this.onRemoveStoryStatus(cell.original);
-                }}
-              />
+              {UserAccessFilter("SSTATUS_UPD") && (
+                <i
+                  className="far fa-edit"
+                  onClick={() => {
+                    this.onEditStoryStatus(cell.original);
+                  }}
+                />
+              )}
+              {UserAccessFilter("SSTATUS_DEL") && (
+                <i
+                  className="fas fa-times fa-lg"
+                  onClick={() => {
+                    this.onRemoveStoryStatus(cell.original);
+                  }}
+                />
+              )}
             </div>
           );
         },
@@ -270,7 +274,7 @@ class StoryStatusTable extends Component {
         </div>
 
         <div className="btn-add-wrapper">
-          {this.state.data && (
+          {this.state.data && UserAccessFilter("SSTATUS_CRE") && (
             <Button
               display=" Tạo mới"
               type="btn-Green"

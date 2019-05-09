@@ -10,7 +10,7 @@ import TextArea from "../../../components/commonUI/TextArea";
 import Modal from "react-responsive-modal";
 import Alert from "../../../components/commonUI/Alert";
 import { Link } from "react-router-dom";
-
+import UserAccessFilter from "../../../actions/UserAccessFilter";
 import ReactTooltip from "react-tooltip";
 class CategoryTable extends Component {
   constructor(props) {
@@ -283,18 +283,22 @@ class CategoryTable extends Component {
         Cell: cell => {
           return (
             <div className="action-group">
-              <i
-                className="far fa-edit"
-                onClick={() => {
-                  this.onEditCategory(cell.original);
-                }}
-              />
-              <i
-                className="fas fa-times fa-lg"
-                onClick={() => {
-                  this.onRemoveCategory(cell.original);
-                }}
-              />
+              {UserAccessFilter("CATEGORY_UPD") && (
+                <i
+                  className="far fa-edit"
+                  onClick={() => {
+                    this.onEditCategory(cell.original);
+                  }}
+                />
+              )}
+              {UserAccessFilter("CATEGORY_DEL") && (
+                <i
+                  className="fas fa-times fa-lg"
+                  onClick={() => {
+                    this.onRemoveCategory(cell.original);
+                  }}
+                />
+              )}
             </div>
           );
         },
@@ -311,7 +315,7 @@ class CategoryTable extends Component {
         </div>
 
         <div className="btn-add-wrapper">
-          {this.state.data && (
+          {this.state.data && UserAccessFilter("CATEGORY_CRE") && (
             <Button
               display=" Tạo mới"
               type="btn-Green"

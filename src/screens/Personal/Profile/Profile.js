@@ -19,6 +19,8 @@ import AccountApi from "../../../api/AccountApi.js";
 import Progress from "../../../components/commonUI/Progress";
 import Photo from "../../../components/commonUI/Photo";
 import TeamApi from "../../../api/TeamApi";
+import Alert from "../../../components/commonUI/Alert";
+import TeamMemApi from "../../../api/TeamMemApi";
 class Profile extends Component {
   constructor(props) {
     super(props);
@@ -237,6 +239,31 @@ class Profile extends Component {
         });
     }
   }
+  onUnlinkTeam() {
+    Alert.warn(
+      "Bạn có muốn thoát nhóm dịch đang tham gia không",
+      this.props.user.TenNhom,
+      () => {
+        TeamMemApi.delete(
+          this.props.user.Id_NhomDich,
+          this.props.user.Id_TaiKhoan
+        )
+          .then(res => {
+            if (res.data.Code && res.data.Code === 200) {
+              Toast.success(this.props.user.TenNhom, "Đã thoát khỏi nhóm", {
+                onClose: () => {
+                  location.reload();
+                }
+              });
+            } else {
+              Toast.notify(res.data.MsgError, "Mã lối " + res.data.Code);
+            }
+          })
+          .catch(err => Toast.error("Có lỗi trong quá trình kết nối"));
+      },
+      () => {}
+    );
+  }
   render() {
     if (!this.state.user.Email) {
       return <Progress />;
@@ -261,18 +288,15 @@ class Profile extends Component {
             >
               <i className="fas fa-key" /> Mật khẩu
             </span>
-            {this.state.user.Id_NhomDich === 1 ? (
-              <span
-                onClick={e => {
-                  this.setComponentShow(3);
-                }}
-                className={this.state.componentShow == 3 ? "active" : ""}
-              >
-                <i className="fas fa-user-friends" /> Nhóm của bạn
-              </span>
-            ) : (
-              ""
-            )}
+
+            <span
+              onClick={e => {
+                this.setComponentShow(3);
+              }}
+              className={this.state.componentShow == 3 ? "active" : ""}
+            >
+              <i className="fas fa-user-friends" /> Nhóm của bạn
+            </span>
           </div>
         </div>
         {this.state.componentShow == 1 ? (
@@ -381,106 +405,115 @@ class Profile extends Component {
         ) : (
           ""
         )}
-        {this.state.componentShow == 3 ? (
-          <div className="profile-container password-con">
-            <div className="content-space">
-              <h1>Tạo nhóm dịch của bạn</h1>
-              <TextInput
-                id="teamName"
-                display="Tên nhóm dịch"
-                value={this.state.teamName}
-                onChanged={(key, value) => {
-                  this.setStateForm(key, value);
-                }}
-                alert={this.state.alert.teamName}
-              />
-              <TextArea
-                id="teamDescription"
-                display="Mô tả"
-                style="description-team"
-                onChanged={(key, value) => {
-                  this.setStateForm(key, value);
-                }}
-                alert={this.state.alert.teamDescription}
-              />
-              <div className="logo-team-form">
-                <div className="logo-display-container">
-                  <Photo
-                    src={
-                      this.state.teamLogo
-                        ? this.state.teamLogo
-                        : "/70fa8d92aab8c65c6b9acca88204487c.png"
-                    }
-                    className="normal-avatar"
-                  />
-                  {this.state.uploading && (
-                    <div className="loadingcmp">
-                      <Progress />
-                    </div>
-                  )}
-                </div>
-                <div className="logo-input">
-                  <FilePicker
-                    multiple={false}
-                    mSize={2}
-                    onAccept={files => {
-                      files.forEach(file => {
-                        this.setState({
-                          uploading: true
-                        });
-                        PhotoApi(file)
-                          .then(res => {
-                            this.setState({
-                              uploading: false,
-                              teamLogo: res.data.link,
-                              alert: {}
-                            });
-                          })
-                          .catch(err => Toast.error(err));
-                      });
-                    }}
-                  />
-                  <div className="group-input ">
-                    <label className="pure-material-textfield-filled">
-                      <input
-                        id="Logo"
-                        name="Logo"
-                        placeholder=" "
-                        onChange={event =>
-                          this.setStateForm("teamLogo", event.target.value)
-                        }
-                        value={this.state.teamLogo}
-                      />
-                      <span>Logo</span>
-                    </label>
-                    <div
-                      className={
-                        "field-alert " +
-                        (this.state.alert.teamLogo ? "" : "hide")
+        {this.state.componentShow == 3 &&
+          (this.props.user.Id_NhomDich === 1 ? (
+            <div className="profile-container password-con">
+              <div className="content-space">
+                <h1>Tạo nhóm dịch của bạn</h1>
+                <TextInput
+                  id="teamName"
+                  display="Tên nhóm dịch"
+                  value={this.state.teamName}
+                  onChanged={(key, value) => {
+                    this.setStateForm(key, value);
+                  }}
+                  alert={this.state.alert.teamName}
+                />
+                <TextArea
+                  id="teamDescription"
+                  display="Mô tả"
+                  style="description-team"
+                  onChanged={(key, value) => {
+                    this.setStateForm(key, value);
+                  }}
+                  alert={this.state.alert.teamDescription}
+                />
+                <div className="logo-team-form">
+                  <div className="logo-display-container">
+                    <Photo
+                      src={
+                        this.state.teamLogo
+                          ? this.state.teamLogo
+                          : "/70fa8d92aab8c65c6b9acca88204487c.png"
                       }
-                    >
-                      <p>{this.state.alert.teamLogo}</p>
+                      className="normal-avatar"
+                    />
+                    {this.state.uploading && (
+                      <div className="loadingcmp">
+                        <Progress />
+                      </div>
+                    )}
+                  </div>
+                  <div className="logo-input">
+                    <FilePicker
+                      multiple={false}
+                      mSize={2}
+                      onAccept={files => {
+                        files.forEach(file => {
+                          this.setState({
+                            uploading: true
+                          });
+                          PhotoApi(file)
+                            .then(res => {
+                              this.setState({
+                                uploading: false,
+                                teamLogo: res.data.link,
+                                alert: {}
+                              });
+                            })
+                            .catch(err => Toast.error(err));
+                        });
+                      }}
+                    />
+                    <div className="group-input ">
+                      <label className="pure-material-textfield-filled">
+                        <input
+                          id="Logo"
+                          name="Logo"
+                          placeholder=" "
+                          onChange={event =>
+                            this.setStateForm("teamLogo", event.target.value)
+                          }
+                          value={this.state.teamLogo}
+                        />
+                        <span>Logo</span>
+                      </label>
+                      <div
+                        className={
+                          "field-alert " +
+                          (this.state.alert.teamLogo ? "" : "hide")
+                        }
+                      >
+                        <p>{this.state.alert.teamLogo}</p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="btn-info-container">
-                <Button
-                  display="Tạo"
-                  onClick={() => {
-                    this.CreateTeam();
-                  }}
-                />
+                <div className="btn-info-container">
+                  <Button
+                    display="Tạo"
+                    onClick={() => {
+                      this.CreateTeam();
+                    }}
+                  />
+                </div>
               </div>
             </div>
-          </div>
-        ) : (
-          ""
-        )}
+          ) : (
+            <div className="unlink-team-wrapper">
+              <h2>{this.props.user.TenNhom}</h2>
+              <Button
+                type="btn-Yellow"
+                icon="fas fa-unlink"
+                display=" Thoát khỏi nhóm"
+                onClick={() => this.onUnlinkTeam()}
+              />
+            </div>
+          ))}
         <div className="btn-logout-container">
           <Button
             display="Đăng xuất"
-            type="btn-cancel"
+            type="btn-del"
             style="btn-logout"
             onClick={() => {
               this.LogoutEvent();

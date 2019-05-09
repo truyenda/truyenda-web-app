@@ -1,18 +1,16 @@
 import React, { Component } from "react";
 import ReactTable from "react-table";
-import CategoryApi from "../../../api/CategoryApi.js";
 import Toast from "../../../components/commonUI/Toast";
 import Progress from "../../../components/commonUI/Progress";
 import Button from "../../../components/commonUI/Button";
 import TextInput from "../../../components/commonUI/TextInput";
-import TextArea from "../../../components/commonUI/TextArea";
 import Modal from "react-responsive-modal";
 import Alert from "../../../components/commonUI/Alert";
 import { Link } from "react-router-dom";
-import ReactTooltip from "react-tooltip";
 import RoleApi from "../../../api/RoleApi";
 import PermissionApi from "../../../api/PermissionApi";
 import Select from "react-select";
+import UserAccessFilter from "../../../actions/UserAccessFilter";
 class Role extends Component {
   constructor(props) {
     super(props);
@@ -34,48 +32,52 @@ class Role extends Component {
   }
 
   componentDidMount() {
-    RoleApi.list()
-      .then(res => {
-        if (res.data.Code === 200) {
-          this.setState({
-            data: res.data.Data
-          });
-        } else {
-          Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
-          this.setState({
-            isError: true
-          });
-        }
-      })
-      .catch(err => {
-        Toast.error("Có lỗi trong quá trình kêt nối máy chủ");
-        this.setState({
-          isError: true
-        });
-      });
-    PermissionApi.list()
-      .then(res => {
-        if (res.data.Code === 200) {
-          let permissions = [];
-          res.data.Data.forEach(el => {
-            permissions.push({ label: el.TenQuyen, value: el.Id });
-          });
-          this.setState({
-            permissions: permissions
-          });
-        } else {
-          Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
+    if (UserAccessFilter("ACCOUNT_PER")) {
+      RoleApi.list()
+        .then(res => {
+          if (res.data.Code === 200) {
+            this.setState({
+              data: res.data.Data
+            });
+          } else {
+            Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
+            this.setState({
+              isError: true
+            });
+          }
+        })
+        .catch(err => {
+          Toast.error("Có lỗi trong quá trình kêt nối máy chủ");
           this.setState({
             isError: true
           });
-        }
-      })
-      .catch(err => {
-        Toast.error("Có lỗi trong quá trình kêt nối máy chủ");
-        this.setState({
-          isError: true
         });
-      });
+      PermissionApi.list()
+        .then(res => {
+          if (res.data.Code === 200) {
+            let permissions = [];
+            res.data.Data.forEach(el => {
+              permissions.push({ label: el.TenQuyen, value: el.Id });
+            });
+            this.setState({
+              permissions: permissions
+            });
+          } else {
+            Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
+            this.setState({
+              isError: true
+            });
+          }
+        })
+        .catch(err => {
+          Toast.error("Có lỗi trong quá trình kêt nối máy chủ");
+          this.setState({
+            isError: true
+          });
+        });
+    } else {
+      this.setState({ isError: true });
+    }
   }
 
   clearDataState() {
@@ -204,43 +206,43 @@ class Role extends Component {
     }
   }
 
-    onRemoveRole(role) {
-      Alert.warn(
-        "Bạn có muốn xóa vai trò này không?",
-        role.TenVaiTro,
-        () => {
-          this.setState({
-            loading: true
-          });
-          RoleApi.delete(role)
-            .then(res => {
-              if (res.data.Code && res.data.Code === 200) {
-                Toast.success(role.TenVaiTro, "Đã xóa vai trò");
-                var newData = [];
-                this.state.data.forEach(c => {
-                  if (c.Id !== role.Id) {
-                    newData.push(c);
-                  }
-                });
-                this.setState({
-                  data: newData
-                });
-              } else {
-                Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
-              }
-            })
-            .catch(err => {
-              Toast.error("Có lỗi trong quá trình kêt nối máy chủ");
-            })
-            .finally(() => {
-              this.setState({
-                loading: false
+  onRemoveRole(role) {
+    Alert.warn(
+      "Bạn có muốn xóa vai trò này không?",
+      role.TenVaiTro,
+      () => {
+        this.setState({
+          loading: true
+        });
+        RoleApi.delete(role)
+          .then(res => {
+            if (res.data.Code && res.data.Code === 200) {
+              Toast.success(role.TenVaiTro, "Đã xóa vai trò");
+              var newData = [];
+              this.state.data.forEach(c => {
+                if (c.Id !== role.Id) {
+                  newData.push(c);
+                }
               });
+              this.setState({
+                data: newData
+              });
+            } else {
+              Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
+            }
+          })
+          .catch(err => {
+            Toast.error("Có lỗi trong quá trình kêt nối máy chủ");
+          })
+          .finally(() => {
+            this.setState({
+              loading: false
             });
-        },
-        () => {}
-      );
-    }
+          });
+      },
+      () => {}
+    );
+  }
 
   getRolePermissions() {
     this.setState({ loading: true });
@@ -326,15 +328,17 @@ class Role extends Component {
         </div>
 
         <div className="btn-add-wrapper">
-          <Button
-            display=" Tạo mới"
-            type="btn-Green"
-            icon="fa fa-plus-square"
-            style="btn-add-cate"
-            onClick={() => {
-              this.onShowModal();
-            }}
-          />
+          {this.state.data && (
+            <Button
+              display=" Tạo mới"
+              type="btn-Green"
+              icon="fa fa-plus-square"
+              style="btn-add-cate"
+              onClick={() => {
+                this.onShowModal();
+              }}
+            />
+          )}
           <Modal
             classNames={{ modal: "modal-add" }}
             open={this.state.openModal}
