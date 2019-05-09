@@ -7,10 +7,10 @@
    @include shadow;
    padding: 0;
    .alternative_cls:nth-child(even){
-      background: $white;
+    background: $dark-gray-listmanga;
    }
    .alternative_cls:nth-child(odd){
-      background: $dark-gray-listmanga;
+    background: $white;
    }
    ._3kDZW {
       color: rgba(0,0,0,.87);
@@ -46,6 +46,14 @@
       }
       color: $blue;
       width: 100%;
+    }
+  }
+}
+
+@media only screen and (max-device-width: 480px) {
+  .main-wrappers {
+    ._3X8sC{
+      display: none;
     }
   }
 }
