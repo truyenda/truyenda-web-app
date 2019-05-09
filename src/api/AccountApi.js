@@ -26,8 +26,8 @@ export default {
       Ten: name,
       NgaySinh: birthday,
       GioiTinh: gender,
-      Confirm_Password: cfPassword,
-      New_Passord: newPassword
+      Old_Password: cfPassword,
+      New_Password: newPassword
     };
     return Caller("accounts/my", "PUT", data);
   }
