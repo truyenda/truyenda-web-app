@@ -14,6 +14,7 @@ export default class AllMangaCom extends Component {
       mangas: null,
       filter: [],
       total_mangas: 0,
+      pages: 1,
       inProgress: false
     };
   }
@@ -30,28 +31,45 @@ export default class AllMangaCom extends Component {
     
   }
 
-  componentDidMount() {
-    ComicApi.list(1)
-      .then(res => {
-        if (res.data.Code && res.data.Code === 200) {
-          this.setState({
-            mangas: res.data.Data.listTruyen,
-            pages: res.data.Data.Paging.CurrentPage,
-            total_mangas: res.data.Data.Paging.TotalRecord
-          });
-        } else {
-          Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
-          this.setState({
-            isError: true
-          });
-        }
-      })
-      .catch(err => {
-        Toast.error("Có lỗi trong quá trình kêt nối máy chủ");
+  load_manga(){
+    ComicApi.list(this.state.pages)
+    .then(res => {
+      if (res.data.Code && res.data.Code === 200) {
+        let man = this.state.mangas;
+        if(!man){ man = [] }
         this.setState({
-          isError: true
+          mangas: man.concat(res.data.Data.listTruyen),
+          // mangas: res.data.Data.listTruyen,
+          total_mangas: res.data.Data.Paging.TotalRecord
         });
+      } else {
+        Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
+      }
+    })
+    .catch(err => {
+      Toast.error("Có lỗi trong quá trình kêt nối máy chủ");
+      this.setState({
+        isError: true
       });
+    }).finally(() => {
+      console.log("mangas" + this.state.mangas);
+    });
+  }
+
+  componentDidMount() {
+    
+  }
+
+  toggle() {
+    let page = this.state.pages;
+    if(this.state.mangas.length == 0){
+      page = 0;
+    }
+    this.setState({
+      pages: page+1
+    },()=>{
+      this.load_manga();
+    });
   }
 
   onFilterManga() {
@@ -61,7 +79,7 @@ export default class AllMangaCom extends Component {
         if (res.data.Code && res.data.Code === 200) {
           this.setState({
             mangas: res.data.Data.listTruyen,
-            pages: res.data.Data.Paging.TotalPages,
+            total_mangas: res.data.Data.Paging.TotalRecord,
             inProgress: false
           });
         } else {
@@ -72,13 +90,12 @@ export default class AllMangaCom extends Component {
         Toast.error("Có lỗi trong quá trình kêt nối máy chủ");
       })
       .finally(() => {
-        this.setState({
-          loading: false
-        });
+        console.log("filter: " + this.state.mangas);
       });
   }
 
 	render() {
+    console.log("page" + this.state.pages);
     if(this.state.mangas) {
       var elements_mangas = this.state.mangas.map((manga, index) => {
         return  <div key={ index }>
@@ -97,7 +114,7 @@ export default class AllMangaCom extends Component {
       <div>
         <h1 className="title_all_manga">All Manga</h1>
         <LatestFilter onSubmit ={(value)=> this.receive(value)} />
-        <div className="_3T_XVY"><h4>{this.state.total_mangas} mangas</h4></div>
+        <div className="_3T_XVY"><h4>{this.state.mangas ? this.state.mangas.length : "0"} mangas</h4></div>
         {this.state.inProgress || !this.state.mangas ? (
             <Progress display="Đang load truyện..." />
           ) : (
@@ -109,6 +126,19 @@ export default class AllMangaCom extends Component {
         <div className="all_manga">
           {elements_mangas}
         </div>
+        {
+          this.state.mangas && this.state.mangas.length == this.state.total_mangas ? ("") :
+          (<div className="_1dGlBc">
+            <Button
+                display={"Load More"}
+                type="btn-GrayShow"
+                style="_D25dfc"
+                onClick={() => {
+                  this.toggle();
+                }}
+            />
+          </div>)
+        }
       </div>           
 		);
 	}

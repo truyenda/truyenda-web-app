@@ -29,8 +29,11 @@
    ._1dGlB {
       margin: 20px -20px -20px;
       ._D25df {
-         color: $blue;
-         width: 100%;
+        &:hover {
+          background: $gray-1;
+        }
+        color: $blue;
+        width: 100%;
       }
    }
 }

@@ -17,14 +17,14 @@ export default class Manga extends Component {
     };
   }
 
-  componentDidMount() {
-    console.log("com");
+  load_manga(){
     ChapterApi.list_latest(this.state.pages)
       .then(res => {
         if (res.data.Code && res.data.Code === 200) {
+          let man = this.state.mangas;
+          if(!man){ man = [] }
           this.setState({
-            // mangas: this.state.mangas.concat([res.data.Data.listNewChuong]),
-            mangas: res.data.Data.listNewChuong,
+            mangas: man.concat(res.data.Data.listNewChuong),
             total_mangas: res.data.Data.Paging.TotalRecord,
             pages: res.data.Data.Paging.CurrentPage
           });
@@ -34,12 +34,20 @@ export default class Manga extends Component {
       })
       .catch(err => {
         Toast.error("Có lỗi trong quá trình kêt nối máy chủ");
+        console.log(err)
       });
+  }
+
+  componentDidMount() {
+    console.log("com");
+    this.load_manga();
   }
 
   toggle() {
     this.setState({
-      pages: this.state.pages+1
+      pages: this.state.pages + 1
+    },()=>{
+      this.load_manga();
     });
   }
 
@@ -77,7 +85,7 @@ export default class Manga extends Component {
           )}
         { elements_mangas }
         {
-          !this.state.mangas /*&& this.state.mangas.length == this.state.total_mangas*/ ? ("") :
+          this.state.mangas && this.state.mangas.length == this.state.total_mangas ? ("") :
           (<div className="_1dGlB">
             <Button
                 display={"Show more"}
