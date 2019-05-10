@@ -22,20 +22,24 @@ export default class ComicAuthors extends Component {
 
    render() {
       const { comic, isOpen } = this.state;
-      const listAuthors = comic.DanhSachTacGia.map(a => (
+      const listAuthors = comic && comic.DanhSachTacGia && comic.DanhSachTacGia.map(author => (
          <Link
             to={{
-               pathname: toAuthorLink(a.TenTacGia, a.Id),
-               author: a
+               pathname: toAuthorLink(author.TenTacGia, author.Id),
+               state: {
+                  author
+               }
             }}
-            key={a.Id}
+            key={author.Id}
          >
             <div className="comic-author-item">
                <img
-                  src="https://www.seekpng.com/png/small/514-5147412_default-avatar-icon.png"
-                  alt={a.TenTacGia}
+                  src={`https://ui-avatars.com/api/?name=${
+                     author.TenTacGia
+                  }&size=100&font-size=0.25&rounded=true`}
+                  alt={author.TenTacGia}
                />
-               <p>{a.TenTacGia}</p>
+               <p>{author.TenTacGia}</p>
             </div>
          </Link>
       ));

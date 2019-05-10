@@ -161,7 +161,7 @@ export default class ReadingPage extends Component {
                   .catch(err => {})
                   .finally(() => {
                      Toast.success(
-                        `Đã đánh dấu chương ${this.stateate.chapter.TenChuong}`
+                        `Đã đánh dấu chương ${this.state.chapter.TenChuong}`
                      );
                   });
             })
@@ -179,7 +179,7 @@ export default class ReadingPage extends Component {
             .catch(err => {})
             .finally(() => {
                Toast.success(
-                  `Đã đánh dấu chương ${this.stateate.chapter.TenChuong}`
+                  `Đã đánh dấu chương ${this.state.chapter.TenChuong}`
                );
             });
       }
@@ -241,7 +241,6 @@ export default class ReadingPage extends Component {
          isBookmarked,
          isLoading
       } = this.state;
-      console.table(isLoading, chapter, allChapters);
       if (isError404) {
          return <NotFound />;
       }
