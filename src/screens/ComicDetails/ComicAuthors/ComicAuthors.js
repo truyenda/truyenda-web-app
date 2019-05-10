@@ -21,12 +21,11 @@ export default class ComicAuthors extends Component {
    render() {
       const { comic, isOpen } = this.state;
       const listAuthors = comic.DanhSachTacGia.map(a => (
-         <div className="comic-author-item">
+         <div className="comic-author-item" key={a.Id}>
             <img src="https://www.seekpng.com/png/small/514-5147412_default-avatar-icon.png" alt={a.TenTacGia}/>
             <p>{a.TenTacGia}</p>
          </div>
       ))
-      console.log(comic.DanhSachTacGia);
       const showMoreClassName = isOpen
          ? "comic-authors-container-open"
          : "comic-authors-container-close";

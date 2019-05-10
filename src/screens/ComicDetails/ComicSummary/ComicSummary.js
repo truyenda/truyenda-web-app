@@ -61,7 +61,7 @@ export default class ComicSummary extends Component {
                />
                <p>{t.Username}</p>
             </div>
-         ));   
+         ));
 
       return (
          <div className={showMoreClassName}>
