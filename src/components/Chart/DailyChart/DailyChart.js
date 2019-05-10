@@ -23,31 +23,42 @@ export default class DailyChart extends Component {
 
    render() {
       const { comics } = this.state;
-      const listComics = comics ? comics.map(comic => (
-         <Link
-            to={{
-               pathname: toComicLink(comic.TenTruyen, comic.Id),
-               state: {
-                  comic
-               }
-            }}
-            key={comic.Id}
-         >
-            <div className="chart-item">
-               <p className="rank">{comics.indexOf(comic) + 1}</p>
-               <img className="img" src={comic.AnhDaiDien} />
-               <div className="content">
-                  <p className="name-title">{comic.TenTruyen}</p>
-                  <p className="side-title">
-                     {[...comic.DanhSachTacGia].map(e => e.TenTacGia).join(",")}
-                  </p>
-                  <p className="status-title">
-                     {comic.TrangThai} | {comic.view} views
-                  </p>
+      const listComics = comics ? (
+         comics.map(comic => (
+            <Link
+               to={{
+                  pathname: toComicLink(comic.TenTruyen, comic.Id),
+                  state: {
+                     comic
+                  }
+               }}
+               key={comic.Id}
+            >
+               <div className="chart-item">
+                  {comics.indexOf(comic) !== 0 && (
+                     <p className="rank">{comics.indexOf(comic) + 1}</p>
+                  )}
+                  {comics.indexOf(comic) === 0 && (
+                     <p className="rank-1">{comics.indexOf(comic) + 1}</p>
+                  )}
+                  <img className="img" src={comic.AnhDaiDien} />
+                  <div className="content">
+                     <p className="name-title">{comic.TenTruyen}</p>
+                     <p className="side-title">
+                        {[...comic.DanhSachTacGia]
+                           .map(e => e.TenTacGia)
+                           .join(",")}
+                     </p>
+                     <p className="status-title">
+                        {comic.TrangThai} | {comic.view} views
+                     </p>
+                  </div>
                </div>
-            </div>
-         </Link>
-      )) : (<Progress />);
+            </Link>
+         ))
+      ) : (
+         <Progress />
+      );
       return <div className="chart-wrapper">{listComics}</div>;
    }
 }

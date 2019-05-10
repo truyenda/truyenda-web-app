@@ -94,3 +94,8 @@
       justify-content: center;
    }
 }
+@media only screen and (max-device-width: 480px) {
+  .home-wrapper {
+    padding: 0;
+  }
+}

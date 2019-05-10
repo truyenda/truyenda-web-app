@@ -22,7 +22,7 @@ class Home extends Component {
    componentDidMount() {
       document.title = "Trang chủ";
       this.setState({
-         type: "monthly"
+         type: "daily"
       })
    }
 

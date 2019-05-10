@@ -62,8 +62,6 @@ export default class Chart extends Component {
 
    render() {
       const { type, dailyComics, weeklyComics, comics } = this.state;
-      console.log(type);
-      console.log(comics);
       const listComics = comics.map(comic => (
          <Link
             to={{
