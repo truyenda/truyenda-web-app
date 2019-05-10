@@ -7,6 +7,19 @@
   flex-wrap: wrap;
   min-width: 195px;
 }
+._1dGlBc {
+  width: 26%;
+  margin: 0 auto;
+  padding-bottom: 8px;
+  padding-top: 25px;
+  ._D25dfc {
+    &:hover {
+      background: $gray-1;
+    }
+    color: $blue;
+    width: 100%;
+  }
+}
 .not_manga {
   text-align: center;
   padding-bottom: 30px;
