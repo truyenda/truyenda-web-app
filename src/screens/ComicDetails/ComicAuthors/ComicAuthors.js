@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import styles from "./ComicAuthors.scss";
 import Avatar from "../../../components/commonUI/Avatar/Avatar";
 import AuthorApi from "../../../api/AuthorApi";
+import { Link } from "react-router-dom";
+import { toAuthorLink } from "../../../utils/LinkUtils";
 
 export default class ComicAuthors extends Component {
    constructor(props) {
@@ -21,11 +23,22 @@ export default class ComicAuthors extends Component {
    render() {
       const { comic, isOpen } = this.state;
       const listAuthors = comic.DanhSachTacGia.map(a => (
-         <div className="comic-author-item" key={a.Id}>
-            <img src="https://www.seekpng.com/png/small/514-5147412_default-avatar-icon.png" alt={a.TenTacGia}/>
-            <p>{a.TenTacGia}</p>
-         </div>
-      ))
+         <Link
+            to={{
+               pathname: toAuthorLink(a.TenTacGia, a.Id),
+               author: a
+            }}
+            key={a.Id}
+         >
+            <div className="comic-author-item">
+               <img
+                  src="https://www.seekpng.com/png/small/514-5147412_default-avatar-icon.png"
+                  alt={a.TenTacGia}
+               />
+               <p>{a.TenTacGia}</p>
+            </div>
+         </Link>
+      ));
       const showMoreClassName = isOpen
          ? "comic-authors-container-open"
          : "comic-authors-container-close";
@@ -33,9 +46,7 @@ export default class ComicAuthors extends Component {
       return (
          <div className={showMoreClassName}>
             <h2>Authors</h2>
-            <div className="comic-list-authors">
-               {listAuthors}
-            </div>
+            <div className="comic-list-authors">{listAuthors}</div>
             <div className="comic-authors-show-more">
                <p
                   onClick={() => {
