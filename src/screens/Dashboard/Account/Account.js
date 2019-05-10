@@ -75,8 +75,8 @@ class Account extends Component {
       });
       this.getPressions();
       this.getTeams();
-    }else{
-      this.setState({error: true})
+    } else {
+      this.setState({ error: true });
     }
   }
   toggleLoading(status) {
@@ -217,13 +217,16 @@ class Account extends Component {
     if (!this.state.profile.Email || this.state.profile.Email.length === 0) {
       alert.Email = "Bạn cần nhập email";
     } else {
-      if (!StringUtils.validateEmail(this.state.profile.Email)){
+      if (!StringUtils.validateEmail(this.state.profile.Email)) {
         alert.Email = "Email không đúng định dạng";
       }
     }
-    if (!this.state.profile.Username || this.state.profile.Username.length === 0) {
+    if (
+      !this.state.profile.Username ||
+      this.state.profile.Username.length === 0
+    ) {
       alert.Username = "Bạn cần nhập username";
-    }else{
+    } else {
       if (!StringUtils.validUsername(this.state.profile.Username)) {
         alert.Username =
           "Tên đăng nhập từ 8 đến 24 ký tự, không có ký tự đặc biệt hoặc khoảng trắng";
@@ -239,7 +242,7 @@ class Account extends Component {
   }
 
   onSubmitForm() {
-    if(this.checkValidation()) {
+    if (this.checkValidation()) {
       this.setState({
         loading: true
       });
@@ -405,7 +408,7 @@ class Account extends Component {
             loading: false
           });
         });
-      }
+    }
   }
 
   render() {
@@ -467,15 +470,23 @@ class Account extends Component {
         Cell: cell => {
           return (
             <div className="action-group">
-              {UserAccessFilter("ACCOUNT_UPD") && (
-                <i
-                  className="far fa-edit"
-                  onClick={() => {
-                    this.onEditAccount(cell.original);
-                  }}
-                />
-              )}
-              {UserAccessFilter("ACCOUNT_UPD") ? (
+              {UserAccessFilter("ACCOUNT_UPD") &&
+                cell.original.Id !==
+                  JSON.parse(
+                    localStorage.getItem("redux-react-session/USER_DATA")
+                  ).Id_TaiKhoan && (
+                  <i
+                    className="far fa-edit"
+                    onClick={() => {
+                      this.onEditAccount(cell.original);
+                    }}
+                  />
+                )}
+              {UserAccessFilter("ACCOUNT_UPD") &&
+              cell.original.Id !==
+                JSON.parse(
+                  localStorage.getItem("redux-react-session/USER_DATA")
+                ).Id_TaiKhoan ? (
                 cell.value === 1 ? (
                   <i
                     className="fas fa-user-slash"
@@ -494,14 +505,18 @@ class Account extends Component {
               ) : (
                 ""
               )}
-              {UserAccessFilter("ACCOUNT_DEL") && (
-                <i
-                  className="fas fa-times fa-lg"
-                  onClick={() => {
-                    this.onRemoveAccount(cell.original);
-                  }}
-                />
-              )}
+              {UserAccessFilter("ACCOUNT_DEL") &&
+                cell.original.Id !==
+                  JSON.parse(
+                    localStorage.getItem("redux-react-session/USER_DATA")
+                  ).Id_TaiKhoan && (
+                  <i
+                    className="fas fa-times fa-lg"
+                    onClick={() => {
+                      this.onRemoveAccount(cell.original);
+                    }}
+                  />
+                )}
             </div>
           );
         },
