@@ -9,6 +9,7 @@ import Manga from "../../components/Manga/Manga";
 import DailyChart from "../../components/Chart/DailyChart/DailyChart";
 import WeeklyChart from "../../components/Chart/WeeklyChart/WeeklyChart";
 import MonthlyChart from "../../components/Chart/MonthlyChart/MonthlyChart";
+import SearchHome from "../../components/SearchHome/SearchHome";
 class Home extends Component {
    constructor(props) {
       super(props);
@@ -23,7 +24,7 @@ class Home extends Component {
       document.title = "Trang chủ";
       this.setState({
          type: "daily"
-      })
+      });
    }
 
    handleClick(event) {
@@ -53,7 +54,7 @@ class Home extends Component {
 
    render() {
       const { type, isOpen } = this.state;
-         const showMoreClassName = isOpen ? "chart-col-open" : "chart-col-close";
+      const showMoreClassName = isOpen ? "chart-col-open" : "chart-col-close";
       const innerShowMore = isOpen ? "Show Less" : "Show More";
       return (
          <div className="home-wrapper">
@@ -64,10 +65,10 @@ class Home extends Component {
                </Switch>
             </div>
             <div className="side-content-col">
-               <Browse 
-                  isOpenOutside={false}
-                  hasButtonShowMore={true}
-               />
+               <div>
+                  <SearchHome />
+               </div>
+               <Browse isOpenOutside={false} hasButtonShowMore={true} />
                <div className={showMoreClassName}>
                   <div className="chart-header">
                      <p className="chart-title">MOST POPULAR</p>
@@ -93,13 +94,13 @@ class Home extends Component {
                      {type && type === "daily" && (
                         <div className="title-type-chart">
                            <p>Daily Chart</p>
-                           <DailyChart/>
+                           <DailyChart />
                         </div>
                      )}
                      {type && type === "weekly" && (
                         <div className="title-type-chart">
                            <p>Weekly Chart</p>
-                           <WeeklyChart/>
+                           <WeeklyChart />
                         </div>
                      )}
                      {type && type === "monthly" && (

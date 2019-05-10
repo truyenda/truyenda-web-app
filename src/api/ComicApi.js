@@ -39,6 +39,9 @@ export default {
   get(idComic) {
     return Caller(prefix + idComic, "GET");
   },
+  getAll() {
+    return Caller(prefix + "/all", "GET");
+  },
   getChapters(idComic) {
     return Caller(prefix + idComic + "/chapters", "GET");
   },
