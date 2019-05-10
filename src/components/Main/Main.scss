@@ -24,15 +24,61 @@
       float: right;
    }
 }
+.wrapper-recommend {
+  margin-top: 18px;
+}
+.wrapper-latest{
+  margin-top: 18px;
+  padding: 20px 0;
+  .title-latest {
+    padding: 0 20px;
+    padding-bottom: 20px; 
+  }
+  .alternative_cls:nth-child(even){
+    background: $dark-gray-listmanga;
+   }
+   .alternative_cls:nth-child(odd){
+    background: $white;
+   }
+  ._3X8sC {
+    display: flex;
+    font-size: 13px;
+    height: 25px;
+    color: rgba(0,0,0,.54);
+    .qjYVyl {
+       padding-left: 20px;
+       width: 43%; 
+    }
+    .qjYVym {
+       width: 34%;
+    }
+ }
+}
 
 // @media only screen and (max-width: 1025px) {
 //    .main-wrapper {
 //       // width: 96%;
 //    }
 // }
-
-// @media only screen and (max-width: 769px) {
-//    .main-wrapper {
-//       // width: 93%;
-//    }
-// }
+@media only screen and (max-device-width: 480px) {
+  .main-wrapper {
+    padding: 0;
+    .few-hours{
+      padding-left: 15px;
+    }
+    .tilte-trending{
+      padding-left: 15px;
+    }
+    .view-all {
+      padding-right: 10px;
+    }
+  }
+  .wrapper-latest{
+    .title-latest{
+      padding: 10px;
+    }
+    ._3X8sC{
+      display: none;
+    }
+  }
+}

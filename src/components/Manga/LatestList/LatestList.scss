@@ -75,6 +75,8 @@
           text-overflow: ellipsis;
           display: inline-block;
           width: 100%;
+          max-width: 19ch;
+          text-overflow: ellipsis;
        }
     }
     ._2t82X {
@@ -123,4 +125,26 @@
        }
     }
  }
- 
+@media only screen and (max-device-width: 480px) {
+  .manga-wrapper{
+    .manga-item {
+      display: inline;
+      height: 100%;
+      .left {
+        display: flex;
+        width: 100%;
+      }
+      .e6dEC {
+        padding-left: 13px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+      }
+      ._2t82X {
+        font-size: .875rem;
+        line-height: 16px;
+        padding-left: 13px;
+      }
+    }
+  }
+}
