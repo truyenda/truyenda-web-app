@@ -28,7 +28,8 @@ export default class ReadingPage extends Component {
          isError404: false,
          isGetDone: false,
          isSubscribed: false,
-         isBookmarked: <false></false>
+         isBookmarked: false,
+         isLoading: false
       };
    }
 
@@ -42,20 +43,25 @@ export default class ReadingPage extends Component {
                .then(res => {
                   let data = res.data.Data;
                   data.LinkAnh = JSON.parse(data.LinkAnh);
-                  this.setState(
-                     {
-                        chapter: data
-                     },
-                     () => setTimeout(() => this.getLocalBookmark(), 1000)
-                  );
+                  this.setState({
+                     chapter: data,
+                     isLoading: true
+                  });
                   this.checkSubscribed();
                   this.checkBookmarked();
                   document.title = data.TenTruyen + " - " + data.TenChuong;
-                  ChapterApi.list(data.IdTruyen)
+                  ChapterApi.list(data.Id_Truyen)
                      .then(res => {
-                        this.setState({
-                           allChapters: res.data.Data
-                        });
+                        this.setState(
+                           {
+                              allChapters: res.data.Data,
+                              isLoading: false
+                           },
+                           () =>
+                              setTimeout(() => {
+                                 this.getLocalBookmark();
+                              }, 1200)
+                        );
                      })
                      .catch(err => {});
                })
@@ -84,18 +90,23 @@ export default class ReadingPage extends Component {
                   data.LinkAnh = JSON.parse(data.LinkAnh);
                   this.checkSubscribed();
                   this.checkBookmarked();
-                  this.setState(
-                     {
-                        chapter: data
-                     },
-                     () => setTimeout(() => this.getLocalBookmark(), 1000)
-                  );
+                  this.setState({
+                     chapter: data,
+                     isLoading: true
+                  });
                   document.title = data.TenTruyen + " - " + data.TenChuong;
-                  ChapterApi.list(data.IdTruyen)
+                  ChapterApi.list(data.Id_Truyen)
                      .then(res => {
-                        this.setState({
-                           allChapters: res.data.Data
-                        });
+                        this.setState(
+                           {
+                              allChapters: res.data.Data,
+                              isLoading: false
+                           },
+                           () =>
+                              setTimeout(() => {
+                                 this.getLocalBookmark();
+                              }, 1200)
+                        );
                      })
                      .catch(err => {});
                })
@@ -113,7 +124,7 @@ export default class ReadingPage extends Component {
    }
 
    getLocalBookmark() {
-      let index = LocalBookmarkApi.get(this.state.chapter.Id);
+      let index = LocalBookmarkApi.get(this.state.chapter.Id_Chuong);
       if (index !== 0) {
          let page = document.getElementById("image" + index);
          page.scrollIntoView();
@@ -124,23 +135,23 @@ export default class ReadingPage extends Component {
    saveLocalBookmark(index) {
       if (this.state.isGetDone) {
          if (index === 0 || this.state.chapter.LinkAnh.length - 1 === index)
-            LocalBookmarkApi.remove(this.state.chapter.Id);
+            LocalBookmarkApi.remove(this.state.chapter.Id_Chuong);
          else {
-            LocalBookmarkApi.save(this.state.chapter.Id, index);
+            LocalBookmarkApi.save(this.state.chapter.Id_Chuong, index);
          }
       }
    }
 
    addBookmark() {
       if (!this.state.isSubscribed) {
-         BookmarkApi.create(this.state.chapter.IdTruyen)
+         BookmarkApi.create(this.state.chapter.Id_Truyen)
             .then(res => {
                this.setState({
                   isSubscribed: !this.state.isSubscribed
                });
                BookmarkApi.updateByChapterId(
-                  this.state.chapter.Id,
-                  this.state.chapter.IdTruyen
+                  this.state.chapter.Id_Chuong,
+                  this.state.chapter.Id_Truyen
                )
                   .then(res => {
                      this.setState({
@@ -157,8 +168,8 @@ export default class ReadingPage extends Component {
             .catch(err => {});
       } else {
          BookmarkApi.updateByChapterId(
-            this.state.chapter.Id,
-            this.state.chapter.IdTruyen
+            this.state.chapter.Id_Chuong,
+            this.state.chapter.Id_Truyen
          )
             .then(res => {
                this.setState({
@@ -170,21 +181,23 @@ export default class ReadingPage extends Component {
                Toast.success(
                   `Đã đánh dấu chương ${this.stateate.chapter.TenChuong}`
                );
-            });;
+            });
       }
    }
 
    checkBookmarked() {
-      BookmarkApi.getByComicId(this.state.chapter.IdTruyen)
+      BookmarkApi.getByComicId(this.state.chapter.Id_Truyen)
          .then(res => {
-            if (this.state.chapter.Id === res.data.Data.Id_ChuongDanhDau) {
+            if (
+               this.state.chapter.Id_Chuong === res.data.Data.Id_ChuongDanhDau
+            ) {
                this.setState({
                   isBookmarked: true
                });
             } else {
                this.setState({
                   isBookmarked: false
-               })
+               });
             }
          })
          .catch(() => {
@@ -195,7 +208,7 @@ export default class ReadingPage extends Component {
    }
 
    checkSubscribed() {
-      BookmarkApi.getByComicId(this.state.chapter.IdTruyen)
+      BookmarkApi.getByComicId(this.state.chapter.Id_Truyen)
          .then(res => {
             if (res.data.Data) {
                this.setState({
@@ -209,7 +222,7 @@ export default class ReadingPage extends Component {
    }
 
    unbookmark() {
-      BookmarkApi.delete(this.state.chapter.IdTruyen).then(res => {
+      BookmarkApi.delete(this.state.chapter.Id_Truyen).then(res => {
          this.setState({
             isBookmarked: false
          });
@@ -223,8 +236,12 @@ export default class ReadingPage extends Component {
          allChapters,
          isError,
          isError404,
-         isBookmarked
+         isGetDone,
+         isSubscribed,
+         isBookmarked,
+         isLoading
       } = this.state;
+      console.table(isLoading, chapter, allChapters);
       if (isError404) {
          return <NotFound />;
       }
@@ -233,7 +250,7 @@ export default class ReadingPage extends Component {
       }
       return (
          <div className="reading-page-container">
-            {isBookmarked && (
+            {!isLoading && isBookmarked && (
                <div className="bookmark-icon-container">
                   <img
                      src="https://freeiconshop.com/wp-content/uploads/edd/bookmark-flat.png"
@@ -245,7 +262,7 @@ export default class ReadingPage extends Component {
                   </p>
                </div>
             )}
-            {!isBookmarked && (
+            {!isLoading && !isBookmarked && (
                <div className="bookmark-icon-container">
                   <img
                      src="https://cdn1.iconfinder.com/data/icons/hawcons/32/698367-icon-19-bookmark-add-512.png"
@@ -265,29 +282,35 @@ export default class ReadingPage extends Component {
                         to={{
                            pathname: toComicLink(
                               chapter.TenTruyen,
-                              chapter.IdTruyen
+                              chapter.Id_Truyen
                            )
                         }}
                      >
                         <p>Trở về trang chi tiết truyện</p>
                      </Link>
                   </div>
-                  {chapter.LinkAnh.map((c, i) => (
-                     <Waypoint key={i} onEnter={v => this.saveLocalBookmark(i)}>
-                        <img
-                           id={"image" + i}
-                           src={c}
-                           alt={
-                              this.state.chapter.TenTruyen +
-                              " trang + " +
-                              (i + 1)
-                           }
-                           onError={e =>
-                              (e.target.src = "../../assets/404.png")
-                           }
-                        />
-                     </Waypoint>
-                  ))}
+                  {isLoading && <Progress />}
+
+                  {!isLoading &&
+                     chapter.LinkAnh.map((c, i) => (
+                        <Waypoint
+                           key={i}
+                           onEnter={v => this.saveLocalBookmark(i)}
+                        >
+                           <img
+                              id={"image" + i}
+                              src={c}
+                              alt={
+                                 this.state.chapter.TenTruyen +
+                                 " trang + " +
+                                 (i + 1)
+                              }
+                              onError={e =>
+                                 (e.target.src = "../../assets/404.png")
+                              }
+                           />
+                        </Waypoint>
+                     ))}
 
                   <div className="control-bar">
                      {allChapters &&
@@ -320,7 +343,7 @@ export default class ReadingPage extends Component {
                               outputPage={
                                  allChapters
                                     .map(c => c.Id)
-                                    .indexOf(chapter.Id) + 1
+                                    .indexOf(chapter.Id_Chuong) + 1
                               }
                               allChapters={allChapters}
                               comicName={chapter.TenTruyen}
@@ -355,7 +378,7 @@ export default class ReadingPage extends Component {
                   </div>
                </div>
             )}
-            {!chapter && (
+            {!isLoading && !chapter && (
                <div className="comic-details">
                   <Progress />
                </div>

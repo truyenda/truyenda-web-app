@@ -3,7 +3,7 @@ const prefix = "teams/";
 const posfix = "/members/";
 export default {
   list(IdTeam) {
-    return Caller(prefix + IdTeam + posfix, "GET");
+    return Caller(prefix + IdTeam + "/members", "GET");
   },
   update(IdTeam, IdUser, IdRole) {
     var data = { Id_Role: IdRole };

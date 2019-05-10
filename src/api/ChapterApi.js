@@ -13,7 +13,7 @@ export default {
     return Caller(prefix, "POST", data);
   },
   list(IdStory) {
-    return Caller("stories/" + IdStory + "/chapters", "GET");
+    return Caller(  "stories/" + IdStory + "/chapters", "GET");
   },
   list_latest(index=1) {
     return Caller(prefix + "latest-update/" + index);

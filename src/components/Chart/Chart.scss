@@ -28,9 +28,18 @@
    .rank {
       font-size: 2.5em;
       color: $blue;
-      padding: 10px 0 3px;;
+      padding: 10px 0 3px;
       text-align: center;
-      display: block;   
+      display: block;
+      margin: auto 0;
+   }
+
+   .rank-1 {
+      font-size: 2.5em;
+      color: $orange-1;
+      padding: 10px 0 3px;
+      text-align: center;
+      display: block;
       margin: auto 0;
    }
 

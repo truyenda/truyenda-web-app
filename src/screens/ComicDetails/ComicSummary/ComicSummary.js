@@ -10,7 +10,7 @@ export default class ComicSummary extends Component {
       super(props);
       this.state = {
          comic: this.props.details,
-         teams: null,
+         teams: [],
          isOpen: false
       };
    }
@@ -30,7 +30,7 @@ export default class ComicSummary extends Component {
          .then(res => {
             this.setState({
                teams: res.data.Data.ThanhVienList
-            });
+            });   
          })
          .catch(err => {});
    }
@@ -61,7 +61,7 @@ export default class ComicSummary extends Component {
                />
                <p>{t.Username}</p>
             </div>
-         ));   
+         ));
 
       return (
          <div className={showMoreClassName}>
