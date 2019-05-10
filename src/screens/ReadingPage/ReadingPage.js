@@ -28,7 +28,8 @@ export default class ReadingPage extends Component {
          isError404: false,
          isGetDone: false,
          isSubscribed: false,
-         isBookmarked: false
+         isBookmarked: false,
+         isLoading: false
       };
    }
 
@@ -42,20 +43,25 @@ export default class ReadingPage extends Component {
                .then(res => {
                   let data = res.data.Data;
                   data.LinkAnh = JSON.parse(data.LinkAnh);
-                  this.setState(
-                     {
-                        chapter: data
-                     },
-                     () => setTimeout(() => this.getLocalBookmark(), 1000)
-                  );
+                  this.setState({
+                     chapter: data,
+                     isLoading: true
+                  });
                   this.checkSubscribed();
                   this.checkBookmarked();
                   document.title = data.TenTruyen + " - " + data.TenChuong;
                   ChapterApi.list(data.Id_Truyen)
                      .then(res => {
-                        this.setState({
-                           allChapters: res.data.Data
-                        });
+                        this.setState(
+                           {
+                              allChapters: res.data.Data,
+                              isLoading: false
+                           },
+                           () =>
+                              setTimeout(() => {
+                                 this.getLocalBookmark();
+                              }, 1200)
+                        );
                      })
                      .catch(err => {});
                })
@@ -84,18 +90,23 @@ export default class ReadingPage extends Component {
                   data.LinkAnh = JSON.parse(data.LinkAnh);
                   this.checkSubscribed();
                   this.checkBookmarked();
-                  this.setState(
-                     {
-                        chapter: data
-                     },
-                     () => setTimeout(() => this.getLocalBookmark(), 1000)
-                  );
+                  this.setState({
+                     chapter: data,
+                     isLoading: true
+                  });
                   document.title = data.TenTruyen + " - " + data.TenChuong;
                   ChapterApi.list(data.Id_Truyen)
                      .then(res => {
-                        this.setState({
-                           allChapters: res.data.Data
-                        });
+                        this.setState(
+                           {
+                              allChapters: res.data.Data,
+                              isLoading: false
+                           },
+                           () =>
+                              setTimeout(() => {
+                                 this.getLocalBookmark();
+                              }, 1200)
+                        );
                      })
                      .catch(err => {});
                })
@@ -170,21 +181,23 @@ export default class ReadingPage extends Component {
                Toast.success(
                   `Đã đánh dấu chương ${this.stateate.chapter.TenChuong}`
                );
-            });;
+            });
       }
    }
 
    checkBookmarked() {
       BookmarkApi.getByComicId(this.state.chapter.Id_Truyen)
          .then(res => {
-            if (this.state.chapter.Id_Chuong === res.data.Data.Id_ChuongDanhDau) {
+            if (
+               this.state.chapter.Id_Chuong === res.data.Data.Id_ChuongDanhDau
+            ) {
                this.setState({
                   isBookmarked: true
                });
             } else {
                this.setState({
                   isBookmarked: false
-               })
+               });
             }
          })
          .catch(() => {
@@ -223,8 +236,12 @@ export default class ReadingPage extends Component {
          allChapters,
          isError,
          isError404,
-         isBookmarked
+         isGetDone,
+         isSubscribed,
+         isBookmarked,
+         isLoading
       } = this.state;
+      console.table(isLoading, chapter, allChapters);
       if (isError404) {
          return <NotFound />;
       }
@@ -233,7 +250,7 @@ export default class ReadingPage extends Component {
       }
       return (
          <div className="reading-page-container">
-            {isBookmarked && (
+            {!isLoading && isBookmarked && (
                <div className="bookmark-icon-container">
                   <img
                      src="https://freeiconshop.com/wp-content/uploads/edd/bookmark-flat.png"
@@ -245,7 +262,7 @@ export default class ReadingPage extends Component {
                   </p>
                </div>
             )}
-            {!isBookmarked && (
+            {!isLoading && !isBookmarked && (
                <div className="bookmark-icon-container">
                   <img
                      src="https://cdn1.iconfinder.com/data/icons/hawcons/32/698367-icon-19-bookmark-add-512.png"
@@ -272,22 +289,28 @@ export default class ReadingPage extends Component {
                         <p>Trở về trang chi tiết truyện</p>
                      </Link>
                   </div>
-                  {chapter.LinkAnh.map((c, i) => (
-                     <Waypoint key={i} onEnter={v => this.saveLocalBookmark(i)}>
-                        <img
-                           id={"image" + i}
-                           src={c}
-                           alt={
-                              this.state.chapter.TenTruyen +
-                              " trang + " +
-                              (i + 1)
-                           }
-                           onError={e =>
-                              (e.target.src = "../../assets/404.png")
-                           }
-                        />
-                     </Waypoint>
-                  ))}
+                  {isLoading && <Progress />}
+
+                  {!isLoading &&
+                     chapter.LinkAnh.map((c, i) => (
+                        <Waypoint
+                           key={i}
+                           onEnter={v => this.saveLocalBookmark(i)}
+                        >
+                           <img
+                              id={"image" + i}
+                              src={c}
+                              alt={
+                                 this.state.chapter.TenTruyen +
+                                 " trang + " +
+                                 (i + 1)
+                              }
+                              onError={e =>
+                                 (e.target.src = "../../assets/404.png")
+                              }
+                           />
+                        </Waypoint>
+                     ))}
 
                   <div className="control-bar">
                      {allChapters &&
@@ -355,7 +378,7 @@ export default class ReadingPage extends Component {
                   </div>
                </div>
             )}
-            {!chapter && (
+            {!isLoading && !chapter && (
                <div className="comic-details">
                   <Progress />
                </div>
