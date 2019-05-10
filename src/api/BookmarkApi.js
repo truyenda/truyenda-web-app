@@ -21,8 +21,8 @@ export default {
     };
     return Caller(prefix, "PUT", data);
   },
-  delete(idBookmark) {
-    return Caller(prefix + "strory/" + idBookmark, "DELETE");
+  delete(idTruyen) {
+    return Caller(prefix + "strory/" + idTruyen, "DELETE");
   },
   getByComicId(idTruyen) {
     return Caller(prefix + "strory/" + idTruyen, "GET");

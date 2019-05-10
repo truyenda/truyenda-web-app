@@ -420,22 +420,30 @@ class MyTeam extends Component {
         maxWidth: 100,
         Cell: cell => (
           <div className="action-group">
-            {UserAccessFilter("TEAMMEM_PER") && (
-              <i
-                className="fas fa-user-tag"
-                onClick={() => {
-                  this.onShowPerMember(cell.original);
-                }}
-              />
-            )}
-            {UserAccessFilter("TEAMMEM_DEL") && (
-              <i
-                className="fas fa-times fa-lg"
-                onClick={() => {
-                  this.onRemoveMember(cell.original);
-                }}
-              />
-            )}
+            {UserAccessFilter("TEAMMEM_PER") &&
+              cell.original.Id_TaiKhoanThanhVien !==
+                JSON.parse(
+                  localStorage.getItem("redux-react-session/USER_DATA")
+                ).Id_TaiKhoan && (
+                <i
+                  className="fas fa-user-tag"
+                  onClick={() => {
+                    this.onShowPerMember(cell.original);
+                  }}
+                />
+              )}
+            {UserAccessFilter("TEAMMEM_DEL") &&
+              cell.original.Id_TaiKhoanThanhVien !==
+                JSON.parse(
+                  localStorage.getItem("redux-react-session/USER_DATA")
+                ).Id_TaiKhoan && (
+                <i
+                  className="fas fa-times fa-lg"
+                  onClick={() => {
+                    this.onRemoveMember(cell.original);
+                  }}
+                />
+              )}
           </div>
         ),
         filterable: false

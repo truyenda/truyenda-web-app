@@ -21,7 +21,7 @@ class Forgot extends Component {
     if (!localStorage.getItem("redux-react-session/USER_DATA")) {
       let url = document.location.href;
       let token = url.split("=")[1];
-      if (token && token.length === 56) {
+      if (token && token.length > 50) {
         this.setState({ token });
       } else {
         this.setState({ isError: true });

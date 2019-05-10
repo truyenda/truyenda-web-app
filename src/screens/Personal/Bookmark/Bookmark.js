@@ -43,7 +43,7 @@ class Bookmark extends Component {
   }
   updateBookmark(bookmark) {
     this.toggleLoading(true);
-    BookmarkApi.update(bookmark.Id_BookMark, bookmark.Id_ChuongMoiNhat)
+    BookmarkApi.update(bookmark.Id_ChuongMoiNhat, bookmark.Id_Truyen)
       .then(res => {
         if (res.data.Code === 200) {
           Toast.success("Đã đánh dấu truyện " + bookmark.TenTruyen);
@@ -86,7 +86,7 @@ class Bookmark extends Component {
 
   removeBookmark(bookmark) {
     this.toggleLoading(true);
-    BookmarkApi.delete(bookmark.Id_BookMark)
+    BookmarkApi.delete(bookmark.Id_Truyen)
       .then(res => {
         if (res.data.Code === 200) {
           Toast.success("Đã bỏ theo dõi " + bookmark.TenTruyen);

@@ -945,7 +945,8 @@ export default class ComicsDashBoard extends Component {
             showPageSizeOptions={false}
             filterable={true}
             key={this.state.data.value}
-            defaultPageSize={20}
+            defaultPageSize={28}
+            minRows={5}
             manual
             onFetchData={(state, instance) => {
               this.loadPage(state, instance);
