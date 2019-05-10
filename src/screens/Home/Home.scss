@@ -50,7 +50,7 @@
          );
          position: absolute;
          bottom: 0;
-      
+
          p {
             position: absolute;
             font-size: 0.75em;
@@ -94,7 +94,7 @@
          );
          position: absolute;
          bottom: 0;
-      
+
          p {
             display: none;
             position: absolute;
@@ -149,24 +149,25 @@
 
 @media only screen and (max-width: 1025px) {
    .home-wrapper {
-      flex-direction: column;
+      display: flex;
+      flex-direction: column-reverse;
       justify-content: space-between;
-   }
 
-   .side-content-col {
-      margin-top: 1em;
-      margin-left: 0em;
-      .browse-col {
-         // width: 90%;
-         height: 80%;
+      .side-content-col {
+         margin-top: 1em;
+         margin-left: 0em;
+         .browse-col {
+            // width: 90%;
+            height: 80%;
+         }
       }
-   }
 
-   .main-content-col {
-      justify-content: center;
-   }
+      .main-content-col {
+         justify-content: center;
+      }
 
-   // .browse-col {
-   //    margin: 25px   0;
-   // }
+      // .browse-col {
+      //    margin: 25px   0;
+      // }
+   }
 }

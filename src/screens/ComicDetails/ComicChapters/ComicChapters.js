@@ -38,7 +38,7 @@ export default class ComicChapters extends Component {
 
       return (
          <div className={showMoreClassName}>
-            <h2>Chapters</h2>
+            <h2>Danh sách chương</h2>
             <div className="comic-chapters-wrapper">
                {allChapters && comic &&
                   allChapters.map(chapter => (
@@ -63,7 +63,7 @@ export default class ComicChapters extends Component {
                               {chapter.TenChuong}
                            </p>
                            <p className="comic-chapters-item-right">
-                              {chapter.NgayTao} | {chapter.LuotXem} Lượt xem
+                              {chapter.NgayTao} | <span>{chapter.LuotXem}</span> Lượt xem
                            </p>
                         </div>
                      </Link>

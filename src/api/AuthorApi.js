@@ -20,6 +20,9 @@ export default {
     var data = { TenTacGia: author.name };
     return Caller(prefix + author.Id, "PUT", data);
   },
+  getStories(idAuthor) {
+    return Caller(prefix + idAuthor + "/stories", "GET");
+  },
   delete(author) {
     return Caller(prefix + author.Id, "DELETE");
   }
