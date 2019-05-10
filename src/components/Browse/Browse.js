@@ -90,7 +90,7 @@ export default class Browse extends Component {
               ));
       return (
          <div className="browse-wrapper">
-            <p className="title">Browse By Genres</p>
+            <p className="title">Các thể loại</p>
             <div className="browse">
                <div className="col">{elements_genres}</div>
             </div>

@@ -112,9 +112,9 @@ export default class AllMangaCom extends Component {
     }
 		return (
       <div>
-        <h1 className="title_all_manga">All Manga</h1>
+        <h1 className="title_all_manga">Tất cả truyện</h1>
         <LatestFilter onSubmit ={(value)=> this.receive(value)} />
-        <div className="_3T_XVY"><h4>{this.state.mangas ? this.state.mangas.length : "0"} mangas</h4></div>
+        <div className="_3T_XVY"><h4>{this.state.mangas ? this.state.mangas.length : "0"} truyện</h4></div>
         {this.state.inProgress || !this.state.mangas ? (
             <Progress display="Đang load truyện..." />
           ) : (

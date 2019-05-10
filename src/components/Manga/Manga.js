@@ -71,12 +71,12 @@ export default class Manga extends Component {
     }
     return (
       <div className="main-wrappers">
-        <h1 className="_3kDZW">Latest Update</h1>
-        <div className="_3_XVY"><h4>{this.state.total_mangas} mangas</h4></div>
+        <h1 className="_3kDZW">Cập nhật mới nhất</h1>
+        <div className="_3_XVY"><h4>{this.state.total_mangas} truyện</h4></div>
         <div className="_3X8sC">
-          <div className="qjYVyl">Manga</div>
-          <div className="qjYVym">New chapters</div>
-          <div className="qjYVyr">Date updated</div>
+          <div className="qjYVyl">Truyện</div>
+          <div className="qjYVym">Những chương mới</div>
+          <div className="qjYVyr">Ngày cập nhật</div>
         </div>
         {!this.state.mangas ? (
             <Progress display="Đang load truyện..." />

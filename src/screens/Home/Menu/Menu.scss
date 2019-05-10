@@ -149,6 +149,7 @@ a {
    background: white;
    border-radius: 5px;
    z-index: 1000;
+   right: 0;
    @include shadow;
    a{
       cursor: pointer;

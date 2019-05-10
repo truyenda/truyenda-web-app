@@ -4,14 +4,16 @@
 .all-manga-container {
    background-color: $white;
    @include shadow;
-  //  padding: 1em;
-}
-.title_all_manga {
-  color: rgba(0,0,0,.87);
-  font-size: 36px;
-  font-size: 2.25rem;
-  font-weight: 500;
-  line-height: 42px;
+   //  padding: 1em;
+  }
+  .title_all_manga {
+    color: rgba(0,0,0,.87);
+    font-size: 36px;
+    font-size: 2.25rem;
+    font-weight: 500;
+    line-height: 42px;
+    margin-top: 0.5em;
+    padding-top: 0.5em;
   margin-bottom: 20px;
   padding-left: 20px;
 }

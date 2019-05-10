@@ -117,11 +117,11 @@ export default class Main extends Component {
           ) : (
             ""
           )}
-          <div className="few-hours">In the last few hours</div>
+          <div className="few-hours">Trong những giờ qua</div>
           <div>
-            <div className="tilte-trending">Trending Updates</div>
+            <div className="tilte-trending">Các cập nhật hot</div>
             <div className="view-all">
-              <Link to="/all-manga">View all</Link>
+              <Link to="/all-manga">Tất cả</Link>
             </div>
           </div>
           <div className="all_manga">
@@ -134,11 +134,11 @@ export default class Main extends Component {
           ) : (
             ""
           )}
-          <div className="few-hours">In the last few hours</div>
+          <div className="few-hours">Trong những giờ qua</div>
           <div>
-            <div className="tilte-trending">Recommed Stories</div>
+            <div className="tilte-trending">Truyện gợi ý cho bạn</div>
             <div className="view-all">
-              <Link to="/all-manga">View all</Link>
+              <Link to="/all-manga">Tất cả</Link>
             </div>
           </div>
           <div className="all_manga">
@@ -147,15 +147,15 @@ export default class Main extends Component {
         </div>
         <div className="main-wrapper wrapper-latest">
           <div className="title-latest">
-            <div className="tilte-trending">LATEST UPDATE</div>
+            <div className="tilte-trending">Cập nhật mới nhất</div>
             <div className="view-all">
-              <Link to="/latest-update">View all</Link>
+              <Link to="/latest-update">Tất cả</Link>
             </div>
           </div>
           <div className="_3X8sC">
-            <div className="qjYVyl">Manga</div>
-            <div className="qjYVym">New chapters</div>
-            <div className="qjYVyr">Date updated</div>
+            <div className="qjYVyl">Truyện</div>
+            <div className="qjYVym">Chương mới</div>
+            <div className="qjYVyr">Ngày cập nhật</div>
           </div>
           { !this.state.mangas ? (
             <Progress display="Đang load truyện..." />

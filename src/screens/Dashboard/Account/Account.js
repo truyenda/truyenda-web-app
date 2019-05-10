@@ -79,6 +79,13 @@ class Account extends Component {
       this.setState({ error: true });
     }
   }
+  componentDidUpdate(){
+    if (document.getElementsByClassName("rt-th")[9])
+      document
+        .getElementsByClassName("rt-th")[9]
+        .getElementsByTagName("input")[0]
+        .setAttribute("placeholder", "Tìm tài khoản");
+  }
   toggleLoading(status) {
     this.setState({
       loading: status

@@ -66,21 +66,21 @@ class LatestUpdate extends Component {
               <Browse />
                <div className="chart-col">
                   <div className="chart-header">
-                     <p className="chart-title">MOST POPULAR</p>
+                     <p className="chart-title">Phổ biến nhất</p>
                      <ul className="chart-type">
                         <li>
                            <a id="daily" onClick={this.handleClick}>
-                              Daily
+                              Ngày
                            </a>
                         </li>
                         <li>
                            <a id="weekly" onClick={this.handleClick}>
-                              Weekly
+                              Tuần
                            </a>
                         </li>
                         <li>
                            <a id="monthly" onClick={this.handleClick}>
-                              Monthly
+                              Tháng
                            </a>
                         </li>
                      </ul>

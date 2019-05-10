@@ -331,7 +331,7 @@ export default class ComicsDashBoard extends Component {
         .then(res => {
           if (res.data.Code && res.data.Code === 200) {
             Toast.success(comic.name, "Done");
-            this.loadPage({ page: this.state.pages - 1, filtered: [] });
+            this.loadPage({ page: 0, filtered: [] });
           } else {
             Toast.notify(res.data.MsgError, "Mã lỗi " + res.data.Code);
           }
@@ -880,10 +880,10 @@ export default class ComicsDashBoard extends Component {
               />
               <div
                 className={
-                  "field-alert " + (this.state.alert.coverPicture ? "" : "hide")
+                  "field-alert " + (this.state.alert.categories ? "" : "hide")
                 }
               >
-                <p>{this.state.alert.coverPicture}</p>
+                <p>{this.state.alert.categories}</p>
               </div>
             </div>
             <Select
