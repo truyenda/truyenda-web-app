@@ -39,9 +39,13 @@
          }
 
          .comic-chapters-item-right {
-            font-size: 0.6em;
+            font-size: 0.8em;
             color: $orange-1;
             margin: auto 0;
+
+            span {
+               color: $blue;
+            }
          }
       }
    }
@@ -117,9 +121,14 @@
          }
 
          .comic-chapters-item-right {
-            font-size: 0.6em;
+            font-size: 0.8em;
             color: $orange-1;
             margin: auto 0;
+            
+            span {
+               color: $blue;
+            }
+
          }
       }
    }

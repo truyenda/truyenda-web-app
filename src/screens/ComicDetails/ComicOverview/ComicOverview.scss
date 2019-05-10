@@ -45,6 +45,10 @@
          &:nth-last-of-type(1) {
             color: $dark-gray;
             font-size: 0.7em;
+            span {
+               color: $blue-4;
+               font-weight: bold;
+            }
          }
 
          &:nth-last-of-type(2) {

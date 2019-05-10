@@ -46,10 +46,10 @@ export default class ComicAuthors extends Component {
       const showMoreClassName = isOpen
          ? "comic-authors-container-open"
          : "comic-authors-container-close";
-      const innerShowMore = isOpen ? "Show Less" : "Show More";
+      const innerShowMore = isOpen ? "Hiện bớt" : "Hiện thêm";
       return (
          <div className={showMoreClassName}>
-            <h2>Authors</h2>
+            <h2>Tác giả</h2>
             <div className="comic-list-authors">{listAuthors}</div>
             <div className="comic-authors-show-more">
                <p

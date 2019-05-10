@@ -46,7 +46,7 @@ export default class ComicSummary extends Component {
       const showMoreClassName = isOpen
          ? "comic-summary-container-open"
          : "comic-summary-container-close";
-      const innerShowMore = isOpen ? "Show Less" : "Show More";
+      const innerShowMore = isOpen ? "Hiện bớt" : "Hiện thêm";
       const originalHeight = document.getElementsByClassName(showMoreClassName);
 
       const teamListResult =

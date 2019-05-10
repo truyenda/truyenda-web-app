@@ -50,7 +50,7 @@ export default class MonthlyChart extends Component {
                            .join(",")}
                      </p>
                      <p className="status-title">
-                        {comic.TrangThai} | {comic.view} views
+                        {comic.TrangThai} | {comic.view} lượt xem
                      </p>
                   </div>
                </div>
