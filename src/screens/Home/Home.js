@@ -9,6 +9,7 @@ import Manga from "../../components/Manga/Manga";
 import DailyChart from "../../components/Chart/DailyChart/DailyChart";
 import WeeklyChart from "../../components/Chart/WeeklyChart/WeeklyChart";
 import MonthlyChart from "../../components/Chart/MonthlyChart/MonthlyChart";
+import SearchHome from "../../components/SearchHome/SearchHome";
 class Home extends Component {
    constructor(props) {
       super(props);
@@ -23,7 +24,7 @@ class Home extends Component {
       document.title = "Trang chủ";
       this.setState({
          type: "daily"
-      })
+      });
    }
 
    handleClick(event) {
@@ -53,8 +54,8 @@ class Home extends Component {
 
    render() {
       const { type, isOpen } = this.state;
-         const showMoreClassName = isOpen ? "chart-col-open" : "chart-col-close";
-      const innerShowMore = isOpen ? "Show Less" : "Show More";
+      const showMoreClassName = isOpen ? "chart-col-open" : "chart-col-close";
+      const innerShowMore = isOpen ? "" : "Xem thêm";
       return (
          <div className="home-wrapper">
             <div className="main-content-col">
@@ -64,27 +65,27 @@ class Home extends Component {
                </Switch>
             </div>
             <div className="side-content-col">
-               <Browse 
-                  isOpenOutside={false}
-                  hasButtonShowMore={true}
-               />
+               <div>
+                  <SearchHome />
+               </div>
+               <Browse isOpenOutside={false} hasButtonShowMore={true} />
                <div className={showMoreClassName}>
                   <div className="chart-header">
-                     <p className="chart-title">MOST POPULAR</p>
+                     <p className="chart-title">BẢNG XẾP HẠNG</p>
                      <ul className="chart-type">
                         <li>
                            <a id="daily" onClick={this.handleClick}>
-                              Daily
+                              Ngày
                            </a>
                         </li>
                         <li>
                            <a id="weekly" onClick={this.handleClick}>
-                              Weekly
+                              Tuần
                            </a>
                         </li>
                         <li>
                            <a id="monthly" onClick={this.handleClick}>
-                              Monthly
+                              Tháng
                            </a>
                         </li>
                      </ul>
@@ -92,19 +93,19 @@ class Home extends Component {
                   <div className="chart-container">
                      {type && type === "daily" && (
                         <div className="title-type-chart">
-                           <p>Daily Chart</p>
-                           <DailyChart/>
+                           <p>BXH Ngày</p>
+                           <DailyChart />
                         </div>
                      )}
                      {type && type === "weekly" && (
                         <div className="title-type-chart">
-                           <p>Weekly Chart</p>
-                           <WeeklyChart/>
+                           <p>BXH Tuần</p>
+                           <WeeklyChart />
                         </div>
                      )}
                      {type && type === "monthly" && (
                         <div className="title-type-chart">
-                           <p>Monthly Chart</p>
+                           <p>BXH Tháng</p>
                            <MonthlyChart />
                         </div>
                      )}

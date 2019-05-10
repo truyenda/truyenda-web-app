@@ -117,7 +117,7 @@ export default class ComicOverview extends Component {
             )}
             {isSubscribe && (
                <p className="comic-overview-bar-item comic-overview-bar-main-item">
-                  CONTINUE READING
+                  TIẾP TỤC ĐỌC
                </p>
             )}
          </Link>
@@ -134,21 +134,21 @@ export default class ComicOverview extends Component {
                </p>
                <p className="comic-overview-subtitle">{comic.TrangThai}</p>
                <p className="comic-overview-subtitle">
-                  {comic.view ? comic.view : 0} views
+                  <span>{comic.view ? comic.view : 0}</span> lượt xem
                </p>
             </div>
             <div className="comic-overview-bar">
                {linkResult}
                <p className="comic-overview-bar-item">
                   <span>{comic.listChuong.length}</span>
-                  Chapters
+                  chương
                </p>
                {!isSubscribe && (
                   <p
                      className="comic-overview-bar-item comic-overview-bar-main-item-subscribe"
                      onClick={() => this.subcribe()}
                   >
-                     Theo dõi
+                     THEO DÕI
                   </p>
                )}
                {isSubscribe && (
@@ -156,7 +156,7 @@ export default class ComicOverview extends Component {
                      className="comic-overview-bar-item comic-overview-bar-main-item-subscribed"
                      onClick={() => this.unsubscribe()}
                   >
-                     Đang Theo dõi
+                     ĐANG THEO DÕI
                   </p>
                )}
             </div>

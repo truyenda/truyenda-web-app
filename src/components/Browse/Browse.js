@@ -4,7 +4,7 @@ import Button from "../commonUI/Button";
 import Caller from "../../utils/APICaller";
 import { Link } from "react-router-dom";
 import { toCategoryDetailLink } from "../../utils/LinkUtils";
-const MAX_ITEMS = 14;
+const MAX_ITEMS = 10;
 export default class Browse extends Component {
    constructor(props) {
       super(props);

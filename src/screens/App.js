@@ -20,6 +20,7 @@ import "../assets/react-table.css";
 import TeamProfile from "./TeamProfile";
 import CategoryDetail from "./CategoryDetail/CategoryDetail";
 import Forgot from "./Forgot";
+import AuthorDetails from "./AuthorDetails/AuthorDetails";
 class App extends Component {
   render() {
     return (
@@ -42,6 +43,7 @@ class App extends Component {
             <Route path="/comics" component={ComicDetails} />
             <Route path="/categories" component={CategoryDetail} />
             <Route path="/teams" component={TeamProfile} />
+            <Route path="/authors" component={AuthorDetails} />
             <Route path="/forgot" component={Forgot} />
             <Route component={NotFound} />
           </Switch>
